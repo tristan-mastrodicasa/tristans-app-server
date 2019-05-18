@@ -1,8 +1,8 @@
 import passport from 'passport';
-import FacebookStrategy from './strategies/facebookStrategy';
+import JWTStrategy from './strategies/jwtStrategy';
 import UserModel from '../models/UserModel';
 
-passport.use(FacebookStrategy);
+passport.use(JWTStrategy);
 
 passport.serializeUser((user, callback) => {
   return callback(null, user);

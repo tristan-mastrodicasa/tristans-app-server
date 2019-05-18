@@ -1,22 +1,74 @@
 import passport from 'passport';
+import facebook from 'fb';
+import jwt from 'jsonwebtoken';
+import UserModel from '../models/UserModel';
 
-export const getLoginFacebook = (req, res, next) => {
-  console.log('in');
-  passport.authenticate('facebook', (error, user, info) => {
-    console.log('ina');
-    if (error) throw error;
-    req.login(user, (error) => {
-      console.log('Creating session with facebook login info');
-    });
-  })(req, res, next);
+export const postSignUp = (req, res) => {
+  const facebook_access_token = req.body.access_token;
+
+  facebook.api('me', {
+    fields: ['first_name', 'last_name', 'id'],
+    access_token: facebook_access_token,
+  }, async function(response) {
+    if (response.error) {
+      return res.send({
+        error: true,
+        message: response.error.message,
+        reason: 'You access token is null or expired',
+      });
+    }
+    const isRegistered = await UserModel.findOne({'facebook.profileId': response.id});
+
+    if (!isRegistered) {
+      const user = await UserModel.create({
+        firstname: response.first_name,
+        lastname: response.last_name,
+        facebook: {
+          profileId: response.id,
+        },
+      });
+
+      return res.send({
+        completed: true,
+        message: 'Registration completed',
+        user,
+      });
+    } else {
+      return res.send({
+        error: true,
+        message: 'You are already registered with this facebook account',
+      });
+    }
+  });
 };
 
-export const getFacebookTest = (req, res) => {
-  return res.send(`You are authenticated with facebook bro and you know which is your token? Is this bro: ${req.user.facebook.accessToken}`);
-};
+export const postLogin = (req, res) => {
+  const facebook_access_token = req.body.access_token;
 
-export const getLogout = (req, res) => {
-  req.session.destroy(function(err) {
-    return res.send('Logged out bitch');
+  facebook.api('me', {
+    fields: ['id'],
+    access_token: facebook_access_token,
+  }, async function(response) {
+    if (response.error) {
+      return res.send({
+        error: true,
+        message: response.error.message,
+        reason: 'You access token is null or expired',
+      });
+    }
+
+    const isUserFound = await UserModel.findOne({'facebook.profileId': response.id});
+    if (isUserFound) {
+      const jwt_token = jwt.sign(isUserFound.toJSON(), 'secretkey');
+      return res.send({
+        message: 'Login completed',
+        jwt_token,
+      });
+    } else {
+      return res.send({
+        error: true,
+        message: 'ProfileId is not found in the database',
+      });
+    }
   });
 };
