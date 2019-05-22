@@ -1,5 +1,9 @@
 # NPM modules
 node_modules
+dist
 
 # VS Code
 .vscode
+
+# Database
+data
