@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "babel src -d dist",
-    "start": "npm run build && node dist/server.js",
+    "start": "npm run build && MONGODB_URI=mongodb://mongodb:27017/meme-api node dist/server.js",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,14 +27,16 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-regenerator": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
-    "babel-polyfill": "^6.26.0",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.12.0",
     "nodemon": "^1.19.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.5",
     "axios": "^0.18.0",
     "body-parser": "^1.19.0",
     "connect-mongo": "^2.0.3",
