@@ -17,15 +17,13 @@ export const postSignUp = (req, res) => {
         reason: 'You access token is null or expired',
       });
     }
-    const isRegistered = await UserModel.findOne({'facebook.profileId': response.id});
+    const isRegistered = await UserModel.findOne({fbid: response.id});
 
     if (!isRegistered) {
       const user = await UserModel.create({
+        fbid: response.id,
         firstname: response.first_name,
         lastname: response.last_name,
-        facebook: {
-          profileId: response.id,
-        },
       });
 
       return res.send({
@@ -57,7 +55,7 @@ export const postLogin = (req, res) => {
       });
     }
 
-    const isUserFound = await UserModel.findOne({'facebook.profileId': response.id});
+    const isUserFound = await UserModel.findOne({fbid: response.id});
     if (isUserFound) {
       const jwt_token = jwt.sign(isUserFound.toJSON(), 'secretkey');
       return res.send({
@@ -67,7 +65,7 @@ export const postLogin = (req, res) => {
     } else {
       return res.send({
         error: true,
-        message: 'ProfileId is not found in the database',
+        message: 'FacebookID is not found in the database',
       });
     }
   });
