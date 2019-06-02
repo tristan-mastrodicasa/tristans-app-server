@@ -17,6 +17,12 @@ server.use(express.urlencoded({
 }));
 server.use(cookieParser());
 
+server.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
+});
+
 server.use('/api', RoutesHandler);
 
 server.listen(port, () => {

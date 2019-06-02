@@ -2,7 +2,7 @@ import {ExtractJwt, Strategy} from 'passport-jwt';
 import UserModel from '../../models/UserModel';
 
 const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
   secretOrKey: 'secretkey',
 };
 
