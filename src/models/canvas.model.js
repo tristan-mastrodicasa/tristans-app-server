@@ -1,6 +1,6 @@
-import {Schema} from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-export default Schema({
+export default model('Canvas', new Schema({
   uid: Schema.Types.ObjectId, ref: 'User',
   description: String,
   image_path: String,
@@ -8,5 +8,4 @@ export default Schema({
   points: Number,
   utc_time: Date,
   active: Boolean,
-});
-
+}));

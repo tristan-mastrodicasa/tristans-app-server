@@ -1,6 +1,6 @@
-import {Schema} from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-export default Schema({
+export default model('User', new Schema({
   fbid: Number,
   username: String,
   firstname: String,
@@ -37,5 +37,4 @@ export default Schema({
       },
     ],
   },
-});
-
+}));

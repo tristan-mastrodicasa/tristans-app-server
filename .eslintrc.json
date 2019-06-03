@@ -14,6 +14,10 @@
         "sourceType": "module"
     },
     "rules": {
-        "max-len": 0
+        "max-len": 0,
+        "linebreak-style": ["error", "windows"],
+        "padded-blocks": ["error", "always"],
+        "object-curly-spacing": ["error", "always"],
+        "new-cap": ["error", { "newIsCap": true }]
     }
 }
