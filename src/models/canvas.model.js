@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 export default model('Canvas', new Schema({
-  uid: Schema.Types.ObjectId, ref: 'User',
+  uid: { type: Schema.Types.ObjectId, ref: 'User' },
   description: String,
   image_path: String,
   public: Boolean,
