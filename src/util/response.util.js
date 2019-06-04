@@ -9,11 +9,13 @@ export default class Response {
 
   /**
    * Initialize the fields for the response object
+   * Default state is 200
    */
   constructor() {
 
     this.error = { exists: false };
     this.content;
+    this.state = 200;
 
   }
 
@@ -29,14 +31,26 @@ export default class Response {
 
   /**
    * Add an error to the request object. The request object will flag that an
-   * application level error has occured
+   * application level error has occured.
+   * It also set the state as 400 error code
    * Ex. a user enters an invalid username; return error message(s)
    * @param {Object} content The information regarding the error
    */
   addError(content) {
 
+    this.state = 400;
     this.error.exists = true;
     this.error.errorInfo = content;
+
+  }
+
+  /**
+   * Return the response code state
+   * @return {Number} code of the state. Ex: 200 or 400
+   */
+  getState() {
+
+    return this.state;
 
   }
 
@@ -44,7 +58,7 @@ export default class Response {
    * Return the formatted response object
    * @return {Object} JSON to send to the client
    */
-  get output() {
+  getOutput() {
 
     return { error: this.error, content: this.content };
 
