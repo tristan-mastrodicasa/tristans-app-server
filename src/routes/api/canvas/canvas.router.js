@@ -1,6 +1,9 @@
 import { Router } from 'express';
 
-import { getCanvas } from './controllers/canvas.controller';
+import {
+  getCanvas,
+  postCanvas,
+} from './controllers/canvas.controller';
 
 const router = new Router();
 
@@ -8,6 +11,6 @@ const router = new Router();
 router.get('/', getCanvas);
 
 // Post routes
-
+router.post('/', postCanvas);
 
 export default router;

@@ -53,6 +53,15 @@ export default class Response {
     return this.state;
 
   }
+  /**
+   * Set the response state
+   * @param {Integer} state http code of the response
+   */
+  setState(state) {
+
+    this.state = state;
+
+  }
 
   /**
    * Return the formatted response object
