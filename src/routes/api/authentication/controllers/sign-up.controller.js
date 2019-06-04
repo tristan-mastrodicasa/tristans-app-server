@@ -29,8 +29,8 @@ export const signup = (req, res) => {
 
       const user = await UserModel.create({
         fbid: response.id,
-        firstname: response.first_name,
-        lastname: response.last_name,
+        first_name: response.first_name,
+        last_name: response.last_name,
       });
 
       responseObj.addContent({

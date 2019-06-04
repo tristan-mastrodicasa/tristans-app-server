@@ -4,8 +4,7 @@ export default model('Canvas', new Schema({
   uid: Schema.Types.ObjectId, ref: 'User',
   description: String,
   image_path: String,
-  public: Boolean,
-  points: Number,
+  visbility: { type: String, enum: ['public', 'followers', 'follow_backs', 'specific_users'] },
+  stars: Number,
   utc_time: Date,
-  active: Boolean,
 }));
