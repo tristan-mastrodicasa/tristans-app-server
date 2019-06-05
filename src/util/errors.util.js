@@ -4,3 +4,4 @@
 
 export const CID_NOT_FOUND = { name: 'CID_NOT_FOUND', message: 'Canvas id is not found' };
 export const UID_NOT_FOUND = { name: 'UID_NOT_FOUND', message: 'User id is not found' };
+export const MID_NOT_FOUND = { name: 'MID_NOT_FOUND', message: 'Meme id is not found' };
