@@ -79,6 +79,7 @@ export const postMeme = async (req, res) => {
       const meme = await MemeModel.create(body);
 
       response.addContent({ meme: meme });
+      response.setState(201); // -> HTTP CODE 201 FOR CREATED RESOURCE
 
     } else {
 
