@@ -19,7 +19,7 @@ export const signup = (req, res) => {
         reason: 'You access token is null or expired',
       });
 
-      return res.send(responseObj.output);
+      return res.send(responseObj.getOutput());
 
     }
 
@@ -29,8 +29,7 @@ export const signup = (req, res) => {
 
       const user = await UserModel.create({
         fbid: response.id,
-        first_name: response.first_name,
-        last_name: response.last_name,
+        firstName: response.first_name,
       });
 
       responseObj.addContent({
@@ -39,7 +38,7 @@ export const signup = (req, res) => {
         user,
       });
 
-      return res.send(responseObj.output);
+      return res.send(responseObj.getOutput());
 
     } else {
 
@@ -47,7 +46,7 @@ export const signup = (req, res) => {
         message: 'You are already registered with this facebook account',
       });
 
-      return res.send(responseObj.output);
+      return res.send(responseObj.getOutput());
 
     }
 

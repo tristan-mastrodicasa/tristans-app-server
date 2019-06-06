@@ -46,7 +46,7 @@ export default class Response {
 
   /**
    * Return the response code state
-   * @return {Number} code of the state. Ex: 200 or 400
+   * @return {Integer} code of the state. Ex: 200 or 400
    */
   getState() {
 

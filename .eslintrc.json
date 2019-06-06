@@ -16,7 +16,7 @@
     "rules": {
         "max-len": 0,
         "linebreak-style": ["error", "windows"],
-        "padded-blocks": ["error", "always"],
+        "padded-blocks": ["error", "always", { "allowSingleLineBlocks": true }],
         "object-curly-spacing": ["error", "always"],
         "new-cap": ["error", { "newIsCap": true }]
     }

@@ -20,7 +20,7 @@ export const login = (req, res) => {
         reason: 'You access token is null or expired',
       });
 
-      return res.send(responseObj.output);
+      return res.send(responseObj.getOutput());
 
     }
 
@@ -35,7 +35,7 @@ export const login = (req, res) => {
         jwtToken,
       });
 
-      return res.send(responseObj.output);
+      return res.send(responseObj.getOutput());
 
     } else {
 
@@ -43,7 +43,7 @@ export const login = (req, res) => {
         message: 'FacebookID is not found in the database',
       });
 
-      return res.send(responseObj.output);
+      return res.send(responseObj.getOutput());
 
     }
 
