@@ -23,7 +23,7 @@ export const getCanvas = async (req, res) => {
 
   response.addContent({ canvas: canvas });
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -49,7 +49,7 @@ export const getCanvasById = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -74,7 +74,7 @@ export const postCanvas = async (req, res) => {
       const canvas = await CanvasModel.create(body);
 
       response.addContent({ canvas: canvas });
-      response.setState(201); // Canvas created -> 201 code assigned to response
+      response.state = 201; // Canvas created -> 201 code assigned to response
 
     } else {
 
@@ -88,7 +88,7 @@ export const postCanvas = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -125,7 +125,7 @@ export const postUpdateCanvasById = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -161,6 +161,6 @@ export const deleteCanvasById = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };

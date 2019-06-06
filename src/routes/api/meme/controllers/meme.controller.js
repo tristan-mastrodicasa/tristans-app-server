@@ -16,6 +16,7 @@ import {
  */
 export const getMemes = async (req, res) => {
 
+  console.log('in');
   const response = new Response();
   const memes = await MemeModel.find().catch((error) => {
 
@@ -24,8 +25,7 @@ export const getMemes = async (req, res) => {
   });
 
   response.addContent({ memes });
-
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -51,7 +51,7 @@ export const getMemeById = async (req, res) => {
     meme,
   });
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -79,7 +79,7 @@ export const postMeme = async (req, res) => {
       const meme = await MemeModel.create(body);
 
       response.addContent({ meme: meme });
-      response.setState(201); // -> HTTP CODE 201 FOR CREATED RESOURCE
+      response.state = 201; // -> HTTP CODE 201 FOR CREATED RESOURCE
 
     } else {
 
@@ -93,7 +93,7 @@ export const postMeme = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -130,7 +130,7 @@ export const postUpdateMemeById = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };
 
@@ -166,6 +166,6 @@ export const deleteMemeById = async (req, res) => {
 
   }
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };

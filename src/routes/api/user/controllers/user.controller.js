@@ -18,6 +18,6 @@ export const getUsers = async (req, res) => {
 
   response.addContent({ users: users });
 
-  return res.status(response.getState()).send(response.getOutput());
+  return res.status(response.state).send(response.output);
 
 };

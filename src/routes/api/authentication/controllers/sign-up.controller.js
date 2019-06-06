@@ -19,7 +19,7 @@ export const signup = (req, res) => {
         reason: 'You access token is null or expired',
       });
 
-      return res.send(responseObj.getOutput());
+      return res.send(responseObj.output);
 
     }
 
@@ -38,7 +38,7 @@ export const signup = (req, res) => {
         user,
       });
 
-      return res.send(responseObj.getOutput());
+      return res.send(responseObj.output);
 
     } else {
 
@@ -46,7 +46,7 @@ export const signup = (req, res) => {
         message: 'You are already registered with this facebook account',
       });
 
-      return res.send(responseObj.getOutput());
+      return res.send(responseObj.output);
 
     }
 

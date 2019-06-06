@@ -48,18 +48,18 @@ export default class Response {
    * Return the response code state
    * @return {Integer} code of the state. Ex: 200 or 400
    */
-  getState() {
+  get state() {
 
-    return this.state;
+    return this._state;
 
   }
   /**
    * Set the response state
    * @param {Integer} state http code of the response
    */
-  setState(state) {
+  set state(state) {
 
-    this.state = state;
+    this._state = state;
 
   }
 
@@ -67,7 +67,7 @@ export default class Response {
    * Return the formatted response object
    * @return {Object} JSON to send to the client
    */
-  getOutput() {
+  get output() {
 
     return { error: this.error, content: this.content };
 
