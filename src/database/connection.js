@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const connectionURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/meme-api';
+const connectionURI = process.env.MONGO_URL || 'mongodb://localhost:27017/meme-api';
 console.log(connectionURI);
 const debug = process.env.DEBUG || true;
 
