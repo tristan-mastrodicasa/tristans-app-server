@@ -25,6 +25,7 @@ export default model('User', new Schema({
   email: String,
   photo: String, // Path
   influence: { type: Number, default: 0 },
+  contentNumber: { type: Number, default: 0 },
   settings: { // Can be updated
     notifications: {
       disabled: { type: Boolean, default: false },
@@ -48,7 +49,7 @@ export default model('User', new Schema({
       ],
     },
   },
-  notifications: [
+  notifications: [ // Optional
     {
       name: { type: String, enum: ['friends_joined_service', 'invitation', 'level_up'] }, // Can be updated
       data: Schema.Types.Mixed,

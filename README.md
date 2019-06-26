@@ -33,3 +33,7 @@ Read everything in /docs
 * `src/server.js` Root server file
 
 Front-end repo: https://github.com/ghostcoder217/meme-app/
+
+## Misc
+
+When we deploy Tristan want's to use [CloudCraft](https://cloudcraft.co/) to design the AWS servers
