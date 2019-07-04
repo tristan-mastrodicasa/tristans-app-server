@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Validate from '../util/validate.util';
+import Error from '../util/error.util';
 
 /**
  * The canvas model describes everything stored per canvas
@@ -11,7 +11,7 @@ export default model('Canvas', new Schema({
   description: {
     type: String,
     validate: {
-      validator: Validate.mongoose('canvasDescription'),
+      validator: Error.mongoose('canvasDescription'),
     },
     default: null,
   },

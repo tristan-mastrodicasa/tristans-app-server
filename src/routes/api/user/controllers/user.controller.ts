@@ -1,15 +1,15 @@
 import UserModel from '../../../../models/user.model';
-import Response from '../../../../util/response.util';
+import ResponseFormat from '../../../../util/response-format.util';
 
 /**
  * Return a list of users
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON including all users
+ * @param req incoming request
+ * @param res out response
+ * @return JSON including all users
  */
 export const getUsers = async (req, res) => {
 
-  const response = new Response();
+  const response = new ResponseFormat();
   const users = await UserModel.find().catch((error) => {
 
     response.addError(error);

@@ -1,17 +1,16 @@
 import facebook from 'fb';
-import jwt from 'jsonwebtoken';
 import UserModel from '../../../../models/user.model';
-import Response from '../../../../util/response.util';
+import ResponseFormat from '../../../../util/response-format.util';
 
-export const login = (req, res) => {
+export const postSignup = (req, res) => {
 
   const facebookAccessToken = req.body.access_token;
-  const responseObj = new Response();
+  const responseObj = new ResponseFormat();
 
   facebook.api('me', {
-    fields: ['id'],
+    fields: ['first_name', 'last_name', 'id'],
     access_token: facebookAccessToken,
-  }, async function(response) {
+  }, async (response) => {
 
     if (response.error) {
 
@@ -24,15 +23,19 @@ export const login = (req, res) => {
 
     }
 
-    const isUserFound = await UserModel.findOne({ fbid: response.id });
+    const isRegistered = await UserModel.findOne({ fbid: response.id });
 
-    if (isUserFound) {
+    if (!isRegistered) {
 
-      const jwtToken = jwt.sign(isUserFound.toJSON(), 'secretkey');
+      const user = await UserModel.create({
+        fbid: response.id,
+        firstName: response.first_name,
+      });
 
       responseObj.addContent({
-        message: 'Login completed',
-        jwtToken,
+        completed: true,
+        message: 'Registration completed',
+        user,
       });
 
       return res.send(responseObj.output);
@@ -40,7 +43,7 @@ export const login = (req, res) => {
     } else {
 
       responseObj.addError({
-        message: 'FacebookID is not found in the database',
+        message: 'You are already registered with this facebook account',
       });
 
       return res.send(responseObj.output);

@@ -6,15 +6,16 @@ const options = {
   secretOrKey: 'secretkey',
 };
 
-export default new Strategy(options, function(jwtPayload, done) {
+export default new Strategy(options, (jwtPayload, done) => {
 
-  UserModel.findOne({ 'facebook.profileId': jwtPayload.id }, function(error, user) {
+  UserModel.findOne({ 'facebook.profileId': jwtPayload.id }, (error, user) => {
 
     if (error) {
 
       return done(error, false);
 
     }
+
     if (user) {
 
       // User if found

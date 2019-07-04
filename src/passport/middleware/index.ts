@@ -4,7 +4,7 @@ export const isAuthenticated = (req, res, next) => {
 
     return next();
 
-  };
+  }
 
   return res.send('You are not authenticated bitch');
 

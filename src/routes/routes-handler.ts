@@ -4,7 +4,7 @@ import UserRouter from './api/user/user.router';
 import AuthenticationRouter from './api/authentication/authentication.router';
 import MemeRouter from './api/meme/meme.router';
 
-const router = new Router();
+const router = Router();
 
 router.use('/api/canvas', CanvasRouter);
 router.use('/api/users', UserRouter);

@@ -8,7 +8,7 @@ import {
   deleteCanvasById,
 } from './controllers/canvas.controller';
 
-const router = new Router();
+const router = Router();
 
 // Get Routes
 router.get('/', getCanvas);

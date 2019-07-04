@@ -1,7 +1,7 @@
 import MemeModel from '../../../../models/meme.model';
 import CanvasModel from '../../../../models/canvas.model';
 import UserModel from '../../../../models/user.model';
-import Response from '../../../../util/response.util';
+import ResponseFormat from '../../../../util/response-format.util';
 import {
   UID_NOT_FOUND,
   CID_NOT_FOUND,
@@ -10,14 +10,14 @@ import {
 
 /**
  * Return a list of memes
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON including all memes
+ * @param req incoming request
+ * @param res out response
+ * @return JSON including all memes
  */
 export const getMemes = async (req, res) => {
 
   console.log('in');
-  const response = new Response();
+  const response = new ResponseFormat();
   const memes = await MemeModel.find().catch((error) => {
 
     response.addError(error);
@@ -31,15 +31,15 @@ export const getMemes = async (req, res) => {
 
 /**
  * Return a Meme by his ID
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @param {ObjectId} id of the meme to search
- * @return {Response} JSON including the meme data
+ * @param req incoming request
+ * @param res out response
+ * @param id of the meme to search
+ * @return JSON including the meme data
  */
 export const getMemeById = async (req, res) => {
 
   const { id } = req.params;
-  const response = new Response();
+  const response = new ResponseFormat();
 
   const meme = await MemeModel.findById(id).catch((error) => {
 
@@ -57,14 +57,14 @@ export const getMemeById = async (req, res) => {
 
 /**
  * Create a new meme
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @param {ObjectId} id of the meme to search
- * @return {Response} JSON including the created meme
+ * @param req incoming request
+ * @param res out response
+ * @param id of the meme to search
+ * @return JSON including the created meme
  */
 export const postMeme = async (req, res) => {
 
-  const response = new Response();
+  const response = new ResponseFormat();
   const { body } = req;
   const { cid, uid } = body;
 
@@ -99,13 +99,13 @@ export const postMeme = async (req, res) => {
 
 /**
  * Updated a meme given an id
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON with the updated meme
+ * @param req incoming request
+ * @param res out response
+ * @return JSON with the updated meme
  */
 export const postUpdateMemeById = async (req, res) => {
 
-  const response = new Response();
+  const response = new ResponseFormat();
   const { id } = req.params;
   const { body } = req;
 
@@ -136,13 +136,13 @@ export const postUpdateMemeById = async (req, res) => {
 
 /**
  * Delete a meme given an id
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON with deleted info
+ * @param req incoming request
+ * @param res out response
+ * @return JSON with deleted info
  */
 export const deleteMemeById = async (req, res) => {
 
-  const response = new Response();
+  const response = new ResponseFormat();
   const { id } = req.params;
 
   try {

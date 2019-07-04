@@ -8,7 +8,7 @@ import {
   deleteMemeById,
 } from './controllers/meme.controller';
 
-const router = new Router();
+const router = Router();
 
 // Get Routes
 router.get('/', getMemes);

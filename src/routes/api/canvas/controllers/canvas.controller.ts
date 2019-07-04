@@ -1,6 +1,6 @@
 import CanvasModel from '../../../../models/canvas.model';
 import UserModel from '../../../../models/user.model';
-import Response from '../../../../util/response.util';
+import ResponseFormat from '../../../../util/response-format.util';
 import {
   CID_NOT_FOUND,
   UID_NOT_FOUND,
@@ -8,13 +8,13 @@ import {
 
 /**
  * Return a list of canvas
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON including all canvas
+ * @param req incoming request
+ * @param res out response
+ * @return JSON including all canvas
  */
 export const getCanvas = async (req, res) => {
 
-  const response = new Response();
+  const response = new ResponseFormat();
   const canvas = await CanvasModel.find().catch((error) => {
 
     response.addError(error);
@@ -29,14 +29,14 @@ export const getCanvas = async (req, res) => {
 
 /**
  * Get a canvas given an id
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON of found canvas
+ * @param req incoming request
+ * @param res out response
+ * @return JSON of found canvas
  */
 export const getCanvasById = async (req, res) => {
 
   const { id } = req.params;
-  const response = new Response();
+  const response = new ResponseFormat();
 
   try {
 
@@ -55,15 +55,15 @@ export const getCanvasById = async (req, res) => {
 
 /**
  * Create a new canvas
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON of the created canvas
+ * @param req incoming request
+ * @param res out response
+ * @return JSON of the created canvas
  */
 export const postCanvas = async (req, res) => {
 
   const { body } = req;
   const { uid } = body;
-  const response = new Response();
+  const response = new ResponseFormat();
 
   try {
 
@@ -94,15 +94,15 @@ export const postCanvas = async (req, res) => {
 
 /**
  * Updated a canvas given an id
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON of the created canvas
+ * @param req incoming request
+ * @param res out response
+ * @return JSON of the created canvas
  */
 export const postUpdateCanvasById = async (req, res) => {
 
   const { id } = req.params;
   const { body } = req;
-  const response = new Response();
+  const response = new ResponseFormat();
 
   try {
 
@@ -131,14 +131,14 @@ export const postUpdateCanvasById = async (req, res) => {
 
 /**
  * Delete a canvas given an id
- * @param {Request} req incoming request
- * @param {Response} res out response
- * @return {Response} JSON with deleted info
+ * @param eq incoming request
+ * @param res out response
+ * @return JSON with deleted info
  */
 export const deleteCanvasById = async (req, res) => {
 
   const { id } = req.params;
-  const response = new Response();
+  const response = new ResponseFormat();
 
   try {
 

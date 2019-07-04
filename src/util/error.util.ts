@@ -1,15 +1,17 @@
 
 /**
+ * This utility is a collection of methods for verification of user inputs
+ *
  * @usageNotes
  *
- * The Validate class is meant to be static. The class simply serves as a namespace.
+ * The Error class is meant to be static. The class simply serves as a namespace.
  *
  * If you want to validate input in another file (like a route) simply import this class
  * and run the input through one of the verifier methods. It should return `false` if
  * no errors exist, or a string if the input is invalid
  *
- * Whenever wanting to use Validate in mongoose it must put forward it's API for
- * it like so `validator: Validate.mongoose(fieldName)`
+ * Whenever wanting to use Error in mongoose it must put forward it's API for
+ * it like so `validator: Error.mongoose(fieldName)`
  *
  * If you want to add a new validator for mongoose, create a standalone verifier
  * like `username(input)` and then edit the switch-case block in `mongoose(inputType)`
@@ -17,19 +19,15 @@
  *
  * If you want to add a new verifier simply add a new method and document it!
  * Not all verifiers will be available in `mongoose()`, some may be explicitly used outside of it
- *
- * @description
- *
- * This utility is a collection of methods for verification of user inputs
  */
-export default class Validate {
+export default class Error {
 
   /**
    * Verifies inputs for usernames
-   * @param  {String} input     Input for the username
-   * @return {Boolean|String} false if no error, string explaining the occured error
+   * @param input Input for the username
+   * @return false if no error, string explaining the occured error
    */
-  static username(input) {
+  public static username(input: string): boolean | string {
 
     if (input == null || input == undefined) return 'Username is required';
     if (typeof input !== 'string') return 'Username is not a string';
@@ -43,10 +41,10 @@ export default class Validate {
 
   /**
    * Verifies the input for first names
-   * @param  {String} input     Input for the first name
-   * @return {Boolean|String} false if no error, string explaining the occured error
+   * @param input Input for the first name
+   * @return false if no error, string explaining the occured error
    */
-  static firstName(input) {
+  public static firstName(input: string): boolean | string {
 
     if (input == null || input == undefined) return 'First name is required';
     if (typeof input !== 'string') return 'First name is not a string';
@@ -60,10 +58,10 @@ export default class Validate {
 
   /**
    * Verifies the input for canvas descriptions
-   * @param  {String} input     Input for the canvas description
-   * @return {Boolean|String} false if no error, string explaining the occured error
+   * @param input     Input for the canvas description
+   * @return false if no error, string explaining the occured error
    */
-  static canvasDescription(input) {
+  public static canvasDescription(input: string): boolean | string {
 
     if (input == null || input == undefined) return false;
     if (typeof input !== 'string') return 'Description is not a string';
@@ -74,11 +72,30 @@ export default class Validate {
   }
 
   /**
-   * Interface for the mongoose validator options
-   * @param  {String} inputType Type of input mongoose wants validated
-   * @return {Function}         A function which returns a promise to mongoose
+   * Validate if the request contains the nessecary information to proceed
+   * @param  params   A list of objects describing the required parameters
+   * @param  request  The request objects provided by express.js
+   * @return False if all parameters check out
    */
-  static mongoose(inputType) {
+  public static routeParams(params: { name: string, type: string, location: 'body' | 'query' }[], request: any): boolean {
+
+    for (let param of params) {
+
+      if (typeof request[param.location][param.name] == param.type) continue;
+      else return true;
+
+    }
+
+    return false;
+
+  }
+
+  /**
+   * Interface for the mongoose validator options
+   * @param inputType Type of input mongoose wants validated
+   * @return A function which returns a promise to mongoose
+   */
+  public static mongoose(inputType: string): (input: string) => Promise<boolean | string> {
 
     let verifier;
 
@@ -93,12 +110,10 @@ export default class Validate {
       case 'canvasDescription':
         verifier = this.canvasDescription;
         break;
-      default:
-        return true;
 
     }
 
-    return (input) => {
+    return (input: string): Promise<boolean | string> => {
 
       return new Promise((resolve, reject) => {
 

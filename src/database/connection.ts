@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
 const connectionURI = process.env.MONGO_URL || 'mongodb://localhost:27017/meme-api';
-console.log(connectionURI);
 const debug = process.env.DEBUG || true;
 
+console.log(connectionURI);
+
 mongoose.set('debug', debug);
-const connection = mongoose.connect(connectionURI, { useNewUrlParser: true, useFindAndModify: false }).then(() => {
+mongoose.connect(connectionURI, { useNewUrlParser: true, useFindAndModify: false }).then(() => {
 
   console.log('Connected to mongodb');
 
@@ -14,5 +15,3 @@ const connection = mongoose.connect(connectionURI, { useNewUrlParser: true, useF
   throw new Error(error);
 
 });
-
-export default connection;

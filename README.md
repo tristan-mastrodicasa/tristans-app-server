@@ -12,7 +12,11 @@ Navigate to the repo folder and run
 
 Download a API tester like postman / swagger
 
-Read everything in /docs
+Download the editor config plugin for your associated IDE to sync with the settings located in `.editorconfig`
+
+Read everything in /docs (we are **not** using the graphql implementation)
+
+We are using Trello to manage tasks
 
 ## Before Pushing
 
