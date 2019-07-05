@@ -3,47 +3,32 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../../../../models/user.model';
 import ResponseFormat from '../../../../util/response-format.util';
 
-export const postLogin = (req, res) => {
+export const postLogin = (req, res, next) => {
 
+  // Verify the request //
   const facebookAccessToken = req.body.access_token;
-  const responseObj = new ResponseFormat();
 
-  facebook.api('me', {
-    fields: ['id'],
-    access_token: facebookAccessToken,
-  }, async (response) => {
+  if (!facebookAccessToken) throw { message: 'Missing Facebook Access Token', status: 400 };
 
-    if (response.error) {
+  // Authenticate with facebook //
+  facebook.api('me', { fields: ['id'], access_token: facebookAccessToken, }, async (response) => {
 
-      responseObj.addError({
-        message: response.error.message,
-        reason: 'You access token is null or expired',
-      });
+    if (response.error) next({ message: response.error.message, status: 200 });
+    else {
 
-      return res.send(responseObj.output);
+      const isUserFound = await UserModel.findOne({ fbid: response.id });
 
-    }
+      if (isUserFound) {
 
-    const isUserFound = await UserModel.findOne({ fbid: response.id });
+        const jwtToken = jwt.sign(isUserFound.toJSON(), 'secretkey');
 
-    if (isUserFound) {
+        const responseObj = new ResponseFormat();
 
-      const jwtToken = jwt.sign(isUserFound.toJSON(), 'secretkey');
+        responseObj.addContent({ jwtToken });
 
-      responseObj.addContent({
-        message: 'Login completed',
-        jwtToken,
-      });
+        return res.send(responseObj.output);
 
-      return res.send(responseObj.output);
-
-    } else {
-
-      responseObj.addError({
-        message: 'FacebookID is not found in the database',
-      });
-
-      return res.send(responseObj.output);
+      } else next({ message: 'Facebook ID is not found in the database', status: 200 });
 
     }
 

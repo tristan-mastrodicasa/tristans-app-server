@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Error from '../util/error.util';
+import Validate from '../util/validate.util';
 
 /**
  * The user model describes everything stored per user.
@@ -11,14 +11,14 @@ export default model('User', new Schema({
   username: {
     type: String,
     validate: {
-      validator: Error.mongoose('username'),
+      validator: Validate.mongoose('username'),
     },
     default: null,
   },
   firstName: {
     type: String,
     validate: {
-      validator: Error.mongoose('firstName'),
+      validator: Validate.mongoose('firstName'),
     },
     default: null,
   },

@@ -1,57 +1,4 @@
-/**
- * **SHARED CODE WARNING**
- * The interfaces defined here are used in the client angular application!
- * When making edits please update the client code aswell (response.ts)
- */
-
-/**
- * Interface for all response objects from the server,
- * <T> is the type of object / array containing the content
- */
-export interface Response<T> {
-  error: {
-    exists: boolean,
-    errorInfo?: any
-  };
-  content?: T;
-}
-
-/** Internally used Interfaces */
-
-interface BasicUser {
-  id: string;
-  firstName: string;
-  username: string;
-  photo: string;
-}
-
-/**
- * Content type Options
- */
-
-export interface Profile extends BasicUser {
-  influence: number;
-  followers: number;
-  contentNumber: number;
-}
-
-export interface UserItem extends BasicUser {
-  influence: number;
-  activeCanvases?: number; // Number of active canvases
-}
-
-export interface CanvasCard {
-  cid: string;
-  users: {
-    primary: BasicUser,
-    secondary: BasicUser
-  };
-  imagePath: string;
-  description?: string;
-  stars: number;
-  utcTime: number;
-}
-
+import { Response } from './response.interface';
 
 /**
  * The ResponseFormat class manages the format of the response JSON objects
@@ -65,7 +12,6 @@ export default class ResponseFormat<T> {
 
   private error: { exists: boolean, errorInfo?: any } = { exists: false };
   private content: T;
-  private _state = 200;
 
   /**
    * Replace the content field with your content object
@@ -86,28 +32,8 @@ export default class ResponseFormat<T> {
    */
   public addError(error: any): void {
 
-    this.state = 400;
     this.error.exists = true;
     this.error.errorInfo = error;
-
-  }
-
-  /**
-   * Return the response code state
-   * @return code of the state. Ex: 200 or 400
-   */
-  get state(): number {
-
-    return this._state;
-
-  }
-  /**
-   * Set the response state
-   * @param state http code of the response
-   */
-  set state(state: number) {
-
-    this._state = state;
 
   }
 

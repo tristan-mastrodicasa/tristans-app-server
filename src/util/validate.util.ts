@@ -20,7 +20,7 @@
  * If you want to add a new verifier simply add a new method and document it!
  * Not all verifiers will be available in `mongoose()`, some may be explicitly used outside of it
  */
-export default class Error {
+export default class Validate {
 
   /**
    * Verifies inputs for usernames
@@ -66,25 +66,6 @@ export default class Error {
     if (input == null || input == undefined) return false;
     if (typeof input !== 'string') return 'Description is not a string';
     if (input.length > 300) return 'Description must be smaller than 300 characters';
-
-    return false;
-
-  }
-
-  /**
-   * Validate if the request contains the nessecary information to proceed
-   * @param  params   A list of objects describing the required parameters
-   * @param  request  The request objects provided by express.js
-   * @return False if all parameters check out
-   */
-  public static routeParams(params: { name: string, type: string, location: 'body' | 'query' }[], request: any): boolean {
-
-    for (let param of params) {
-
-      if (typeof request[param.location][param.name] == param.type) continue;
-      else return true;
-
-    }
 
     return false;
 

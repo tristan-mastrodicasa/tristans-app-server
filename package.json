@@ -9,8 +9,8 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && MONGODB_URI=mongodb://mongodb:27017/meme-api node dist/server.js",
-    "dev": "NODE_ENV=development nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec ts-node src/server.ts",
-    "devWindows": "SET NODE_ENV=development && nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec ts-node src/server.ts",
+    "dev": "NODE_ENV=development nodemon",
+    "devWindows": "SET NODE_ENV=development && nodemon",
     "lint": "tslint src/**/*.ts",
     "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
