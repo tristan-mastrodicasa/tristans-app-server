@@ -3,7 +3,6 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 
 import RoutesHandler from './routes/routes-handler';
-import ResponseFormat from './util/response-format.util';
 
 import './database/connection';
 import './passport/passport';
@@ -32,10 +31,7 @@ server.use('/', RoutesHandler);
 // Error handling //
 server.use((err, req, res, next) => {
 
-  let responseObj = new ResponseFormat();
-  responseObj.addError(err.message);
-
-  return res.status(err.status || 400).send(responseObj.output);
+  return res.status(err.status || 400).send({ error: err.content });
 
 });
 

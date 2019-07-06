@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { postLogin } from './controllers/login.controller';
-import { postSignup } from './controllers/sign-up.controller';
+import LoginRoute from './routes/login.route';
+import SignUpRoute from './routes/sign-up.route';
 
 const router = Router();
 
@@ -12,8 +12,7 @@ router.get('/test', passport.authenticate('jwt'), (req, res) => {
 
 });
 
-// Post routes
-router.post('/login', postLogin);
-router.post('/signup', postSignup);
+router.use('/login', LoginRoute);
+router.use('/signup', SignUpRoute);
 
 export default router;
