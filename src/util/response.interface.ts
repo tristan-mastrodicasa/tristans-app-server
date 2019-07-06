@@ -1,19 +1,14 @@
 /**
  * **SHARED CODE WARNING**
- * The interfaces defined here are used in the client angular application!
+ * The interfaces defined here are used in the server!
  * When making edits please update the client code aswell (response.ts)
  */
 
 /**
- * Interface for all response objects from the server,
- * <T> is the type of object / array containing the content
+ * Error interface
  */
-export interface Response<T> {
-  error: {
-    exists: boolean,
-    errorInfo?: any
-  };
-  content?: T;
+export interface Error {
+  error: string | object[];
 }
 
 /** Internally used Interfaces */
