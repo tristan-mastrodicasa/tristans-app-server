@@ -4,11 +4,11 @@ describe('Canvas Model', () => {
 
   describe('descriptions should', () => {
 
-    it('fail when too big (> 300 characters)', (done) => {
+    it('fail when too big (> 255 characters)', (done) => {
 
       const user = new CanvasModel({
-        // 301 character String
-        description: 's'.repeat(301),
+        // 256 character String
+        description: 's'.repeat(256),
       });
 
       user.validate((err) => {

@@ -65,7 +65,7 @@ export default class Validate {
 
     if (input == null || input == undefined) return false;
     if (typeof input !== 'string') return 'Description is not a string';
-    if (input.length > 300) return 'Description must be smaller than 300 characters';
+    if (input.length > 255) return 'Description must be smaller than 255 characters';
 
     return false;
 
