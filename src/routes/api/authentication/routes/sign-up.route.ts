@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import facebook from 'fb';
-import UserModel from '../../../../models/user.model';
+import UserModel from '../../../../entity/user/user.entity';
 
 const signup = Router();
 
@@ -18,35 +18,31 @@ const signup = Router();
  * @apiError (HTTP Error Codes) 500 Communication with facebook servers sucks
  */
 signup.post('/', (req, res, next) => {
-
   // Verify the request //
   const facebookAccessToken = req.body.access_token;
 
   if (!facebookAccessToken) throw { content: 'Missing Facebook Access Token', status: 400 };
 
-  facebook.api('me', { fields: ['first_name', 'last_name', 'id'], access_token: facebookAccessToken }, async (response) => {
+  facebook.api(
+    'me',
+    { fields: ['first_name', 'last_name', 'id'], access_token: facebookAccessToken },
+    async response => {
+      if (response.error) next({ content: response.error.message, status: 500 });
+      else {
+        const isRegistered = await UserModel.findOne({ fbid: response.id });
 
-    if (response.error) next({ content: response.error.message, status: 500 });
-    else {
+        if (!isRegistered) {
+          // Fix the user sign up //
+          const user = await UserModel.create({
+            fbid: response.id,
+            firstName: response.first_name,
+          });
 
-      const isRegistered = await UserModel.findOne({ fbid: response.id });
-
-      if (!isRegistered) {
-
-        // Fix the user sign up //
-        const user = await UserModel.create({
-          fbid: response.id,
-          firstName: response.first_name,
-        });
-
-        return res.send({ user });
-
-      } else next({ content: 'You are already registered with this facebook account', status: 400 });
-
-    }
-
-  });
-
+          return res.send({ user });
+        } else next({ content: 'You are already registered with this facebook account', status: 400 });
+      }
+    },
+  );
 });
 
 export default signup;

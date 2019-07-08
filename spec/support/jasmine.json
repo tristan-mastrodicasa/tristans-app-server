@@ -8,5 +8,5 @@
   ],
   "stopSpecOnExpectationFailure": false,
   "random": true,
-  "verbose":  true
+  "verbose": true
 }
