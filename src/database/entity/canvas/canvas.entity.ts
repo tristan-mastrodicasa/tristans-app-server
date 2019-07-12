@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { IsOptional, Length, IsEnum, IsInt, IsDate, IsNotEmpty } from 'class-validator';
 import { User } from '../user/user.entity';
-import { CanvasActivity } from '../canvas_activity/canvas_activity.entity';
+import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
 import { Meme } from '../meme/meme.entity';
 
 // Enum for the visibility levels of the canvas
@@ -13,26 +14,33 @@ enum EVisibility {
 
 /**
  * The canvas model describes everything stored per canvas
- * @type {Canvas}
  */
 @Entity('canvas')
 export class Canvas extends BaseEntity {
+
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('text')
-  public description: string;
+  @Column('text', { nullable: true })
+  @IsOptional()
+  @Length(1, 255)
+  public description?: string;
 
-  @Column('varchar')
+  @Column('varchar', { length: 64, unique: true })
+  @IsNotEmpty()
   public imagePath: string;
 
   @Column('enum', { enum: EVisibility })
+  @IsEnum(EVisibility)
   public visibility: EVisibility;
 
   @Column('int')
+  @IsInt()
   public stars: number;
 
-  @Column('datetime')
+  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
+  @IsOptional()
+  @IsDate()
   public utc: Date;
 
   @ManyToOne(() => User, user => user.canvas)
@@ -43,4 +51,5 @@ export class Canvas extends BaseEntity {
 
   @OneToMany(() => Meme, meme => meme.canvas)
   public memes: Meme[];
+
 }

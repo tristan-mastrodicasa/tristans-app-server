@@ -1,4 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { IsEnum, IsDate, IsOptional } from 'class-validator';
 import { User } from '../user/user.entity';
 import { Canvas } from '../canvas/canvas.entity';
 
@@ -11,17 +12,20 @@ enum EAction {
 
 /**
  * The canvas model describes everything stored per canvas
- * @type {Canvas}
  */
 @Entity('canvas_activity')
 export class CanvasActivity extends BaseEntity {
+
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
   @Column('enum', { enum: EAction })
+  @IsEnum(EAction)
   public action: EAction;
 
-  @Column('datetime')
+  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
+  @IsOptional()
+  @IsDate()
   public utc: Date;
 
   @ManyToOne(() => Canvas, canvas => canvas.activity)
@@ -29,4 +33,5 @@ export class CanvasActivity extends BaseEntity {
 
   @ManyToOne(() => User, user => user.canvasActivity)
   public user: User;
+
 }

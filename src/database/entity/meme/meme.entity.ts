@@ -1,28 +1,34 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { IsNotEmpty, IsBoolean, IsInt, IsDate, IsOptional } from 'class-validator';
 import { User } from '../user/user.entity';
-import { CanvasActivity } from '../canvas_activity/canvas_activity.entity';
+import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
 import { Canvas } from '../canvas/canvas.entity';
-import { MemeActivity } from '../meme_activity/meme_activity.entity';
+import { MemeActivity } from '../meme-activity/meme-activity.entity';
 
 /**
  * The canvas model describes everything stored per canvas
- * @type {Meme}
  */
 @Entity('memes')
 export class Meme extends BaseEntity {
+
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('varchar')
+  @Column('varchar', { length: 64, unique: true })
+  @IsNotEmpty()
   public imagePath: string;
 
   @Column('boolean')
+  @IsBoolean()
   public listed: boolean;
 
   @Column('int')
+  @IsInt()
   public stars: number;
 
-  @Column('datetime')
+  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
+  @IsOptional()
+  @IsDate()
   public utc: Date;
 
   @ManyToOne(() => User, user => user.memes)
@@ -33,4 +39,5 @@ export class Meme extends BaseEntity {
 
   @OneToMany(() => MemeActivity, memeActivity => memeActivity.meme)
   public activity: MemeActivity[];
+
 }

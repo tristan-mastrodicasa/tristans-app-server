@@ -4,21 +4,21 @@
   "port": 3306,
   "username": "root",
   "password": "",
-  "database": "memeApp",
-  "synchronize": true,
+  "database": "meme_app",
+  "charset": "utf8mb4",
   "logging": true,
   "entities": [
-    "src/entity/**/*.ts"
+    "src/database/entity/**/*.ts"
   ],
   "migrations": [
-    "src/migration/**/*.ts"
+    "src/database/migration/**/*.ts"
   ],
   "subscribers": [
-    "src/subscriber/**/*.ts"
+    "src/database/subscriber/**/*.ts"
   ],
   "cli": {
-    "entitiesDir": "src/entity",
-    "migrationsDir": "src/migration",
-    "subscribersDir": "src/subscriber"
+    "entitiesDir": "src/database/entity",
+    "migrationsDir": "src/database/migration",
+    "subscribersDir": "src/database/subscriber"
   }
 }

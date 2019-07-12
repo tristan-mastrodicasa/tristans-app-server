@@ -1,34 +1,43 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
-import { UserNetwork } from '../user_network/user_network.entity';
-import { UserStatistics } from '../user_statistics/user_statistics.entity';
-import { UserActivity } from '../user_activity/user_activity.entity';
+import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, IsNotEmpty } from 'class-validator';
+import { UserNetwork } from '../user-network/user-network.entity';
+import { UserStatistics } from '../user-statistics/user-statistics.entity';
+import { UserActivity } from '../user-activity/user-activity.entity';
 import { Canvas } from '../canvas/canvas.entity';
-import { CanvasActivity } from '../canvas_activity/canvas_activity.entity';
+import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
 import { Meme } from '../meme/meme.entity';
-import { MemeActivity } from '../meme_activity/meme_activity.entity';
+import { MemeActivity } from '../meme-activity/meme-activity.entity';
 
 /**
  * The user model describes everything stored per user.
- * @type {User}
  */
 @Entity('users')
 export class User extends BaseEntity {
+
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('varchar', { nullable: true })
+  @Column('varchar', { length: 255, nullable: true })
+  @IsOptional()
   public facebookId?: string; // Can be null
 
   @Column('varchar', { length: 25 })
+  @Length(5, 25)
+  @IsAlphanumeric()
   public username: string;
 
   @Column('varchar', { length: 25 })
+  @Length(5, 25)
+  @IsAlpha()
   public firstname: string;
 
-  @Column('varchar', { length: 255, unique: true })
-  public email: string;
+  @Column('varchar', { length: 255, nullable: true, unique: true })
+  @IsOptional()
+  @IsEmail()
+  public email?: string;
 
   @Column('varchar', { length: 64 })
+  @IsNotEmpty()
   public profileImg: string; // path of the image
 
   @OneToMany(() => UserNetwork, userNetwork => userNetwork.user)
@@ -51,4 +60,5 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserStatistics, userStatistics => userStatistics.user)
   public statistics: UserStatistics; // This field gives access to all user statistics
+
 }

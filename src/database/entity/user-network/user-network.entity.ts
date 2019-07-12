@@ -1,16 +1,19 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { IsOptional, IsDate } from 'class-validator';
 import { User } from '../user/user.entity';
 
 /**
  * The user model describes everything stored per user.
- * @type {UserNetwork}
  */
 @Entity('user_network')
 export class UserNetwork extends BaseEntity {
+
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('datetime')
+  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
+  @IsOptional()
+  @IsDate()
   public utc: Date; // Date of following
 
   @ManyToOne(() => User, user => user.network)
@@ -18,4 +21,5 @@ export class UserNetwork extends BaseEntity {
 
   @ManyToOne(() => User, user => user.network)
   public follower: User; // This field is the id of the user that related to the user profile network
+
 }

@@ -1,5 +1,5 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import UserModel from '../../entity/user/user.entity';
+import { User } from '../../database/entity/user/user.entity';
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
@@ -7,17 +7,25 @@ const options = {
 };
 
 export default new Strategy(options, (jwtPayload, done) => {
-  UserModel.findOne({ 'facebook.profileId': jwtPayload.id }, (error, user) => {
+
+  /*User.findOne({ 'facebook.profileId': jwtPayload.id }, (error, user) => {
+
     if (error) {
+
       return done(error, false);
+
     }
 
     if (user) {
+
       // User if found
       return done(null, user);
+
     }
 
     // User is not found
     return done(null, false);
-  });
+
+  });*/
+
 });
