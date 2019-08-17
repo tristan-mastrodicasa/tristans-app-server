@@ -4,7 +4,7 @@
   "port": 3306,
   "username": "root",
   "password": "",
-  "database": "meme_app",
+  "database": "tristans_app",
   "charset": "utf8mb4",
   "logging": true,
   "entities": [

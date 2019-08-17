@@ -1,8 +1,6 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
 import { User } from '../user/user.entity';
-import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
-import { Canvas } from '../canvas/canvas.entity';
 import { Meme } from '../meme/meme.entity';
 
 enum EAction {
@@ -26,7 +24,7 @@ export class MemeActivity extends BaseEntity {
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
   @IsDate()
-  public utc: Date;
+  public utc?: Date;
 
   @ManyToOne(() => Meme, meme => meme.activity)
   public meme: Meme;

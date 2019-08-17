@@ -14,7 +14,7 @@ export class UserNetwork extends BaseEntity {
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
   @IsDate()
-  public utc: Date; // Date of following
+  public utc?: Date; // Date of following
 
   @ManyToOne(() => User, user => user.network)
   public user: User; // This field it's related with the profile network

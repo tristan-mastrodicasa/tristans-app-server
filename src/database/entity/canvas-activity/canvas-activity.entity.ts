@@ -26,7 +26,7 @@ export class CanvasActivity extends BaseEntity {
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
   @IsDate()
-  public utc: Date;
+  public utc?: Date;
 
   @ManyToOne(() => Canvas, canvas => canvas.activity)
   public canvas: Canvas;

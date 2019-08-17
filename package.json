@@ -1,5 +1,5 @@
 {
-  "name": "meme-app-server",
+  "name": "tristans-app-server",
   "version": "1.0.0",
   "description": "Describe the architecture and environment set up here",
   "main": "index.js",
@@ -9,20 +9,21 @@
   "scripts": {
     "build": "tsc",
     "devWindows": "SET NODE_ENV=development && nodemon",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
     "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghostcoder217/meme-app-server.git"
+    "url": "git+https://github.com/ghostcoder217/tristans-app-server.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ghostcoder217/meme-app-server/issues"
+    "url": "https://github.com/ghostcoder217/tristans-app-server/issues"
   },
-  "homepage": "https://github.com/ghostcoder217/meme-app-server#readme",
+  "homepage": "https://github.com/ghostcoder217/tristans-app-server#readme",
   "devDependencies": {
     "@types/cookie-parser": "^1.4.1",
     "@types/express": "^4.17.0",

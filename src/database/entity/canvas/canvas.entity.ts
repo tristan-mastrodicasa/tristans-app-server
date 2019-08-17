@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { IsOptional, Length, IsEnum, IsInt, IsDate, IsNotEmpty } from 'class-validator';
+import { IsOptional, Length, IsEnum, IsInt, IsDate, MaxLength } from 'class-validator';
 import { User } from '../user/user.entity';
 import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
 import { Meme } from '../meme/meme.entity';
@@ -21,13 +21,13 @@ export class Canvas extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('text', { nullable: true })
+  @Column('varchar', { length: 255, nullable: true })
   @IsOptional()
   @Length(1, 255)
   public description?: string;
 
   @Column('varchar', { length: 64, unique: true })
-  @IsNotEmpty()
+  @MaxLength(64)
   public imagePath: string;
 
   @Column('enum', { enum: EVisibility })
@@ -41,7 +41,7 @@ export class Canvas extends BaseEntity {
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
   @IsDate()
-  public utc: Date;
+  public utc?: Date;
 
   @ManyToOne(() => User, user => user.canvas)
   public user: User;

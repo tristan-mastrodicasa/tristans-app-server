@@ -36,7 +36,7 @@ We are using Trello to manage tasks
 * `src/util` Helper functions for the entire server
 * `src/server.js` Root server file
 
-Front-end repo: https://github.com/ghostcoder217/meme-app/
+Front-end repo: https://github.com/ghostcoder217/tristans-app/
 
 ## Misc
 
