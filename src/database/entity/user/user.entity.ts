@@ -8,6 +8,7 @@ import { Canvas } from '../canvas/canvas.entity';
 import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
 import { Meme } from '../meme/meme.entity';
 import { MemeActivity } from '../meme-activity/meme-activity.entity';
+import { CanvasInvites } from '../canvas-invites/canvas-invites.entity';
 
 /**
  * The user model describes everything stored per user.
@@ -66,5 +67,8 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserSettings, userSettings => userSettings.user)
   public settings: UserSettings; // This field gives access to all user settings
+
+  @OneToMany(() => CanvasInvites, canvasInvites => canvasInvites.user)
+  public canvasInvites: CanvasInvites[]; // List of all the canvases the user can been invited to edit
 
 }

@@ -1,7 +1,7 @@
 /**
  * **SHARED CODE WARNING**
  * The interfaces defined here are used in the server!
- * When making edits please update the client code aswell (response.ts)
+ * When making edits please update the client code aswell (response.interface.ts)
  */
 
 /**
@@ -35,14 +35,52 @@ export interface UserItem extends BasicUser {
   activeCanvases?: number; // Number of active canvases
 }
 
-export interface CanvasCard {
+/**
+ * Enum for content visibility
+ */
+export enum EVisibility {
+  public = 'public',
+  followers = 'followers',
+  followBacks = 'follow-backs',
+  specificUsers = 'specific-users',
+}
+
+/**
+ * Enum for the ContentCard type to decide what type of card it is
+ */
+export enum EContentType {
+  Canvas = 'canvas',
+  Meme = 'meme'
+}
+
+/**
+ * A complex type that defines the content card
+ * The content card is defined in two ways depending on the type of card
+ */
+export type ContentCard = {
+  type: EContentType.Meme;
+  id: string;
   cid: string;
   users: {
-    primary: BasicUser,
-    secondary: BasicUser
-  };
+    primary: BasicUser;
+    secondary: BasicUser;
+  },
   imagePath: string;
   description?: string;
   stars: number;
+  starred: boolean;
   utcTime: number;
-}
+} | {
+  type: EContentType.Canvas;
+  id: string;
+  cid?: never;
+  users: {
+    primary: BasicUser;
+    secondary?: never;
+  },
+  imagePath: string;
+  description?: string;
+  stars: number;
+  starred: boolean;
+  utcTime: number;
+};

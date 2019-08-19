@@ -2,15 +2,9 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMan
 import { IsOptional, Length, IsEnum, IsInt, IsDate, MaxLength } from 'class-validator';
 import { User } from '../user/user.entity';
 import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
+import { CanvasInvites } from '../canvas-invites/canvas-invites.entity';
 import { Meme } from '../meme/meme.entity';
-
-// Enum for the visibility levels of the canvas
-enum EVisibility {
-  public,
-  follwers,
-  followBacks,
-  specificUsers,
-}
+import { EVisibility } from '../../../util/response.interface';
 
 /**
  * The canvas model describes everything stored per canvas
@@ -51,5 +45,8 @@ export class Canvas extends BaseEntity {
 
   @OneToMany(() => Meme, meme => meme.canvas)
   public memes: Meme[];
+
+  @OneToMany(() => CanvasInvites, canvasInvites => canvasInvites.canvas)
+  public invitations: CanvasInvites[];
 
 }

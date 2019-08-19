@@ -5,8 +5,6 @@ import { Canvas } from '../canvas/canvas.entity';
 
 // Enum for the visibility levels of the canvas
 enum EAction {
-  allowedAccess,
-  updated,
   starred,
 }
 

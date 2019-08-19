@@ -7,6 +7,7 @@ import RoutesHandler from './routes/routes-handler';
 
 import './passport/passport';
 
+/** @todo Make sure the charset is utf8mb4 */
 createConnection().then(connection => {
 
   connection.synchronize(true);
