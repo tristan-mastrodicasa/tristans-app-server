@@ -1,13 +1,11 @@
 import express from 'express';
-import { initialize } from 'passport';
 import { createConnection } from 'typeorm';
-import cookieParser from 'cookie-parser';
 
 import RoutesHandler from './routes/routes-handler';
 
 import { Error } from './utils/response.interface';
 
-import './passport/passport';
+// import './passport/passport';
 
 /** @todo Make sure the charset is utf8mb4 */
 createConnection().then(connection => {
@@ -17,14 +15,12 @@ createConnection().then(connection => {
   const server = express();
   const port = process.env.PORT || 3000;
 
-  server.use(initialize());
   server.use(express.json());
   server.use(
     express.urlencoded({
       extended: true,
     }),
   );
-  server.use(cookieParser());
 
   // Set server side headers //
   server.use((req, res, next) => {
