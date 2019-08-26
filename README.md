@@ -10,6 +10,8 @@ Navigate to the repo folder and run
 
 	$ npm install
 
+Duplicate and edit `src/conf/env.sample.ts` into the dev and production files
+
 Download a API tester like postman / swagger
 
 Download the editor config plugin for your associated IDE to sync with the settings located in `.editorconfig`

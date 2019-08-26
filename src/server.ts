@@ -1,5 +1,6 @@
 import express from 'express';
 import { createConnection } from 'typeorm';
+import { ormconfig } from './conf/ormconfig';
 
 import RoutesHandler from './routes/routes-handler';
 
@@ -8,7 +9,7 @@ import { Error } from './utils/response.interface';
 // import './passport/passport';
 
 /** @todo Make sure the charset is utf8mb4 */
-createConnection().then(_connection => {
+createConnection(ormconfig).then(_connection => {
 
   // connection.synchronize(true);
 
