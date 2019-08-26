@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Validate from '../util/validate.util';
+import Validate from '../utils/validate.util';
 
 /**
  * The user model describes everything stored per user.

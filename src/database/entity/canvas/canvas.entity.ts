@@ -4,7 +4,7 @@ import { User } from '../user/user.entity';
 import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
 import { CanvasInvites } from '../canvas-invites/canvas-invites.entity';
 import { Meme } from '../meme/meme.entity';
-import { EVisibility } from '../../../util/response.interface';
+import { EVisibility } from '../../../utils/response.interface';
 
 /**
  * The canvas model describes everything stored per canvas

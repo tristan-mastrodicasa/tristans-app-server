@@ -23,12 +23,12 @@ login.post('/', (req, res, next) => {
   // Verify the request //
   const facebookAccessToken = req.body.access_token;
 
-  if (!facebookAccessToken) throw { content: 'Missing Facebook Access Token', status: 400 };
+  if (!facebookAccessToken) throw { content: [{ detail: 'Missing Facebook Access Token' }], status: 400 };
 
   // Authenticate with facebook //
   facebook.api('me', { fields: ['id'], access_token: facebookAccessToken }, async response => {
 
-    if (response.error) next({ content: response.error.message, status: 500 });
+    if (response.error) next({ content: [{ detail: response.error.message }], status: 500 });
     else {
 
       /* const isUserFound = await User.findOne({ fbid: response.id });
@@ -39,7 +39,7 @@ login.post('/', (req, res, next) => {
 
         return res.send({ jwtToken });
 
-      } else next({ content: 'Facebook ID is not found in the database', status: 404 });
+      } else next({ content: content: [{ detail: 'Facebook ID is not found in the database' }], status: 404 });
       */
 
     }

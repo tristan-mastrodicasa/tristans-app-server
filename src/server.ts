@@ -5,12 +5,14 @@ import cookieParser from 'cookie-parser';
 
 import RoutesHandler from './routes/routes-handler';
 
+import { Error } from './utils/response.interface';
+
 import './passport/passport';
 
 /** @todo Make sure the charset is utf8mb4 */
 createConnection().then(connection => {
 
-  connection.synchronize(true);
+  // connection.synchronize(true);
 
   const server = express();
   const port = process.env.PORT || 3000;
@@ -36,9 +38,9 @@ createConnection().then(connection => {
   server.use('/', RoutesHandler);
 
   // Error handling //
-  server.use((err, req, res, next) => {
+  server.use((err: { status: number, content: Error[] }, req, res, next) => {
 
-    return res.status(err.status || 400).send({ error: err.content });
+    return res.status(err.status || 400).send({ errors: err.content });
 
   });
 

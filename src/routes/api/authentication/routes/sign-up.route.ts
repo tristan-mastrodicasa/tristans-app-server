@@ -14,15 +14,22 @@ const signup = Router();
  * @apiSuccess {Object} The user object
  *
  * @apiError (HTTP Error Codes) 400 Missing Facebook Access Token
- * @apiError (HTTP Error Codes) 400 You are already registered with this facebook account
+ * @apiError (HTTP Error Codes) 422 You are already registered with this facebook account
  * @apiError (HTTP Error Codes) 500 Communication with facebook servers sucks
  */
 signup.post('/', (req, res, next) => {
 
+  console.log('hello');
+
   // Verify the request //
   const facebookAccessToken = req.body.access_token;
+  console.log(facebookAccessToken);
+  if (!facebookAccessToken) {
 
-  if (!facebookAccessToken) throw { content: 'Missing Facebook Access Token', status: 400 };
+    console.log('die?');
+    throw { content: [{ detail: 'Missing Facebook Access Token' }], status: 400 };
+
+  }
 
   facebook.api('me', { fields: ['first_name', 'last_name', 'id'], access_token: facebookAccessToken },
     async response => {
@@ -30,6 +37,8 @@ signup.post('/', (req, res, next) => {
       if (response.error) next({ content: response.error.message, status: 500 });
       else {
 
+        console.log(response);
+        return res.send(response);
         /*
         const isRegistered = await UserModel.findOne({ fbid: response.id });
 
@@ -43,7 +52,7 @@ signup.post('/', (req, res, next) => {
 
           return res.send({ user });
 
-        } else next({ content: 'You are already registered with this facebook account', status: 400 });
+        } else next({ content: [{ detail: 'You are already registered with this facebook account' }], status: 422 });
         */
 
       }

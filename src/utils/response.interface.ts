@@ -1,14 +1,30 @@
 /**
  * **SHARED CODE WARNING**
- * The interfaces defined here are used in the server!
- * When making edits please update the client code aswell (response.interface.ts)
  */
 
 /**
- * Error interface
+ * API Interface
+ * @todo Sometime in the future implement standard REST API responses
+ * https://jsonapi.org/examples/
+ * https://jsonapi.org/examples/#pagination
+ */
+/*
+export interface Response<D, I = {}> {
+  data: D;
+  links?: {};
+  meta?: {};
+  included?: I;
+}
+*/
+
+/**
+ * https://jsonapi.org/examples/#error-objects
  */
 export interface Error {
-  error: string | object[];
+  status?: number;
+  source?: { pointer?: string };
+  title?: string;
+  detail: string;
 }
 
 /** Internally used Interfaces */

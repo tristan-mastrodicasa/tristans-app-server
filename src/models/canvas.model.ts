@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Validate from '../util/validate.util';
+import Validate from '../utils/validate.util';
 
 /**
  * The canvas model describes everything stored per canvas
