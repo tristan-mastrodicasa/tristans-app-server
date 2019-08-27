@@ -1,10 +1,10 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { IsOptional, Length, IsEnum, IsInt, IsDate, MaxLength } from 'class-validator';
-import { User } from '../user/user.entity';
-import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
-import { CanvasInvites } from '../canvas-invites/canvas-invites.entity';
-import { Meme } from '../meme/meme.entity';
-import { EVisibility } from '../../../utils/response.interface';
+import { User } from './user.entity';
+import { CanvasActivity } from './canvas-activity.entity';
+import { CanvasInvites } from './canvas-invites.entity';
+import { Meme } from './meme.entity';
+import { EVisibility } from '../../utils/response.interface';
 
 /**
  * The canvas model describes everything stored per canvas

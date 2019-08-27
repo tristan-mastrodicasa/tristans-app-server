@@ -11,8 +11,6 @@ import './conf/passport';
 /** @todo Make sure the charset is utf8mb4 */
 createConnection(ormconfig).then(_connection => {
 
-  // connection.synchronize(true);
-
   const server = express();
   const port: number = Number(process.env.PORT) || 3000;
 

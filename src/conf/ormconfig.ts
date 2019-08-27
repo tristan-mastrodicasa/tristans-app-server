@@ -23,5 +23,6 @@ export const ormconfig: ConnectionOptions = {
     entitiesDir: 'src/database/entity',
     migrationsDir: 'src/database/migration',
     subscribersDir: 'src/database/subscriber'
-  }
+  },
+  synchronize: env.rebuild_database
 };

@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
-import { User } from '../user/user.entity';
-import { Meme } from '../meme/meme.entity';
+import { User } from './user.entity';
+import { Meme } from './meme.entity';
 
 enum EAction {
   updated,

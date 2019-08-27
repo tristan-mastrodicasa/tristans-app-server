@@ -1,5 +1,6 @@
 /**
  * Interface defining how to structure your environment objects
+ * @author Tristan Mastrodicasa
  */
 export interface Env {
   database_username: string;
@@ -7,4 +8,5 @@ export interface Env {
   google_redirect_url: string;
   google_client_id: string;
   google_client_secret: string;
+  rebuild_database: boolean;
 }

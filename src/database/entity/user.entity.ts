@@ -1,14 +1,14 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, MaxLength } from 'class-validator';
-import { UserNetwork } from '../user-network/user-network.entity';
-import { UserStatistics } from '../user-statistics/user-statistics.entity';
-import { UserSettings } from '../user-settings/user-settings.entity';
-import { UserActivity } from '../user-activity/user-activity.entity';
-import { Canvas } from '../canvas/canvas.entity';
-import { CanvasActivity } from '../canvas-activity/canvas-activity.entity';
-import { Meme } from '../meme/meme.entity';
-import { MemeActivity } from '../meme-activity/meme-activity.entity';
-import { CanvasInvites } from '../canvas-invites/canvas-invites.entity';
+import { UserNetwork } from './user-network.entity';
+import { UserStatistics } from './user-statistics.entity';
+import { UserSettings } from './user-settings.entity';
+import { UserActivity } from './user-activity.entity';
+import { Canvas } from './canvas.entity';
+import { CanvasActivity } from './canvas-activity.entity';
+import { Meme } from './meme.entity';
+import { MemeActivity } from './meme-activity.entity';
+import { CanvasInvites } from './canvas-invites.entity';
 
 /**
  * The user model describes everything stored per user.
@@ -19,10 +19,15 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('varchar', { length: 255, nullable: true })
+  @Column('varchar', { length: 100, nullable: true })
   @IsOptional()
-  @MaxLength(255)
+  @MaxLength(100)
   public facebookId?: string; // Can be null
+
+  @Column('varchar', { length: 100, nullable: true })
+  @IsOptional()
+  @MaxLength(100)
+  public googleId?: string; // Can be null
 
   @Column('varchar', { length: 25 })
   @IsAlphanumeric()
@@ -40,8 +45,8 @@ export class User extends BaseEntity {
   @IsEmail()
   public email?: string;
 
-  @Column('varchar', { length: 64 })
-  @MaxLength(64)
+  @Column('varchar', { length: 128 })
+  @MaxLength(128)
   public profileImg: string; // path of the image
 
   @OneToMany(() => UserNetwork, userNetwork => userNetwork.user)

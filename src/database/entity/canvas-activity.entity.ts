@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsEnum, IsDate, IsOptional } from 'class-validator';
-import { User } from '../user/user.entity';
-import { Canvas } from '../canvas/canvas.entity';
+import { User } from './user.entity';
+import { Canvas } from './canvas.entity';
 
 // Enum for the visibility levels of the canvas
 enum EAction {

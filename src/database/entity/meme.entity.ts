@@ -1,8 +1,8 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { IsBoolean, IsInt, IsDate, IsOptional, MaxLength } from 'class-validator';
-import { User } from '../user/user.entity';
-import { Canvas } from '../canvas/canvas.entity';
-import { MemeActivity } from '../meme-activity/meme-activity.entity';
+import { User } from './user.entity';
+import { Canvas } from './canvas.entity';
+import { MemeActivity } from './meme-activity.entity';
 
 /**
  * The canvas model describes everything stored per canvas

@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { IsInt } from 'class-validator';
-import { User } from '../user/user.entity';
+import { User } from './user.entity';
 
 /**
  * The user model describes the statistics of the user using an 1:1 Relation.
