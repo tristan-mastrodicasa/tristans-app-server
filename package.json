@@ -30,6 +30,7 @@
     "@types/mysql2": "types/mysql2",
     "@types/node": "^12.0.12",
     "@types/passport": "^1.0.0",
+    "@types/passport-google-oauth20": "^2.0.2",
     "jasmine": "^3.4.0",
     "nodemon": "^1.19.0",
     "request": "^2.88.0",

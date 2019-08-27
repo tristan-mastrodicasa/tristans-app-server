@@ -6,7 +6,7 @@ import RoutesHandler from './routes/routes-handler';
 
 import { Error } from './utils/response.interface';
 
-// import './passport/passport';
+import './conf/passport';
 
 /** @todo Make sure the charset is utf8mb4 */
 createConnection(ormconfig).then(_connection => {
