@@ -27,6 +27,9 @@ export interface Error {
   detail: string;
 }
 
+/** Basic reponses */
+export interface Token { token: string; }
+
 /** Internally used Interfaces */
 
 interface BasicUser {

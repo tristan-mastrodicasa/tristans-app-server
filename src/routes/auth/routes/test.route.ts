@@ -1,11 +1,19 @@
 import { Router } from 'express';
-import { authCheck } from '../../../utils/auth-check.util';
+import passport from 'passport';
 
 const router = Router();
 
-router.get('/', authCheck, (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 
-  res.send('You made it! ' + req.user.username);
+  console.log('test route accessed');
+  res.send('You made it! ' + req.user.id);
+
+});
+
+router.get('/unprotected', (_req, res) => {
+
+  console.log('unprotected route accessed');
+  res.send('You have accessed an unprotected route');
 
 });
 

@@ -8,6 +8,6 @@ export interface Env {
   google_redirect_url: string;
   google_client_id: string;
   google_client_secret: string;
-  cookie_keys: string[];
   rebuild_database: boolean;
+  jwt_key: string;
 }

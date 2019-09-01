@@ -7,8 +7,6 @@ import RoutesHandler from './routes/routes-handler';
 import { Error } from './utils/response.interface';
 
 import './conf/passport';
-import env from './conf/env';
-import cookieSesion from 'cookie-session';
 import passport from 'passport';
 
 /** @todo Make sure the charset is utf8mb4 */
@@ -24,12 +22,6 @@ createConnection(ormconfig).then(_connection => {
       extended: true,
     }),
   );
-
-  // Authorization Section //
-  server.use(cookieSesion({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: env.cookie_keys
-  }));
 
   server.use(passport.initialize());
   server.use(passport.session());
