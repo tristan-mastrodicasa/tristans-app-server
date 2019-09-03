@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "tslint-eslint-rules"
-  ],
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,

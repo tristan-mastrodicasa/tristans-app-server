@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 
   console.log('test route accessed');
-  res.send('You made it! ' + req.user.id);
+  res.json({ msg: 'You made it! ' + req.user.id });
 
 });
 
