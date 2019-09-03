@@ -29,6 +29,7 @@ export interface Error {
 
 /** Basic reponses */
 export interface Token { token: string; }
+export interface JwtContent { id: number; }
 
 /** Internally used Interfaces */
 

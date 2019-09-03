@@ -1,4 +1,6 @@
 import express from 'express';
+import { Request, Response } from 'express'; // tslint:disable-line
+
 import { createConnection } from 'typeorm';
 import { ormconfig } from './conf/ormconfig';
 
@@ -39,7 +41,7 @@ createConnection(ormconfig).then(_connection => {
   server.use('/', RoutesHandler);
 
   // Error handling //
-  server.use((err: { status: number, content: Error[] }, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  server.use((err: { status: number, content: Error[] }, _req: Request, res: Response) => {
 
     return res.status(err.status || 400).send({ errors: err.content });
 

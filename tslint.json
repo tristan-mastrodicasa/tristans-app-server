@@ -143,7 +143,6 @@
       "check-separator",
       "check-type",
       "check-preblock"
-    ],
-    "ter-padded-blocks": [true, "always"]
+    ]
   }
 }

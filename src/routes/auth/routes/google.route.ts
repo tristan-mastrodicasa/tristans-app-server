@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import env from '../../../conf/env';
 
-import { Token } from '../../../utils/response.interface';
+import { Token, JwtContent } from '../../../utils/response.interface';
 
 const router = Router();
 
@@ -28,7 +28,8 @@ router.post('/authcode', (req, res) => {
       console.log('made it to authcode response' + user);
 
       /** @todo move secret key to env */
-      let token: Token = { token: jwt.sign({ id: user.id }, env.jwt_key, { expiresIn: '30d' }) };
+      let jwtObject: JwtContent = { id: user.id };
+      let token: Token = { token: jwt.sign(jwtObject, env.jwt_key, { expiresIn: '30d' }) };
 
       res.json(token);
 
