@@ -10,7 +10,7 @@
     ],
     "max-line-length": [
       false,
-      140
+      100
     ],
     "variable-name": {
       "options": [

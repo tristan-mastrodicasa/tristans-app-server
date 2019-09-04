@@ -2,14 +2,7 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 't
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
 import { User } from './user.entity';
 import { Meme } from './meme.entity';
-
-/**
- * The different Meme Actions
- */
-enum EAction {
-  updated,
-  starred,
-}
+import { EMemeActions } from '../../models/enums';
 
 /**
  * The canvas model describes everything stored per canvas
@@ -20,9 +13,9 @@ export class MemeActivity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('enum', { enum: EAction })
-  @IsEnum(EAction)
-  public action: EAction;
+  @Column('enum', { enum: EMemeActions })
+  @IsEnum(EMemeActions)
+  public action: EMemeActions;
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()

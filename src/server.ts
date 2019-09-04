@@ -6,7 +6,7 @@ import { ormconfig } from './conf/ormconfig';
 
 import routesHandler from './routes/routes-handler';
 
-import { Error } from './utils/response.interface';
+import { Error } from './models/response.interfaces';
 
 import './conf/passport';
 import passport from 'passport';

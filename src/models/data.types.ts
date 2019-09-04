@@ -1,38 +1,12 @@
 /**
- * **SHARED CODE WARNING**
+ * Interfaces and types to define data structures
  */
+
+import { EContentType } from './enums';
 
 /**
- * API Interface
- * @todo Sometime in the future implement standard REST API responses
- * https://jsonapi.org/examples/
- * https://jsonapi.org/examples/#pagination
+ * Interface for a basic user object
  */
-/*
-export interface Response<D, I = {}> {
-  data: D;
-  links?: {};
-  meta?: {};
-  included?: I;
-}
-*/
-
-/**
- * https://jsonapi.org/examples/#error-objects
- */
-export interface Error {
-  status?: number;
-  source?: { pointer?: string };
-  title?: string;
-  detail: string;
-}
-
-/** Basic reponses */
-export interface Token { token: string; }
-export interface JwtContent { id: number; }
-
-/** Internally used Interfaces */
-
 interface BasicUser {
   id: string;
   firstName: string;
@@ -41,36 +15,20 @@ interface BasicUser {
 }
 
 /**
- * Content type Options
+ * An interface suited more for a more comprehensive set of information
  */
-
 export interface Profile extends BasicUser {
   influence: number;
   followers: number;
   contentNumber: number;
 }
 
+/**
+ * An interface for small user objects to be returned in searches in the database
+ */
 export interface UserItem extends BasicUser {
   influence: number;
   activeCanvases?: number; // Number of active canvases
-}
-
-/**
- * Enum for content visibility
- */
-export enum EVisibility {
-  public = 'public',
-  followers = 'followers',
-  followBacks = 'follow-backs',
-  specificUsers = 'specific-users',
-}
-
-/**
- * Enum for the ContentCard type to decide what type of card it is
- */
-export enum EContentType {
-  Canvas = 'canvas',
-  Meme = 'meme',
 }
 
 /**

@@ -2,13 +2,7 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 't
 import { IsEnum, IsDate, IsOptional } from 'class-validator';
 import { User } from './user.entity';
 import { Canvas } from './canvas.entity';
-
-/**
- * Enum for the visibility levels of the canvas
- */
-enum EAction {
-  starred,
-}
+import { ECanvasActions } from '../../models/enums';
 
 /**
  * The canvas model describes everything stored per canvas
@@ -19,9 +13,9 @@ export class CanvasActivity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('enum', { enum: EAction })
-  @IsEnum(EAction)
-  public action: EAction;
+  @Column('enum', { enum: ECanvasActions })
+  @IsEnum(ECanvasActions)
+  public action: ECanvasActions;
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()

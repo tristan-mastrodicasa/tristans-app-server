@@ -1,13 +1,7 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
 import { User } from './user.entity';
-
-/**
- * User activity actions
- */
-enum EAction {
-  profileUpdate,
-}
+import { EProfileActions } from '../../models/enums';
 
 /**
  * The user model describes everything stored per user.
@@ -18,9 +12,9 @@ export class UserActivity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('enum', { enum: EAction })
-  @IsEnum(EAction)
-  public action: EAction;
+  @Column('enum', { enum: EProfileActions })
+  @IsEnum(EProfileActions)
+  public action: EProfileActions;
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
