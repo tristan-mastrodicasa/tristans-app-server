@@ -70,7 +70,7 @@ export enum EVisibility {
  */
 export enum EContentType {
   Canvas = 'canvas',
-  Meme = 'meme'
+  Meme = 'meme',
 }
 
 /**

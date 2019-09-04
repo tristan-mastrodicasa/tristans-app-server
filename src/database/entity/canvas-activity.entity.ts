@@ -3,7 +3,9 @@ import { IsEnum, IsDate, IsOptional } from 'class-validator';
 import { User } from './user.entity';
 import { Canvas } from './canvas.entity';
 
-// Enum for the visibility levels of the canvas
+/**
+ * Enum for the visibility levels of the canvas
+ */
 enum EAction {
   starred,
 }

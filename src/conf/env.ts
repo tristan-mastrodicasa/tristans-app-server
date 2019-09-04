@@ -5,12 +5,12 @@
  */
 import { Env } from './env.interface';
 
-import devEnv from './env.dev';
-import prodEnv from './env.prod';
+import envDev from './env.dev';
+import envProd from './env.prod';
 
 let env: Env;
 
- if (process.env.NODE_ENV == 'development') env = devEnv;
- else env = prodEnv;
+if (process.env.NODE_ENV === 'development') env = envDev;
+else env = envProd;
 
 export default env;

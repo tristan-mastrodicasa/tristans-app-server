@@ -2,6 +2,9 @@ import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 't
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
 import { User } from './user.entity';
 
+/**
+ * User activity actions
+ */
 enum EAction {
   profileUpdate,
 }

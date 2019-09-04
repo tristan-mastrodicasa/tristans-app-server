@@ -13,7 +13,7 @@ declare module 'passport-google-authcode' {
 
     constructor(
       options: { clientID: string, clientSecret: string, callbackURL: string },
-      verifyFunction: (accessToken: string, refreshToken: string, profile: any, done: any) => void
+      verifyFunction: (accessToken: string, refreshToken: string, profile: any, done: any) => void,
     );
 
   }

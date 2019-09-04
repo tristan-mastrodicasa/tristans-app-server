@@ -1,40 +1,44 @@
 import passport from 'passport';
-import Google from 'passport-google-oauth20';
-import GoogleAuthCode from 'passport-google-authcode';
-import Jwt from 'passport-jwt';
+import passportGoogleOauth20 from 'passport-google-oauth20';
+import passportGoogleAuthcode from 'passport-google-authcode';
+import passportJwt from 'passport-jwt';
 
 import env from './env';
 
 import { User } from '../database/entity/user.entity';
 
 passport.use(
-  new Jwt.Strategy({
-  jwtFromRequest: Jwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: env.jwt_key
-}, (jwt_payload, done) => {
+  new passportJwt.Strategy(
+    {
+      jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: env.jwt_key,
+    },
+    (jwtPayload, done) => {
 
-    console.log(jwt_payload);
-    done(null, { id: 2 });
+      console.log(jwtPayload);
+      done(null, { id: 2 });
 
-}));
-
+    },
+));
 
 passport.use(
-  new Google.Strategy({
-    callbackURL: env.google_redirect_url,
-    clientID: env.google_client_id,
-    clientSecret: env.google_client_secret
-  }, (_accessToken, _refreshToken, profile, done) => {
+  new passportGoogleOauth20.Strategy(
+    {
+      callbackURL: env.google_redirect_url,
+      clientID: env.google_client_id,
+      clientSecret: env.google_client_secret,
+    },
+    (_accessToken, _refreshToken, profile, done) => {
 
-    User.findOne({googleId: profile.id }).then((user: User) => {
+      User.findOne({ googleId: profile.id }).then((user: User) => {
 
-      if (user) {
+        if (user) {
 
-        console.log(profile);
-        console.log('user is:' + user);
-        done(null, user);
+          console.log(profile);
+          console.log(`user is: ${user}`);
+          done(null, user);
 
-      } else {
+        }
 
         /** @todo add user statistics and settings */
         const newUser = new User();
@@ -47,36 +51,36 @@ passport.use(
         newUser.save().then((userRecord: User) => {
 
           console.log(profile);
-          console.log('new user is:' + userRecord);
+          console.log(`new user is: ${userRecord}`);
           done(null, user);
 
         });
 
-      }
+      });
 
-    });
-
-  })
+    },
+  ),
 );
 
 passport.use(
-  new GoogleAuthCode.Strategy({
-    clientID: env.google_client_id,
-    clientSecret: env.google_client_secret,
-    callbackURL: ''
-  },
-  (_accessToken, _refreshToken, profile, done) => {
+  new passportGoogleAuthcode.Strategy(
+    {
+      clientID: env.google_client_id,
+      clientSecret: env.google_client_secret,
+      callbackURL: '',
+    },
+    (_accessToken, _refreshToken, profile, done) => {
 
-    console.log('made it to authcode strategy');
+      console.log('made it to authcode strategy');
 
-    User.findOne({googleId: profile.id }).then((user: User) => {
+      User.findOne({ googleId: profile.id }).then((user: User) => {
 
-      if (user) {
+        if (user) {
 
-        console.log('user is:' + user.id);
-        return done(null, user);
+          console.log(`user is: ${user.id}`);
+          return done(null, user);
 
-      } else {
+        }
 
         /** @todo add user statistics and settings */
         const newUser = new User();
@@ -88,14 +92,13 @@ passport.use(
 
         newUser.save().then((userRecord: User) => {
 
-          console.log('new user is:' + userRecord);
+          console.log(`new user is: ${userRecord}`);
           return done(null, user.id);
 
         });
 
-      }
+      });
 
-    });
-
-  }
-));
+    },
+  ),
+);

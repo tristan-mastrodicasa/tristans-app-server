@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import jwt from 'jsonwebtoken';
+import jsonwebtoken from 'jsonwebtoken';
 
 import env from '../../../conf/env';
 
@@ -9,7 +9,7 @@ import { Token, JwtContent } from '../../../utils/response.interface';
 const router = Router();
 
 router.get('/', passport.authenticate('google', {
-  scope: ['profile', 'email']
+  scope: ['profile', 'email'],
 }));
 
 router.get('/redirect', passport.authenticate('google'), (_req, res) => {
@@ -25,11 +25,11 @@ router.post('/authcode', (req, res) => {
     // Return the token //
     if (user) {
 
-      console.log('made it to authcode response' + user);
+      console.log(`made it to authcode response ${user}`);
 
       /** @todo move secret key to env */
-      let jwtObject: JwtContent = { id: user.id };
-      let token: Token = { token: jwt.sign(jwtObject, env.jwt_key, { expiresIn: '30d' }) };
+      const jwtObject: JwtContent = { id: user.id };
+      const token: Token = { token: jsonwebtoken.sign(jwtObject, env.jwt_key, { expiresIn: '30d' }) };
 
       res.json(token);
 
@@ -42,10 +42,5 @@ router.post('/authcode', (req, res) => {
   })(req, res);
 
 });
-
-
-
-
-
 
 export default router;

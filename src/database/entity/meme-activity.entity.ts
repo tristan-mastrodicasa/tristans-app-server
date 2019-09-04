@@ -3,6 +3,9 @@ import { IsEnum, IsOptional, IsDate } from 'class-validator';
 import { User } from './user.entity';
 import { Meme } from './meme.entity';
 
+/**
+ * The different Meme Actions
+ */
 enum EAction {
   updated,
   starred,

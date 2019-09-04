@@ -11,18 +11,18 @@ export const ormconfig: ConnectionOptions = {
   charset: 'utf8mb4',
   logging: true,
   entities: [
-    'src/database/entity/**/*.ts'
+    'src/database/entity/**/*.ts',
   ],
   migrations: [
-    'src/database/migration/**/*.ts'
+    'src/database/migration/**/*.ts',
   ],
   subscribers: [
-    'src/database/subscriber/**/*.ts'
+    'src/database/subscriber/**/*.ts',
   ],
   cli: {
     entitiesDir: 'src/database/entity',
     migrationsDir: 'src/database/migration',
-    subscribersDir: 'src/database/subscriber'
+    subscribersDir: 'src/database/subscriber',
   },
-  synchronize: env.rebuild_database
+  synchronize: env.rebuild_database,
 };
