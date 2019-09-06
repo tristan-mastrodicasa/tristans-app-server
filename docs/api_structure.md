@@ -15,6 +15,10 @@
 
 /meme/:id                                              Data: ContentCard[]
 
+/upload/canvas
+/upload/profile/picture
+/upload/meme
+
 ## API DOC EXAMPLE
 
 /**

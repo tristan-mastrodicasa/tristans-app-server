@@ -43,7 +43,7 @@ createConnection(ormconfig).then((_connection) => {
   // Error handling //
   server.use((err: { status: number, content: Error[] }, _req: Request, res: Response) => {
 
-    return res.status(err.status || 400).send({ errors: err.content });
+    return res.status(err.status || 400).json({ errors: err.content });
 
   });
 

@@ -14,3 +14,6 @@ batch-files
 # Hide the environment variables
 src/conf/env.dev.ts
 src/conf/env.prod.ts
+
+# Uploads
+/uploads

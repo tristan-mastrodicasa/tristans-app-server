@@ -28,6 +28,11 @@ export class Canvas extends BaseEntity {
   @IsEnum(EVisibility)
   public visibility: EVisibility;
 
+  @Column('varchar', { length: 64 })
+  @MaxLength(64)
+  // When accessing publicly this access key must be passes as a param (so only people with the link can see it)
+  public publicAccessKey: string;
+
   @Column('int')
   @IsInt()
   public stars: number;
