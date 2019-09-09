@@ -5,7 +5,7 @@ import passportJwt from 'passport-jwt';
 
 import env from './env';
 
-import { User } from '../database/entity/user.entity';
+import { User } from 'database/entity/user.entity';
 
 passport.use(
   new passportJwt.Strategy(

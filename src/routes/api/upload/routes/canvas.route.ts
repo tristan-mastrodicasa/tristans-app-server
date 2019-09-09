@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 // import passport from 'passport';
 
-import { CanvasUploaded } from '../../../../models/response.interfaces';
+import { CanvasUploaded } from 'models/response.interfaces';
 
 const router = Router();
 

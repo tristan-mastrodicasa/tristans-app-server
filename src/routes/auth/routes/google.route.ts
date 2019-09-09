@@ -2,10 +2,10 @@ import { Router } from 'express';
 import passport from 'passport';
 import jsonwebtoken from 'jsonwebtoken';
 
-import env from '../../../conf/env';
+import env from 'conf/env';
 
-import { JwtContent } from '../../../models/data.types';
-import { Token } from '../../../models/response.interfaces';
+import { JwtContent } from 'models/data.types';
+import { Token } from 'models/response.interfaces';
 
 const router = Router();
 

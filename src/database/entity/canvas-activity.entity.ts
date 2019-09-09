@@ -2,7 +2,7 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 't
 import { IsEnum, IsDate, IsOptional } from 'class-validator';
 import { User } from './user.entity';
 import { Canvas } from './canvas.entity';
-import { ECanvasActions } from '../../models/enums';
+import { ECanvasActions } from 'models/enums';
 
 /**
  * The canvas model describes everything stored per canvas
