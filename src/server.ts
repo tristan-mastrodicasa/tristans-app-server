@@ -1,5 +1,5 @@
 import express from 'express';
-import { Request, Response } from 'express'; // tslint:disable-line
+import { Request, Response, NextFunction } from 'express'; // tslint:disable-line
 
 import { createConnection } from 'typeorm';
 import { ormconfig } from './conf/ormconfig';
@@ -41,7 +41,7 @@ createConnection(ormconfig).then((_connection) => {
   server.use('/', routesHandler);
 
   // Error handling //
-  server.use((err: { status: number, content: Error[] }, _req: Request, res: Response) => {
+  server.use((err: { status: number, content: Error[] }, _req: Request, res: Response, _next: NextFunction) => {
 
     return res.status(err.status || 400).json({ errors: err.content });
 
@@ -53,4 +53,4 @@ createConnection(ormconfig).then((_connection) => {
 
   });
 
-}).catch(error => console.log(error));
+}).catch(error => console.log(`An error has occured ${error}`));
