@@ -62,3 +62,6 @@ export type ContentCard = {
   starred: boolean;
   utcTime: number;
 };
+
+/** How the jwt will be formatted */
+export interface JwtContent { id: number; }

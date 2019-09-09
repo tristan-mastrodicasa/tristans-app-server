@@ -28,5 +28,5 @@ export interface Error {
 /** How the jwt will be sent to the client */
 export interface Token { token: string; }
 
-/** How the jwt will be formatted */
-export interface JwtContent { id: number; }
+/** Returned information after sucessful canvas upload */
+export interface CanvasUploaded { canvasId: number; }
