@@ -2,7 +2,7 @@
  * Interfaces and types to define data structures
  */
 
-import { EContentType } from 'models/enums';
+import { EContentType } from './enums'; //tslint:disable-line
 
 /**
  * Interface for a basic user object
