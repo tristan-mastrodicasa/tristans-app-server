@@ -25,6 +25,10 @@ export class Canvas extends BaseEntity {
   @MaxLength(64)
   public imagePath: string;
 
+  @Column('varchar', { length: 15, unique: true })
+  @MaxLength(15)
+  public mimetype: string; // Header for when the user queries images to load
+
   @Column('enum', { enum: EVisibility })
   @IsEnum(EVisibility)
   public visibility: EVisibility;
@@ -34,7 +38,8 @@ export class Canvas extends BaseEntity {
   // When accessing publicly this access key must be passes as a param (so only people with the link can see it)
   public publicAccessKey: string;
 
-  @Column('int')
+  @Column('int', { default: () => 0 })
+  @IsOptional()
   @IsInt()
   public stars: number;
 
