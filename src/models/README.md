@@ -1,1 +1,1 @@
-## Project types
+# Project types

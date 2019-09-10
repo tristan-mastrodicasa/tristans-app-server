@@ -1,2 +1,2 @@
-## Database
+# Database
 Schemas, Migrations, etc...
