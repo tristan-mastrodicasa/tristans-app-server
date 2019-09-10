@@ -27,17 +27,6 @@ We are using Trello to manage tasks
 3. run `npm run lint` to check if code is clean
 4. run `npm run test` to check if jasmine tests pass
 
-## Folder Structure
-
-* `docs` Are where we store extra documentation
-* `spec` Testing configuration etc
-* `src` All the source for the project
-* `src/databse` Database specific files
-* `src/models` Model's for the data to be stored
-* `src/routes` Where all the controllers for the different routes live
-* `src/util` Helper functions for the entire server
-* `src/server.js` Root server file
-
 Front-end repo: https://github.com/ghostcoder217/tristans-app/
 
 ## Misc
