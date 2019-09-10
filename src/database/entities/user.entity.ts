@@ -1,14 +1,14 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, MaxLength } from 'class-validator';
-import { UserNetwork } from './user-network.entity';
-import { UserStatistics } from './user-statistics.entity';
-import { UserSettings } from './user-settings.entity';
-import { UserActivity } from './user-activity.entity';
-import { Canvas } from './canvas.entity';
-import { CanvasActivity } from './canvas-activity.entity';
-import { Meme } from './meme.entity';
-import { MemeActivity } from './meme-activity.entity';
-import { CanvasInvites } from './canvas-invites.entity';
+import { UserNetwork } from 'database/entities/user-network.entity';
+import { UserStatistics } from 'database/entities/user-statistics.entity';
+import { UserSettings } from 'database/entities/user-settings.entity';
+import { UserActivity } from 'database/entities/user-activity.entity';
+import { Canvas } from 'database/entities/canvas.entity';
+import { CanvasActivity } from 'database/entities/canvas-activity.entity';
+import { Meme } from 'database/entities/meme.entity';
+import { MemeActivity } from 'database/entities/meme-activity.entity';
+import { CanvasInvites } from 'database/entities/canvas-invites.entity';
 
 /**
  * The user model describes everything stored per user.

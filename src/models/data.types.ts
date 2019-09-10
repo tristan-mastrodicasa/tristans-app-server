@@ -2,7 +2,7 @@
  * Interfaces and types to define data structures
  */
 
-import { EContentType } from './enums';
+import { EContentType } from 'models/enums';
 
 /**
  * Interface for a basic user object

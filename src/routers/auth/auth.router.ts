@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import googleRoute from './routes/google.route';
-import testRoute from './routes/test.route';
+import googleRoute from 'routers/auth/routes/google.route';
+import testRoute from 'routers/auth/routes/test.route';
 
 const router = Router();
 

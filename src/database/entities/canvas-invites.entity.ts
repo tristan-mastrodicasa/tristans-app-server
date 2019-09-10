@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Canvas } from './canvas.entity';
-import { User } from './user.entity';
+import { Canvas } from 'database/entities/canvas.entity';
+import { User } from 'database/entities/user.entity';
 
 /**
  * The canvas model describes everything stored per canvas

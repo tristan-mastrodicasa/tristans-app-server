@@ -1,5 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import env from './env';
+import env from 'conf/env';
 
 export const ormconfig: ConnectionOptions = {
   type: 'mysql',
@@ -11,13 +11,13 @@ export const ormconfig: ConnectionOptions = {
   charset: 'utf8mb4',
   logging: true,
   entities: [
-    'src/database/entity/**/*.ts',
+    'src/database/entities/**/*.ts',
   ],
   migrations: [
-    'src/database/migration/**/*.ts',
+    'src/database/migrations/**/*.ts',
   ],
   subscribers: [
-    'src/database/subscriber/**/*.ts',
+    'src/database/subscribers/**/*.ts',
   ],
   cli: {
     entitiesDir: 'src/database/entity',

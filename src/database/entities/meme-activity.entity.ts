@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
-import { User } from './user.entity';
-import { Meme } from './meme.entity';
+import { User } from 'database/entities/user.entity';
+import { Meme } from 'database/entities/meme.entity';
 import { EMemeActions } from 'models/enums';
 
 /**

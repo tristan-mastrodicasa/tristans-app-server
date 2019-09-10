@@ -2,13 +2,13 @@ import express from 'express';
 import { Request, Response, NextFunction } from 'express'; // tslint:disable-line
 
 import { createConnection } from 'typeorm';
-import { ormconfig } from './conf/ormconfig';
+import { ormconfig } from 'conf/ormconfig';
 
-import routesHandler from './routes/routes-handler';
+import indexRouter from 'routers/index.router';
 
-import { Error } from './models/response.interfaces';
+import { Error } from 'models/response.interfaces';
 
-import './conf/passport';
+import 'conf/passport';
 import passport from 'passport';
 
 /** @todo Make sure the charset is utf8mb4 */
@@ -38,7 +38,7 @@ createConnection(ormconfig).then((_connection) => {
   });
 
   // Set the default router //
-  server.use('/', routesHandler);
+  server.use('/', indexRouter);
 
   // Error handling //
   server.use((err: { status: number, content: Error[] }, _req: Request, res: Response, _next: NextFunction) => {

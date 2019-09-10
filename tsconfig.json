@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",

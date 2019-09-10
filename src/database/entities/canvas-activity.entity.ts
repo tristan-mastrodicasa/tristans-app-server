@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsEnum, IsDate, IsOptional } from 'class-validator';
-import { User } from './user.entity';
-import { Canvas } from './canvas.entity';
+import { User } from 'database/entities/user.entity';
+import { Canvas } from 'database/entities/canvas.entity';
 import { ECanvasActions } from 'models/enums';
 
 /**

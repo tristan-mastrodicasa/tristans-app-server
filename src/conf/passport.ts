@@ -3,9 +3,9 @@ import passportGoogleOauth20 from 'passport-google-oauth20';
 import passportGoogleAuthcode from 'passport-google-authcode';
 import passportJwt from 'passport-jwt';
 
-import env from './env';
+import env from 'conf/env';
 
-import { User } from 'database/entity/user.entity';
+import { User } from 'database/entities/user.entity';
 
 passport.use(
   new passportJwt.Strategy(
