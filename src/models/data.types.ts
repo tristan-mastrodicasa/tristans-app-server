@@ -8,7 +8,7 @@ import { EContentType } from './enums'; //tslint:disable-line
  * Interface for a basic user object
  */
 interface BasicUser {
-  id: string;
+  id: number;
   firstName: string;
   username: string;
   photo: string;
@@ -37,8 +37,8 @@ export interface UserItem extends BasicUser {
  */
 export type ContentCard = {
   type: EContentType.Meme;
-  id: string;
-  cid: string;
+  id: number;
+  cid: number;
   users: {
     primary: BasicUser;
     secondary: BasicUser;
@@ -50,7 +50,7 @@ export type ContentCard = {
   utcTime: number;
 } | {
   type: EContentType.Canvas;
-  id: string;
+  id: number;
   cid?: never;
   users: {
     primary: BasicUser;
