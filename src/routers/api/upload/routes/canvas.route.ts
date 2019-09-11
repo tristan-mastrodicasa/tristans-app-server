@@ -11,8 +11,23 @@ import { EVisibility } from 'models/enums';
 
 const router = Router();
 
-const upload = multer({ dest: 'uploads/canvas_images/', limits: { fileSize: 1000000, files: 1 } });
+// File upload initalization //
+const upload = multer({
+  dest: 'uploads/canvas_images/',
+  limits: { fileSize: 1500000, files: 1 },
+  fileFilter: (_req, file, cb) => {
 
+    // Make sure only images are uploaded //
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      return cb(null, true);
+    }
+
+    return cb(new Error('Only image files are allowed!'), false);
+
+  },
+});
+
+/** @todo API Doc */
 router.post('/', upload.single('canvas'), (req, res, next) => {
 
   if (req.file) {
@@ -43,6 +58,7 @@ router.post('/', upload.single('canvas'), (req, res, next) => {
 
       console.log('"validation succeed"');
 
+      /** @todo Validate that the user has uploaded less than 6 canvases a day */
       canvas.save().then((canvasRecord: Canvas) => {
 
         console.log(`new canvas is: ${canvasRecord.id}`);
@@ -54,7 +70,7 @@ router.post('/', upload.single('canvas'), (req, res, next) => {
 
     });
 
-  } else throw { content: [{ detail: 'Something went wrong' }], status: 500 };
+  } else throw { content: [{ detail: 'Something went wrong' }], status: 400 };
 
 });
 
