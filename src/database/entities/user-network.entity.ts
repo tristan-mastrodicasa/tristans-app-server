@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { IsOptional, IsDate } from 'class-validator';
-import { User } from 'database/entities/user.entity';
+import { User } from './user.entity';
 
 /**
  * The user model describes everything stored per user.

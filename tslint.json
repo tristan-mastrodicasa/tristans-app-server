@@ -1,5 +1,5 @@
 {
-  "extends": "tslint-config-airbnb",
+  "extends": ["./tslint.override.json", "tslint-config-airbnb"],
   "rules": {
     "completed-docs": [
       true,
@@ -30,7 +30,6 @@
         ]
       }
     ],
-    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
-    "no-relative-imports": true
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
   }
 }

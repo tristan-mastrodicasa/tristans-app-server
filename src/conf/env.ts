@@ -3,10 +3,10 @@
  * You need to create the env.dev.ts and env.prod.ts files
  * with the objects following the correct interface
  */
-import { Env } from 'conf/env.interface';
+import { Env } from './env.interface';
 
-import envDev from 'conf/env.dev';
-import envProd from 'conf/env.prod';
+import envDev from './env.dev';
+import envProd from './env.prod';
 
 let env: Env;
 

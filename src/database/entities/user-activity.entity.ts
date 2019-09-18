@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
-import { User } from 'database/entities/user.entity';
+import { User } from './user.entity';
 import { EProfileActions } from 'models/enums';
 
 /**

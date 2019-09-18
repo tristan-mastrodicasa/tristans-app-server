@@ -1,5 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import env from 'conf/env';
+import env from './env';
 
 export const ormconfig: ConnectionOptions = {
   type: 'mysql',

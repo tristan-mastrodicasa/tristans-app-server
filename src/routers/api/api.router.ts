@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import uploadController from 'routers/api/canvas/routes/upload.controller';
-import canvasDocument from 'routers/api/canvas/routes/canvas.document';
+import uploadController from './canvas/routes/upload.controller';
+import canvasDocument from './canvas/routes/canvas.document';
 
 const router = Router();
 

@@ -41,6 +41,7 @@
     "tsconfig-paths": "^3.8.0",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1",
+    "tslint-microsoft-contrib": "^6.2.0",
     "typescript": "^3.5.2"
   },
   "dependencies": {

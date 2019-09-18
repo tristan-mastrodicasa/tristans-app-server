@@ -1,9 +1,9 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { IsOptional, Length, IsEnum, IsInt, IsDate, MaxLength } from 'class-validator';
-import { User } from 'database/entities/user.entity';
-import { CanvasActivity } from 'database/entities/canvas-activity.entity';
-import { CanvasInvites } from 'database/entities/canvas-invites.entity';
-import { Meme } from 'database/entities/meme.entity';
+import { User } from './user.entity';
+import { CanvasActivity } from './canvas-activity.entity';
+import { CanvasInvites } from './canvas-invites.entity';
+import { Meme } from './meme.entity';
 
 import { EVisibility } from 'models/enums';
 

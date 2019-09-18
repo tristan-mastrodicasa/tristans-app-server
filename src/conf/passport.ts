@@ -3,7 +3,7 @@ import passportGoogleOauth20 from 'passport-google-oauth20';
 import passportGoogleAuthcode from 'passport-google-authcode';
 import passportJwt from 'passport-jwt';
 
-import env from 'conf/env';
+import env from './env';
 
 import { User } from 'database/entities/user.entity';
 
