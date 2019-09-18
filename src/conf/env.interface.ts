@@ -3,6 +3,7 @@
  * @author Tristan Mastrodicasa
  */
 export interface Env {
+  host: string;
   database_username: string;
   database_password: string;
   google_redirect_url: string;
