@@ -5,9 +5,7 @@ import { validate } from 'class-validator';
 // import passport from 'passport';
 
 import { Canvas } from 'database/entities/canvas.entity';
-import { CanvasUploaded } from 'models/response.interfaces';
-
-import { EVisibility } from 'models/enums';
+import { CanvasUploaded, EVisibility } from 'shared/models';
 
 const router = Router();
 

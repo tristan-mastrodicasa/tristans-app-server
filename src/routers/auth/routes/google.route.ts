@@ -4,8 +4,7 @@ import jsonwebtoken from 'jsonwebtoken';
 
 import env from 'conf/env';
 
-import { JwtContent } from 'models/data.types';
-import { Token } from 'models/response.interfaces';
+import { JwtContent, Token } from 'shared/models';
 
 const router = Router();
 

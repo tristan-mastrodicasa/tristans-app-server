@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { IsEnum, IsOptional, IsDate } from 'class-validator';
 import { User } from './user.entity';
-import { EProfileActions } from 'models/enums';
+import { EProfileActions } from 'shared/models';
 
 /**
  * The user model describes everything stored per user.

@@ -6,7 +6,7 @@ import { ormconfig } from 'conf/ormconfig';
 
 import indexRouter from 'routers/index.router';
 
-import { Error } from 'models/response.interfaces';
+import { Error } from 'shared/models';
 
 import 'conf/passport';
 import passport from 'passport';

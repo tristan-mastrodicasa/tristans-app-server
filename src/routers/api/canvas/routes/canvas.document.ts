@@ -1,8 +1,7 @@
 import { Router } from 'express';
 
 import { Canvas } from 'database/entities/canvas.entity';
-import { ContentCard } from 'models/data.types';
-import { EContentType } from 'models/enums';
+import { ContentCard, EContentType } from 'shared/models';
 
 const router = Router();
 

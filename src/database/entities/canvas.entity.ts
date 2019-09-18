@@ -5,7 +5,7 @@ import { CanvasActivity } from './canvas-activity.entity';
 import { CanvasInvites } from './canvas-invites.entity';
 import { Meme } from './meme.entity';
 
-import { EVisibility } from 'models/enums';
+import { EVisibility } from 'shared/models';
 
 /**
  * The canvas model describes everything stored per canvas
