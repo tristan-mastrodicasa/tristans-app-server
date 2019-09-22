@@ -1,24 +1,46 @@
+# Rest API structure + Notes
 
-/search/users      params query userNetwork?           Data: UserItem[]
+For all post that resulted in a creation, use a HTTP 201 status code and include a 
+Location header that points to the URL of the new resource.
 
-/user/:id         params                              Data: UserItem
-/user/:id/network params category? results? page?     Data: UserItem[]
+Research User creation
 
+Consider rate limiting every endpoint
 
-/profile/:id                                          Data: Profile
+Document: A single resource
+Collection: A collection of resources
+Controller: An action which affects multiple resources (like methods of a class)
 
+GET  /canvases/:id -> Document: Get a canvas
+POST /canvases/:id/star -> Controller: "Star" a canvas
+POST /canvases/:id/remove-star -> Controller: Remove your "Star" from a canvas if you made one
+POST /canvases -> Create a canvas
 
-/content           params target userId results? page? Data: ContentCard[]
+GET  /canvases/:id/memes ?results ?page -> Collection: Get list of memes for a specific canvas
+POST /canvases/:id/memes -> Create a meme
 
-/canvas/upload
-/canvas/:id                                          Data: ContentCard[]
-/canvas/:id/memes  params results? page?             Data: ContentCard[]
+GET  /users/:id -> Document: Get a user
+GET  /users/:id/settings -> Document: Settings for a user
+PUT  /users/:id/settings -> Update settings for a user
+PUT  /users/:id -> Update a user
 
-/meme/:id                                              Data: ContentCard[]
+POST /users/:id/follow -> Controller: Follow a specific user
+POST /users/:id/unfollow -> Controller: Unfollow a specific user
 
-/upload/canvas
-/upload/profile/picture
-/upload/meme
+GET  /users ?query ?recommended ?results ?page -> Collection: List of users from the database
+
+GET  /users/:id/daily-suggestions ?page ?results -> Controller: Daily recommended content based on network + history
+
+GET  /users/:id/followers ?page ?results -> Collection: Get users following you
+GET  /users/:id/following ?page ?results -> Collection: Get users you are following
+GET  /users/:id/follow-backs ?page ?results -> Collection: Get users who follow you back
+
+GET  /users/:id/content-cards -> Collection: Recent memes and Canvases
+
+GET  /auth/google -> Controller: Start the google authentication process (web)
+POST /auth/google-authcode -> Controller: Create a new user / find existing user -> return access token
+
+GET  /images/canvas/:file -> Document: Image for canvas
 
 ## API DOC EXAMPLE
 

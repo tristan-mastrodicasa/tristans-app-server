@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
+
 import jsonwebtoken from 'jsonwebtoken';
 
 import env from 'conf/env';
@@ -8,17 +9,9 @@ import { JwtContent, Token } from 'shared/models';
 
 const router = Router();
 
-router.get('/', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-}));
-
-router.get('/redirect', passport.authenticate('google'), (_req, res) => {
-
-  res.redirect('/auth/test');
-
-});
-
-router.post('/authcode', (req, res) => {
+// Pass an authcode to verify google signin //
+/** @test By logging in on mobile with the google option */
+router.post('/', (req, res) => {
 
   passport.authenticate('google-authcode', (_err, user) => {
 
@@ -27,7 +20,6 @@ router.post('/authcode', (req, res) => {
 
       console.log(`made it to authcode response ${user}`);
 
-      /** @todo move secret key to env */
       const jwtObject: JwtContent = { id: user.id };
       const token: Token = { token: jsonwebtoken.sign(jwtObject, env.jwt_key, { expiresIn: '30d' }) };
 

@@ -10,11 +10,4 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 
 });
 
-router.get('/unprotected', (_req, res) => {
-
-  console.log('unprotected route accessed');
-  res.send('You have accessed an unprotected route');
-
-});
-
 export default router;

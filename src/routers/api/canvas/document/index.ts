@@ -5,9 +5,9 @@ import { ContentCard, EContentType } from 'shared/models';
 
 import env from 'conf/env';
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
-router.get('/:id', (req, res, next) => {
+router.get('/', (req, res, next) => {
 
   console.log(req.params);
 
