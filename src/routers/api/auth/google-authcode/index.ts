@@ -14,7 +14,9 @@ const router = Router();
  * @apiName Google Authcode Verifier
  * @apiGroup Google Authentication
  *
- * @apiParam {String} code The authcode return from the google authentication popup
+ * @apiDescription Checks if a user exists, if they don't then create a user
+ *
+ * @apiParam {String} code The authcode returned from the google authentication popup
  *
  * @apiSuccess {String} token The JWT for accessing protected routes
  *

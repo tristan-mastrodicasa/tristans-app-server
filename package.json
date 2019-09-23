@@ -11,7 +11,7 @@
     "devWindows": "SET NODE_ENV=development&& nodemon",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
-    "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "test": "ts-node  -r tsconfig-paths/register node_modules/jasmine/bin/jasmine",
     "apidoc": "apidoc -o api-doc -i src/routers"
   },
   "repository": {
@@ -26,7 +26,7 @@
   },
   "apidoc": {
     "title": "Tristan's App",
-    "url" : "https://localhost:3000/api"
+    "url": "https://localhost:3000/api"
   },
   "homepage": "https://github.com/ghostcoder217/tristans-app-server#readme",
   "devDependencies": {
@@ -46,7 +46,7 @@
     "nodemon": "^1.19.0",
     "request": "^2.88.0",
     "ts-node": "^8.3.0",
-    "tsconfig-paths": "^3.8.0",
+    "tsconfig-paths": "^3.9.0",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-microsoft-contrib": "^6.2.0",

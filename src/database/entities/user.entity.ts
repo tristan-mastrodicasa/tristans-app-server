@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
-import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, MaxLength } from 'class-validator';
+import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional } from 'class-validator';
 import { UserNetwork } from './user-network.entity';
 import { UserStatistics } from './user-statistics.entity';
 import { UserSettings } from './user-settings.entity';
@@ -21,12 +21,12 @@ export class User extends BaseEntity {
 
   @Column('varchar', { length: 100, nullable: true })
   @IsOptional()
-  @MaxLength(100)
+  @Length(1, 100)
   public facebookId?: string; // Can be null
 
   @Column('varchar', { length: 100, nullable: true })
   @IsOptional()
-  @MaxLength(100)
+  @Length(1, 100)
   public googleId?: string; // Can be null
 
   @Column('varchar', { length: 25 })
@@ -41,12 +41,12 @@ export class User extends BaseEntity {
 
   @Column('varchar', { length: 255, nullable: true, unique: true })
   @IsOptional()
-  @MaxLength(255)
+  @Length(1, 255)
   @IsEmail()
   public email?: string;
 
   @Column('varchar', { length: 128 })
-  @MaxLength(128)
+  @Length(1, 128)
   public profileImg: string; // path of the image
 
   @OneToMany(() => UserNetwork, userNetwork => userNetwork.user)
