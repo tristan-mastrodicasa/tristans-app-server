@@ -9,8 +9,17 @@ import { JwtContent, Token } from 'shared/models';
 
 const router = Router();
 
-// Pass an authcode to verify google signin //
-/** @test By logging in on mobile with the google option */
+/**
+ * @api {post} /auth/google-authcode Verify authcode from google
+ * @apiName Google Authcode Verifier
+ * @apiGroup Google Authentication
+ *
+ * @apiParam {String} code The authcode return from the google authentication popup
+ *
+ * @apiSuccess {String} token The JWT for accessing protected routes
+ *
+ * @apiError (HTTP Error Codes) 401 Access key wrong or google server down
+ */
 router.post('/', (req, res) => {
 
   passport.authenticate('google-authcode', (_err, user) => {
@@ -27,7 +36,7 @@ router.post('/', (req, res) => {
 
     } else {
 
-      throw { content: [{ detail: 'Access key wrong or server down' }], status: 401 };
+      throw { content: [{ detail: 'Access key wrong or google server down' }], status: 401 };
 
     }
 

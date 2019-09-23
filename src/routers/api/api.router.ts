@@ -27,6 +27,7 @@ router.use('/auth/test/unprotected', authTestUnprotected);
 router.use('/canvas', canvas);
 router.use('/canvas/:id', canvasDocument);
 
-router.use('/images/canvas', express.static('uploads/canvas_images')); /** @todo improve image storage when we reach production */
+/** @todo improve image storage / retrieval when we reach production */
+router.use('/images/canvas', express.static('uploads/canvas_images'));
 
 export default router;

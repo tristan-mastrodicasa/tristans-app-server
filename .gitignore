@@ -17,3 +17,6 @@ src/conf/env.prod.ts
 
 # Uploads
 /uploads
+
+# apidoc output
+/api-doc

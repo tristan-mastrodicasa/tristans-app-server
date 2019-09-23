@@ -11,7 +11,8 @@
     "devWindows": "SET NODE_ENV=development&& nodemon",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
-    "test": "ts-node node_modules/jasmine/bin/jasmine"
+    "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "apidoc": "apidoc -o api-doc -i src/routers"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,10 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ghostcoder217/tristans-app-server/issues"
+  },
+  "apidoc": {
+    "title": "Tristan's App",
+    "url" : "https://localhost:3000/api"
   },
   "homepage": "https://github.com/ghostcoder217/tristans-app-server#readme",
   "devDependencies": {
