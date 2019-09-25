@@ -22,7 +22,7 @@ const router = Router();
  *
  * @apiError (HTTP Error Codes) 401 Access key wrong or google server down
  */
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
 
   passport.authenticate('google-authcode', (_err, user) => {
 
@@ -38,11 +38,11 @@ router.post('/', (req, res) => {
 
     } else {
 
-      throw { content: [{ detail: 'Access key wrong or google server down' }], status: 401 };
+      next({ content: [{ detail: 'Access key wrong or google server down' }], status: 401 });
 
     }
 
-  })(req, res);
+  })(req, res, next);
 
 });
 

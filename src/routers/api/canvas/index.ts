@@ -37,7 +37,7 @@ router.post('/', upload.single('canvas'), (req, res, next) => {
     canvas.imagePath = req.file.filename;
     canvas.mimetype = req.file.mimetype;
     canvas.visibility = EVisibility.followBacks; // Only followbacks to start
-    canvas.publicAccessKey = crypto.randomBytes(32).toString('hex');
+    canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
 
     validate(canvas).then((errors) => {
 

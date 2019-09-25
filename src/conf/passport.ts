@@ -5,7 +5,7 @@ import passportJwt from 'passport-jwt';
 
 import env from './env';
 
-import googleSignInFunction from 'shared/helpers/google-sign-in.function';
+import { googleSignIn } from 'shared/helpers';
 
 passport.use(
   new passportJwt.Strategy(
@@ -29,7 +29,7 @@ passport.use(
       clientID: env.google_client_id,
       clientSecret: env.google_client_secret,
     },
-    googleSignInFunction,
+    googleSignIn,
   ),
 );
 
@@ -41,6 +41,6 @@ passport.use(
       clientSecret: env.google_client_secret,
       callbackURL: '',
     },
-    googleSignInFunction,
+    googleSignIn,
   ),
 );
