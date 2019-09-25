@@ -6,15 +6,18 @@
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "es5",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {
       "*": ["*"]
     }
   },
-  "lib": ["es2015"]
+  "lib": ["es2018"]
 }

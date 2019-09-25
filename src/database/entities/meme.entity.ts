@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { IsBoolean, IsInt, IsDate, IsOptional, MaxLength } from 'class-validator';
+import { IsBoolean, IsInt, IsDate, IsOptional, Length } from 'class-validator';
 import { User } from './user.entity';
 import { Canvas } from './canvas.entity';
 import { MemeActivity } from './meme-activity.entity';
@@ -14,21 +14,23 @@ export class Meme extends BaseEntity {
   public id: number;
 
   @Column('varchar', { length: 64, unique: true })
-  @MaxLength(64)
+  @Length(1, 64)
   public imagePath: string;
 
-  @Column('boolean')
-  @IsBoolean()
-  public listed: boolean;
-
-  @Column('int')
+  @Column('int', { default: () => 0 })
+  @IsOptional()
   @IsInt()
-  public stars: number;
+  public stars?: number;
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
   @IsDate()
   public utc?: Date;
+
+  @Column('boolean', { default: () => false })
+  @IsOptional()
+  @IsBoolean()
+  public deleted?: boolean;
 
   @ManyToOne(() => User, user => user.memes)
   public user: User;

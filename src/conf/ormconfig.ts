@@ -11,7 +11,7 @@ export const ormconfig: ConnectionOptions = {
   charset: 'utf8mb4',
   logging: true,
   entities: [
-    'src/database/entities/**/*.ts',
+    'src/database/entities/**/*.entity.ts',
   ],
   migrations: [
     'src/database/migrations/**/*.ts',
