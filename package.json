@@ -11,7 +11,7 @@
     "devWindows": "SET NODE_ENV=development&& nodemon",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
-    "test": "ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine",
+    "test": "SET NODE_ENV=development&& ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine",
     "apidoc": "apidoc -o api-doc -i src/routers"
   },
   "repository": {

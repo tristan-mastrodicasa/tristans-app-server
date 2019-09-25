@@ -26,6 +26,9 @@ router.post('/', (req, res, next) => {
 
   passport.authenticate('google-authcode', (_err, user) => {
 
+    console.log(_err);
+    console.log(user);
+
     // Return the token //
     if (user) {
 

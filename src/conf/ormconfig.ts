@@ -9,7 +9,7 @@ export const ormconfig: ConnectionOptions = {
   password: env.database_password,
   database: 'tristans_app',
   charset: 'utf8mb4',
-  logging: true,
+  logging: false,
   entities: [
     'src/database/entities/**/*.entity.ts',
   ],

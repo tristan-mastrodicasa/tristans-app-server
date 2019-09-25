@@ -17,7 +17,7 @@ export class Meme extends BaseEntity {
   @Length(1, 64)
   public imagePath: string;
 
-  @Column('int', { default: () => 0 })
+  @Column('int', { default: () => '0' })
   @IsOptional()
   @IsInt()
   public stars?: number;
@@ -27,7 +27,7 @@ export class Meme extends BaseEntity {
   @IsDate()
   public utc?: Date;
 
-  @Column('boolean', { default: () => false })
+  @Column('boolean', { default: () => 'false' })
   @IsOptional()
   @IsBoolean()
   public deleted?: boolean;

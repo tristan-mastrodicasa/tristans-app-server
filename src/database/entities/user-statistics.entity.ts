@@ -1,5 +1,5 @@
-import { BaseEntity, Entity, Column, OneToOne, JoinColumn } from 'typeorm';
-import { IsInt } from 'class-validator';
+import { BaseEntity, Entity, Column, OneToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
+import { IsInt, IsOptional } from 'class-validator';
 import { User } from './user.entity';
 
 /**
@@ -8,23 +8,30 @@ import { User } from './user.entity';
 @Entity('user_statistics')
 export class UserStatistics extends BaseEntity {
 
-  @Column('int')
-  @IsInt()
-  public influence: number;
+  @PrimaryGeneratedColumn('increment')
+  public id: number;
 
-  @Column('int')
+  @Column('int', { default: () => '0' })
+  @IsOptional()
   @IsInt()
-  public contentNum: number; // Number of meme's/canvas
+  public influence?: number;
 
-  @Column('int')
+  @Column('int', { default: () => '0' })
+  @IsOptional()
   @IsInt()
-  public followers: number; // number of followers
+  public contentNum?: number; // Number of meme's/canvas
 
-  @Column('int')
+  @Column('int', { default: () => '0' })
+  @IsOptional()
   @IsInt()
-  public following: number; // number of users following
+  public followers?: number; // number of followers
 
-  @OneToOne(() => User, user => user.statistics, { primary: true })
+  @Column('int', { default: () => '0' })
+  @IsOptional()
+  @IsInt()
+  public following?: number; // number of users following
+
+  @OneToOne(() => User, user => user.statistics, { onDelete: 'CASCADE' })
   @JoinColumn()
   public user: User; // Foreign key of the user entity used also the primary key
 

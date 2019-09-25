@@ -20,7 +20,7 @@ describe('canvas entity', () => {
 
   describe('descriptions should', () => {
 
-    it('suceed when it does not exist (its optional)', async () => {
+    it('succeed when it does not exist (its optional)', async () => {
       const nonIdealCanvas = Object.create(idealCanvas);
       nonIdealCanvas.description = null;
 

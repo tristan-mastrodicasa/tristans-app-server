@@ -6,25 +6,29 @@ export function googleSignIn(_accessToken: string, _refreshToken: string, profil
 
   User.findOne({ googleId: profile.id }).then((user: User) => {
 
+    console.log('find user');
+    console.log(profile);
+    console.log(user);
+
     if (user) {
 
-      console.log(profile);
       console.log(`user is: ${user}`);
-      done(null, user);
+      return done(null, user);
 
     }
 
+    const profileRaw = profile._json;
+
     const newUser = new User();
-    newUser.googleId = profile.id;
-    newUser.username = profile.displayName;
-    newUser.firstname = profile.name.givenName;
-    newUser.profileImg = (profile.photos[0].value !== undefined ? profile.photos[0].value : 'default_image.jpg');
-    newUser.email = (profile.emails[0].value !== undefined ? profile.emails[0].value : null);
+    newUser.googleId = profileRaw.id;
+    newUser.username = profileRaw.name;
+    newUser.firstname = profileRaw.name;
+    newUser.profileImg = (profileRaw.picture ? profileRaw.picture : '/assets/default_image.jpg');
+    newUser.email = (profileRaw.email ? profileRaw.email : null);
 
     createNewUser(newUser).then((userRecord: User) => {
-      console.log(profile);
       console.log(`new user is: ${userRecord}`);
-      done(null, userRecord);
+      return done(null, userRecord);
     });
 
   });

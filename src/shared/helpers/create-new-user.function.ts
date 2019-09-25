@@ -1,16 +1,36 @@
 import { User } from 'database/entities/user.entity';
+import { UserActivity } from 'database/entities/user-activity.entity';
+import { UserStatistics } from 'database/entities/user-statistics.entity';
+import { UserSettings } from 'database/entities/user-settings.entity';
+import { validate } from 'class-validator';
 
-export function createNewUser(user: User): Promise<User> {
+import { EProfileActions } from 'shared/models';
 
-  return new Promise<User>((resolve, _reject) => {
+export async function createNewUser(user: User): Promise<User> {
 
-    // Validate
+  // Validate //
+  const res = await validate(user);
+  if (res.length > 0) {
+    throw res;
+  }
 
-    /** @todo add user statistics and settings */
-    // Link settings and  stats
+  // Generate the created profile record //
+  const userActivity = new UserActivity();
+  userActivity.action = EProfileActions.profileCreated;
+  await userActivity.save();
 
-    user.save().then((userRecord: User) => resolve(userRecord));
+  // Generate statistics record //
+  const userStatistics = new UserStatistics();
+  await userStatistics.save();
 
-  });
+  // Generate settings record //
+  const userSettings = new UserSettings();
+  await userSettings.save();
+
+  user.settings = userSettings;
+  user.statistics = userStatistics;
+  user.activity = [userActivity];
+
+  return user.save();
 
 }
