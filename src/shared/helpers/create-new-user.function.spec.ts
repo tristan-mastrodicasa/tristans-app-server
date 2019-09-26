@@ -7,6 +7,15 @@ import { createConnection, getConnection } from 'typeorm';
 import { ormconfig } from 'conf/ormconfig';
 
 describe('create user function', () => {
+  const idealUser = new User();
+
+  beforeEach(() => {
+    idealUser.googleId = 'asd6iatsid75ia76dsas';
+    idealUser.username = 'george123';
+    idealUser.firstname = 'Chris';
+    idealUser.email = 'me@email.com';
+    idealUser.profileImg = '/default/picture.jpg';
+  });
 
   // Create connection //
   beforeAll(async () => {
@@ -17,13 +26,6 @@ describe('create user function', () => {
   afterAll(async () => {
     await getConnection().close();
   });
-
-  const idealUser = new User();
-  idealUser.googleId = 'asd6iatsid75ia76dsas';
-  idealUser.username = 'george123';
-  idealUser.firstname = 'Chris';
-  idealUser.email = 'me@email.com';
-  idealUser.profileImg = '/default/picture.jpg';
 
   it('should create and delete a user with ideal inputs', async () => {
     const user = await createNewUser(idealUser);
@@ -49,13 +51,12 @@ describe('create user function', () => {
   });
 
   it('should reject with poor input', async () => {
-    const nonIdealUser = Object.create(idealUser);
-    nonIdealUser.email = '';
-    nonIdealUser.firstname = '';
+    idealUser.email = '';
+    idealUser.firstname = '';
 
     let error: any;
 
-    try { await createNewUser(nonIdealUser); }
+    try { await createNewUser(idealUser); }
     catch (err) { error = err; }
 
     expect(error).toBeDefined();
