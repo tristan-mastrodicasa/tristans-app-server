@@ -2,6 +2,14 @@ import { User } from 'database/entities/user.entity';
 import { Profile, VerifyCallback } from 'passport-google-oauth20';
 import { createNewUser } from './';
 
+/**
+ * Function to call when the authorization token is verified and a user is to be
+ * generated or collected from the database
+ * @param _accessToken  Token stuff
+ * @param _refreshToken Token stuff
+ * @param profile       Profile from google
+ * @param done          Callback for next step
+ */
 export function googleSignIn(_accessToken: string, _refreshToken: string, profile: Profile, done: VerifyCallback): void {
 
   User.findOne({ googleId: profile.id }).then((user: User) => {

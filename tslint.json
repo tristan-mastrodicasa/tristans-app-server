@@ -6,7 +6,8 @@
       {
         "enums": true,
         "methods": true,
-        "interface": true
+        "interface": true,
+        "functions": true
       }
     ],
     "max-line-length": [

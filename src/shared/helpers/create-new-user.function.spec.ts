@@ -26,7 +26,6 @@ describe('create user function', () => {
   idealUser.profileImg = '/default/picture.jpg';
 
   it('should create and delete a user with ideal inputs', async () => {
-
     const user = await createNewUser(idealUser);
 
     // The user is correctly entered into the database //
@@ -47,12 +46,12 @@ describe('create user function', () => {
     expect(await UserSettings.findOne(userSettingsId)).toBeUndefined();
     expect(await UserStatistics.findOne(userStatisticsId)).toBeUndefined();
     expect(await UserActivity.findOne(userActivityId)).toBeUndefined();
-
   });
 
   it('should reject with poor input', async () => {
     const nonIdealUser = Object.create(idealUser);
     nonIdealUser.email = '';
+    nonIdealUser.firstname = '';
 
     let error: any;
 
@@ -60,7 +59,20 @@ describe('create user function', () => {
     catch (err) { error = err; }
 
     expect(error).toBeDefined();
+    expect(error.length).toEqual(2);
+  });
 
+  it('should reject users with an email that already exists', async () => {
+    const user = await createNewUser(idealUser);
+
+    let error: any;
+
+    try { await createNewUser(idealUser); }
+    catch (err) { error = err; }
+
+    expect(error).toBeDefined();
+
+    await user.remove();
   });
 
 });
