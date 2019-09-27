@@ -65,6 +65,7 @@ describe('create user function', () => {
 
   it('should reject users with an email that already exists', async () => {
     const user = await createNewUser(idealUser);
+    idealUser.username = 'differentusername';
 
     let error: any;
 
@@ -72,6 +73,32 @@ describe('create user function', () => {
     catch (err) { error = err; }
 
     expect(error).toBeDefined();
+
+    await user.remove();
+  });
+
+  it('should reject users with a username that already exists', async () => {
+    const user = await createNewUser(idealUser);
+    idealUser.email = 'differentEmail231c41341cw@email.com';
+
+    let error: any;
+
+    try { await createNewUser(idealUser); }
+    catch (err) { error = err; }
+
+    expect(error).toBeDefined();
+
+    await user.remove();
+  });
+
+  it('should auto generate first name and usernames if the flag is set', async () => {
+    idealUser.firstname = 'ghoststeam217';
+    idealUser.username = '';
+
+    const user = await createNewUser(idealUser, true);
+
+    expect(user.username).toEqual(jasmine.any(String));
+    expect(user.firstname).toEqual(jasmine.any(String));
 
     await user.remove();
   });

@@ -5,39 +5,34 @@ import { createNewUser } from './';
 /**
  * Function to call when the authorization token is verified and a user is to be
  * generated or collected from the database
+ * @todo Use image from google profile as the users profile image
  * @param _accessToken  Token stuff
  * @param _refreshToken Token stuff
  * @param profile       Profile from google
  * @param done          Callback for next step
  */
-export function googleSignIn(_accessToken: string, _refreshToken: string, profile: Profile, done: VerifyCallback): void {
+export async function googleSignIn(_accessToken: string, _refreshToken: string, profile: Profile, done: VerifyCallback): Promise<void> {
 
-  User.findOne({ googleId: profile.id }).then((user: User) => {
+  // Find if user exists with this google id //
+  const user = await User.findOne({ googleId: profile.id });
 
-    console.log('find user');
-    console.log(profile);
-    console.log(user);
+  // If they exist return that user object //
+  if (user) return done(null, user);
 
-    if (user) {
+  // Otherwise create a new user //
+  const newUser = new User();
+  newUser.googleId = profile.id;
+  newUser.firstname = profile.name.givenName;
+  newUser.profileImg = '/assets/default_image.jpg';
+  newUser.email = (
+    profile._json.email ? profile._json.email : (profile.emails[0].value ? profile.emails[0].value : null)
+  );
 
-      console.log(`user is: ${user}`);
-      return done(null, user);
+  let userRecord: User;
 
-    }
+  try { userRecord = await createNewUser(newUser, true); }
+  catch (err) { return done(err); }
 
-    const profileRaw = profile._json;
+  return done(null, userRecord);
 
-    const newUser = new User();
-    newUser.googleId = profileRaw.id;
-    newUser.username = profileRaw.name;
-    newUser.firstname = profileRaw.name;
-    newUser.profileImg = (profileRaw.picture ? profileRaw.picture : '/assets/default_image.jpg');
-    newUser.email = (profileRaw.email ? profileRaw.email : null);
-
-    createNewUser(newUser).then((userRecord: User) => {
-      console.log(`new user is: ${userRecord}`);
-      return done(null, userRecord);
-    });
-
-  });
 }

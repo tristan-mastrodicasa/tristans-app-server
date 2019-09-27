@@ -8,15 +8,27 @@ import { EProfileActions } from 'shared/models';
 
 /**
  * Create a new user in the database including all the relevant relations
- * @param  user The user object to create
- * @return      The user record or an error
+ * @param  user            The user object to create
+ * @param  autoFillFixable Should it auto fill unvalidated inupts that can generated
+ * @return                 The user record or an error
  */
-export async function createNewUser(user: User): Promise<User> {
+export async function createNewUser(user: User, autoFillFixable = false): Promise<User> {
 
   // Validate //
   const res = await validate(user);
   if (res.length > 0) {
-    throw res;
+
+    if (!autoFillFixable) {
+      throw res;
+    } else {
+
+      for (let err of res) { // tslint:disable-line
+        if (err.property === 'firstname') user.firstname = 'Larry';
+        else if (err.property === 'username') user.username = `user${+(new Date()) - (10 ** 12)}`;
+      }
+
+    }
+
   }
 
   // Check if the email exists in the database //
@@ -29,6 +41,16 @@ export async function createNewUser(user: User): Promise<User> {
       error.children = [];
       throw [error];
     }
+  }
+
+  // Checks if the username already exists //
+  const usernameExists = await User.findOne({ username: user.username });
+  if (usernameExists) {
+    const error = new ValidationError();
+    error.property = 'username';
+    error.constraints = { unique: 'Username is not unique' };
+    error.children = [];
+    throw [error];
   }
 
   // Generate the created profile record //

@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Length(1, 100)
   public googleId?: string; // Can be null
 
-  @Column('varchar', { length: 25 })
+  @Column('varchar', { length: 25, unique: true })
   @IsAlphanumeric()
   @Length(1, 25)
   public username: string;
