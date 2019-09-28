@@ -10,8 +10,8 @@ import authGoogleRedirect from './auth/google/redirect';
 import authTest from './auth/test';
 import authTestUnprotected from './auth/test/unprotected';
 
-import canvas from './canvas';
-import canvasDocument from './canvas/document';
+import canvases from './canvases';
+import canvasesDocument from './canvases/document';
 
 /* tslint:enable */
 
@@ -24,8 +24,8 @@ router.use('/auth/google/redirect', authGoogleRedirect);
 router.use('/auth/test', authTest);
 router.use('/auth/test/unprotected', authTestUnprotected);
 
-router.use('/canvas', canvas);
-router.use('/canvas/:id', canvasDocument);
+router.use('/canvases', canvases);
+router.use('/canvases/:id', canvasesDocument);
 
 /** @todo improve image storage / retrieval when we reach production */
 router.use('/images/canvas', express.static('uploads/canvas_images'));
