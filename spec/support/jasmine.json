@@ -4,7 +4,7 @@
     "**/*[sS]pec.ts"
   ],
   "helpers": [
-    "helpers/**/*.ts"
+    "spec-helpers/**/*.ts"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": true,

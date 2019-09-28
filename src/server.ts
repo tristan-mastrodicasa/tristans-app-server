@@ -1,13 +1,8 @@
 import express from 'express';
-import { Request, Response, NextFunction } from 'express'; // tslint:disable-line
-
 import { createConnection } from 'typeorm';
 import { ormconfig } from 'conf/ormconfig';
-
+import { httpErrorMiddleware } from 'shared/helpers';
 import indexRouter from 'routers/index.router';
-
-import { Error } from 'shared/models';
-
 import 'conf/passport';
 import passport from 'passport';
 
@@ -41,11 +36,7 @@ createConnection(ormconfig).then((_connection) => {
   server.use('/', indexRouter);
 
   // Error handling //
-  server.use((err: { status: number, content: Error[] }, _req: Request, res: Response, _next: NextFunction) => {
-
-    return res.status(err.status || 400).json({ errors: err.content });
-
-  });
+  server.use(httpErrorMiddleware);
 
   server.listen(port, async () => {
 

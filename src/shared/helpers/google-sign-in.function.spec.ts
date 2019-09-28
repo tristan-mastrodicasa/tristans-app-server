@@ -1,8 +1,6 @@
 import { User } from 'database/entities/user.entity';
 import { googleSignIn } from './';
 import { Profile, VerifyCallback } from 'passport-google-oauth20';
-import { createConnection, getConnection } from 'typeorm';
-import { ormconfig } from 'conf/ormconfig';
 
 describe('google sign in function', () => {
   const accessToken = 'ashbdia7sd6basdia';
@@ -28,16 +26,6 @@ describe('google sign in function', () => {
         locale: 'en',
       },
     };
-  });
-
-  // Create connection //
-  beforeAll(async () => {
-    await createConnection(ormconfig);
-  });
-
-  // Close connection after all specs //
-  afterAll(async () => {
-    await getConnection().close();
   });
 
   it('should work with an ideal google response', async () => {

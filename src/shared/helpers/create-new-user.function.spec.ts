@@ -3,8 +3,6 @@ import { UserSettings } from 'database/entities/user-settings.entity';
 import { UserStatistics } from 'database/entities/user-statistics.entity';
 import { UserActivity } from 'database/entities/user-activity.entity';
 import { createNewUser } from './';
-import { createConnection, getConnection } from 'typeorm';
-import { ormconfig } from 'conf/ormconfig';
 
 describe('create user function', () => {
   const idealUser = new User();
@@ -15,16 +13,6 @@ describe('create user function', () => {
     idealUser.firstname = 'Chris';
     idealUser.email = 'me@email.com';
     idealUser.profileImg = '/default/picture.jpg';
-  });
-
-  // Create connection //
-  beforeAll(async () => {
-    await createConnection(ormconfig);
-  });
-
-  // Close connection after all specs //
-  afterAll(async () => {
-    await getConnection().close();
   });
 
   it('should create and delete a user with ideal inputs', async () => {

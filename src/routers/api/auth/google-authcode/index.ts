@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import passport from 'passport';
-
 import jsonwebtoken from 'jsonwebtoken';
 
 import env from 'conf/env';
@@ -26,13 +25,8 @@ router.post('/', (req, res, next) => {
 
   passport.authenticate('google-authcode', (_err, user) => {
 
-    console.log(_err);
-    console.log(user);
-
     // Return the token //
     if (user) {
-
-      console.log(`made it to authcode response ${user}`);
 
       const jwtObject: JwtContent = { id: user.id };
       const token: Token = { token: jsonwebtoken.sign(jwtObject, env.jwt_key, { expiresIn: '30d' }) };
