@@ -11,10 +11,10 @@ export class CanvasInvites extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @ManyToOne(() => User, user => user.canvasInvites)
+  @ManyToOne(() => User, user => user.canvasInvites, { onDelete: 'CASCADE' })
   public user: User;
 
-  @ManyToOne(() => Canvas, canvas => canvas.invitations)
+  @ManyToOne(() => Canvas, canvas => canvas.invitations, { onDelete: 'CASCADE' })
   public canvas: Canvas;
 
 }

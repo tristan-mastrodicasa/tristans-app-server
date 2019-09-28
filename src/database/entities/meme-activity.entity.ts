@@ -22,10 +22,10 @@ export class MemeActivity extends BaseEntity {
   @IsDate()
   public utc?: Date;
 
-  @ManyToOne(() => Meme, meme => meme.activity)
+  @ManyToOne(() => Meme, meme => meme.activity, { onDelete: 'CASCADE' })
   public meme: Meme;
 
-  @ManyToOne(() => User, user => user.canvasActivity)
+  @ManyToOne(() => User, user => user.canvasActivity, { onDelete: 'CASCADE' })
   public user: User;
 
 }

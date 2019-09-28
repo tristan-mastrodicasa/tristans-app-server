@@ -16,10 +16,10 @@ export class UserNetwork extends BaseEntity {
   @IsDate()
   public utc?: Date; // Date of following
 
-  @ManyToOne(() => User, user => user.network)
+  @ManyToOne(() => User, user => user.network, { onDelete: 'CASCADE' })
   public user: User; // This field it's related with the profile network
 
-  @ManyToOne(() => User, user => user.network)
+  @ManyToOne(() => User, user => user.network, { onDelete: 'CASCADE' })
   public follower: User; // This field is the id of the user that related to the user profile network
 
 }

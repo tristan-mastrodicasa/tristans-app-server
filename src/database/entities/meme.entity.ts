@@ -32,10 +32,10 @@ export class Meme extends BaseEntity {
   @IsBoolean()
   public deleted?: boolean;
 
-  @ManyToOne(() => User, user => user.memes)
+  @ManyToOne(() => User, user => user.memes, { onDelete: 'CASCADE' })
   public user: User;
 
-  @ManyToOne(() => Canvas, canvas => canvas.memes)
+  @ManyToOne(() => Canvas, canvas => canvas.memes, { onDelete: 'CASCADE' })
   public canvas: Canvas;
 
   @OneToMany(() => MemeActivity, memeActivity => memeActivity.meme)

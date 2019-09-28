@@ -52,7 +52,7 @@ export class Canvas extends BaseEntity {
   @IsBoolean()
   public deleted?: boolean;
 
-  @ManyToOne(() => User, user => user.canvas)
+  @ManyToOne(() => User, user => user.canvas, { onDelete: 'CASCADE' })
   public user: User;
 
   @OneToMany(() => CanvasActivity, canvasActivity => canvasActivity.canvas)
