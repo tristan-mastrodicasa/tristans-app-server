@@ -19,7 +19,7 @@ const router = Router();
  *
  * @apiSuccess {String} token The JWT for accessing protected routes
  *
- * @apiError (HTTP Error Codes) 401 Access key wrong or google server down
+ * @apiError (HTTP Error Codes) 401 Something went wrong
  */
 router.post('/', (req, res, next) => {
 
@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
 
     } else {
 
-      next({ content: [{ detail: 'Access key wrong or google server down' }], status: 401 });
+      next({ content: [{ detail: 'Something went wrong' }], status: 401 });
 
     }
 

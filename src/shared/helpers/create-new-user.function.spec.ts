@@ -1,7 +1,6 @@
 import { User } from 'database/entities/user.entity';
 import { UserSettings } from 'database/entities/user-settings.entity';
 import { UserStatistics } from 'database/entities/user-statistics.entity';
-import { UserActivity } from 'database/entities/user-activity.entity';
 import { createNewUser } from './';
 
 describe('create user function', () => {
@@ -22,12 +21,10 @@ describe('create user function', () => {
     expect(user).toBeDefined();
     expect(user.settings).toBeDefined();
     expect(user.statistics).toBeDefined();
-    expect(user.activity).toBeDefined();
 
     const userId = user.id;
     const userSettingsId = user.settings.id;
     const userStatisticsId = user.statistics.id;
-    const userActivityId = user.activity[0].id;
 
     await user.remove();
 
@@ -35,7 +32,6 @@ describe('create user function', () => {
     expect(await User.findOne(userId)).toBeUndefined();
     expect(await UserSettings.findOne(userSettingsId)).toBeUndefined();
     expect(await UserStatistics.findOne(userStatisticsId)).toBeUndefined();
-    expect(await UserActivity.findOne(userActivityId)).toBeUndefined();
   });
 
   it('should reject with poor input', async () => {

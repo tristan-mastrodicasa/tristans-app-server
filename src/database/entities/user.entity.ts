@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
-import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional } from 'class-validator';
+import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, IsDate } from 'class-validator';
 import { UserNetwork } from './user-network.entity';
 import { UserStatistics } from './user-statistics.entity';
 import { UserSettings } from './user-settings.entity';
@@ -48,6 +48,11 @@ export class User extends BaseEntity {
   @Column('varchar', { length: 128 })
   @Length(1, 128)
   public profileImg: string; // path of the image
+
+  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
+  @IsOptional()
+  @IsDate()
+  public utc?: Date;
 
   @OneToMany(() => UserNetwork, userNetwork => userNetwork.user)
   public network: UserNetwork[]; // This field gives access to all the user network info (like followers ecc..), it's used for make joins

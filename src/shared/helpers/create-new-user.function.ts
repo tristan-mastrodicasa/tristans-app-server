@@ -1,10 +1,7 @@
 import { User } from 'database/entities/user.entity';
-import { UserActivity } from 'database/entities/user-activity.entity';
 import { UserStatistics } from 'database/entities/user-statistics.entity';
 import { UserSettings } from 'database/entities/user-settings.entity';
 import { validate, ValidationError } from 'class-validator';
-
-import { EProfileActions } from 'shared/models';
 
 /**
  * Create a new user in the database including all the relevant relations
@@ -53,11 +50,6 @@ export async function createNewUser(user: User, autoFillFixable = false): Promis
     throw [error];
   }
 
-  // Generate the created profile record //
-  const userActivity = new UserActivity();
-  userActivity.action = EProfileActions.profileCreated;
-  await userActivity.save();
-
   // Generate statistics record //
   const userStatistics = new UserStatistics();
   await userStatistics.save();
@@ -68,7 +60,6 @@ export async function createNewUser(user: User, autoFillFixable = false): Promis
 
   user.settings = userSettings;
   user.statistics = userStatistics;
-  user.activity = [userActivity];
 
   return user.save();
 

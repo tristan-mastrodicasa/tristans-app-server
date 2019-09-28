@@ -3,5 +3,4 @@
  */
 export enum EProfileActions {
   profileUpdate = 'profile-update',
-  profileCreated = 'profile-created',
 }
