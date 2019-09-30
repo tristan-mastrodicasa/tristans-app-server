@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import multer from 'multer';
 import crypto from 'crypto';
-import { validate } from 'class-validator';
-// import passport from 'passport';
-
+import { ValidationError } from 'class-validator';
+import passport from 'passport';
 import { Canvas } from 'database/entities/canvas.entity';
 import { CanvasUploaded, EVisibility } from 'shared/models';
+import { createNewCanvas } from 'shared/helpers';
 
 const router = Router();
 
@@ -20,31 +20,36 @@ const upload = multer({
       return cb(null, true);
     }
 
-    return cb(new Error('Only image files are allowed!'), false);
+    return cb(new Error('Only jpg and png files allowed'), false);
 
   },
-});
+}).single('canvas');
 
 /** @todo API Doc */
-router.post('/', upload.single('canvas'), (req, res, next) => {
+router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
-  if (req.file) {
+  upload(req, res, async (err) => {
+    if (err instanceof Error) return next({ content: [{ title: 'file', detail: err.message }], status: 400 });
+    if (err) return next({ content: [{ title: 'file', detail: 'Something went wrong' }], status: 400 });
 
-    console.log(req.file);
+    if (req.file) {
 
-    const canvas = new Canvas();
-    canvas.description = ('description' in req.body && req.body.description ? req.body.description : null);
-    canvas.imagePath = req.file.filename;
-    canvas.mimetype = req.file.mimetype;
-    canvas.visibility = EVisibility.followBacks; // Only followbacks to start
-    canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
+      // Create the canvas record //
+      const canvas = new Canvas();
+      canvas.description = (req.body.description ? req.body.description : null);
+      canvas.imagePath = req.file.filename;
+      canvas.mimetype = req.file.mimetype;
+      canvas.visibility = EVisibility.public; // Only public to start
+      canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
 
-    validate(canvas).then((errors) => {
+      let canvasRecord: Canvas;
 
-      if (errors.length > 0) {
+      try {
+        canvasRecord = await createNewCanvas(canvas, req.user.id);
+      } catch (err) {
 
         return next({
-          content: errors.map((value, _index, _array) => {
+          content: err.map((value: ValidationError) => {
 
             return { title: value.property, detail: value.constraints[Object.keys(value.constraints)[0]] };
 
@@ -54,21 +59,14 @@ router.post('/', upload.single('canvas'), (req, res, next) => {
 
       }
 
-      console.log('"validation succeed"');
+      const canvasId: CanvasUploaded = { canvasId: canvasRecord.id };
+      return res.json(canvasId);
 
-      /** @todo Validate that the user has uploaded less than 6 canvases a day */
-      canvas.save().then((canvasRecord: Canvas) => {
+    }
 
-        console.log(`new canvas is: ${canvasRecord.id}`);
+    return next({ content: [{ title: 'file', detail: 'File is missing' }], status: 400 });
 
-        const canvasId: CanvasUploaded = { canvasId: canvasRecord.id };
-        res.json(canvasId);
-
-      });
-
-    });
-
-  } else throw { content: [{ detail: 'Something went wrong' }], status: 400 };
+  });
 
 });
 

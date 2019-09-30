@@ -61,7 +61,7 @@ export class User extends BaseEntity {
   public activity: UserActivity[]; // This field gives access to all the user activities
 
   @OneToMany(() => Canvas, canvas => canvas.user)
-  public canvas: Canvas[]; // canvases of the client
+  public canvases: Canvas[]; // canvases of the client
 
   @OneToMany(() => Meme, meme => meme.user)
   public memes: Meme[]; // memes of the client

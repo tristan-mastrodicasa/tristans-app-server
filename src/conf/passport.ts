@@ -14,10 +14,7 @@ passport.use(
       secretOrKey: env.jwt_key,
     },
     (jwtPayload, done) => {
-
-      console.log(jwtPayload);
-      done(null, { id: 2 });
-
+      done(null, { id: jwtPayload.id });
     },
 ));
 
