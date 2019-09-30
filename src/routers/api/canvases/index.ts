@@ -25,7 +25,18 @@ const upload = multer({
   },
 }).single('canvas');
 
-/** @todo API Doc */
+/**
+ * @api {post} /canvases Create a new canvas
+ * @apiName CreateCanvas
+ * @apiGroup Canvases
+ *
+ * @apiParam {String} description The description of the canvas
+ *
+ * @apiSuccess {String} canvasId The id of the new canvas
+ *
+ * @apiError (HTTP Error Codes) 400 Validation error
+ * @apiError (HTTP Error Codes) 401 Unauthorized
+ */
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   upload(req, res, async (err) => {
