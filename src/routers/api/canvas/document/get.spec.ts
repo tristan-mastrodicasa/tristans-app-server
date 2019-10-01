@@ -17,7 +17,7 @@ describe('GET canvas/:id', () => {
   beforeAll(async () => {
     userInfo = await getNewAuthorizedUser();
     app = express();
-    app.use(get);
+    app.use('/:id', get);
     app.use(httpErrorMiddleware);
 
     // Generate a phony canvas to get //
