@@ -1,1 +1,5 @@
-export * from './get.google.redirect';
+import get from './get';
+
+export default {
+  get,
+};

@@ -1,1 +1,5 @@
-export * from './post.google-authcode';
+import post from './post';
+
+export default {
+  post,
+};

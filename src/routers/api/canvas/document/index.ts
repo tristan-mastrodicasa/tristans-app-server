@@ -1,1 +1,5 @@
-export * from './get.canvas.document';
+import get from './get';
+
+export default {
+  get,
+};

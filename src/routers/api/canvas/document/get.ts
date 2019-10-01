@@ -41,4 +41,4 @@ router.get('/', (req, res, next) => {
 
 });
 
-export { router as getCanvasDocument };
+export default router;

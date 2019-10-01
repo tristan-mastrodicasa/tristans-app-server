@@ -81,4 +81,4 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
 
 });
 
-export { router as postCanvas };
+export default router;

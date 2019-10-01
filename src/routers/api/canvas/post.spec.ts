@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import express from 'express';
-import { postCanvas } from './post.canvas';
+import post from './post';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware } from 'shared/helpers';
 import { Canvas } from 'database/entities/canvas.entity';
@@ -14,7 +14,7 @@ describe('POST canvas', () => {
   beforeAll(async () => {
     userInfo = await getNewAuthorizedUser();
     app = express();
-    app.use(postCanvas);
+    app.use(post);
     app.use(httpErrorMiddleware);
   });
 

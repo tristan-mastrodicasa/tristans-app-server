@@ -41,4 +41,4 @@ router.post('/', (req, res, next) => {
 
 });
 
-export { router as postGoogleAuthcode };
+export default router;

@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import express from 'express';
 import crypto from 'crypto';
-import { getCanvasDocument } from './get.canvas.document';
+import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware, createNewCanvas } from 'shared/helpers';
 import { User } from 'database/entities/user.entity';
@@ -17,7 +17,7 @@ describe('GET canvas/:id', () => {
   beforeAll(async () => {
     userInfo = await getNewAuthorizedUser();
     app = express();
-    app.use(getCanvasDocument);
+    app.use(get);
     app.use(httpErrorMiddleware);
 
     // Generate a phony canvas to get //

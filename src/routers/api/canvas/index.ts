@@ -1,1 +1,7 @@
-export * from './post.canvas';
+import post from './post';
+import document from './document';
+
+export default {
+  post,
+  document,
+};

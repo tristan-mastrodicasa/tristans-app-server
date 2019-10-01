@@ -6,16 +6,14 @@ const router = Router();
 /** @test By trying to log into google using the web */
 
 /**
- * @api {get} /auth/google/redirect Handle the data sent from google
- * @apiName Google Oauth2 Redirect
+ * @api {get} /auth/google/ Start google authentication process
+ * @apiName Google Oauth2
  * @apiGroup Google Authentication
  *
  * @apiDescription http://www.passportjs.org/packages/passport-google-oauth20/
  */
-router.get('/', passport.authenticate('google'), (_req, res) => {
+router.get('/', passport.authenticate('google', {
+  scope: ['profile', 'email'],
+}));
 
-  res.redirect('/auth/test');
-
-});
-
-export { router as getGoogleRedirect };
+export default router;

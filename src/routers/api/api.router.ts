@@ -1,20 +1,16 @@
 import express from 'express';
 
-import { postGoogleAuthcode } from './auth/google-authcode';
-import { getGoogle } from './auth/google';
-import { getGoogleRedirect } from './auth/google/redirect';
-
-import { postCanvas } from './canvas';
-import { getCanvasDocument } from './canvas/document';
+import auth from './auth';
+import canvas from './canvas';
 
 const router = express.Router();
 
-router.use('/auth/google-authcode', postGoogleAuthcode);
-router.use('/auth/google', getGoogle);
-router.use('/auth/google/redirect', getGoogleRedirect);
+router.use('/auth/google-authcode', auth.googleAuthcode.post);
+router.use('/auth/google', auth.google.get);
+router.use('/auth/google/redirect', auth.google.redirect.get);
 
-router.use('/canvas/:id', getCanvasDocument);
-router.use('/canvas', postCanvas);
+router.use('/canvas/:id', canvas.document.get);
+router.use('/canvas', canvas.post);
 
 /** @todo improve image storage / retrieval when we reach production */
 router.use('/images/canvas', express.static('uploads/canvas_images'));
