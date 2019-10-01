@@ -26,7 +26,7 @@ const upload = multer({
 }).single('canvas');
 
 /**
- * @api {post} /canvases Create a new canvas
+ * @api {post} /canvas Create a new canvas
  * @apiName CreateCanvas
  * @apiGroup Canvases
  *
@@ -81,4 +81,4 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
 
 });
 
-export default router;
+export { router as postCanvas };

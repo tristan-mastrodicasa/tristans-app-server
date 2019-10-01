@@ -1,14 +1,14 @@
 import supertest from 'supertest';
 import express from 'express';
 import crypto from 'crypto';
-import router from './';
+import { getCanvasDocument } from './get.canvas.document';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware, createNewCanvas } from 'shared/helpers';
 import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { EVisibility } from 'shared/models';
 
-describe('GET canvases/:id', () => {
+describe('GET canvas/:id', () => {
 
   let app: express.Express;
   let canvasId: number;
@@ -17,7 +17,7 @@ describe('GET canvases/:id', () => {
   beforeAll(async () => {
     userInfo = await getNewAuthorizedUser();
     app = express();
-    app.use(router);
+    app.use(getCanvasDocument);
     app.use(httpErrorMiddleware);
 
     // Generate a phony canvas to get //

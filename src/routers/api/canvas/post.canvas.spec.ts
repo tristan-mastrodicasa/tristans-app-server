@@ -1,12 +1,12 @@
 import supertest from 'supertest';
 import express from 'express';
-import router from './';
+import { postCanvas } from './post.canvas';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware } from 'shared/helpers';
 import { Canvas } from 'database/entities/canvas.entity';
 import { User } from 'database/entities/user.entity';
 
-describe('POST canvases', () => {
+describe('POST canvas', () => {
 
   let app: express.Express;
   let userInfo: { token: string, userid: number };
@@ -14,7 +14,7 @@ describe('POST canvases', () => {
   beforeAll(async () => {
     userInfo = await getNewAuthorizedUser();
     app = express();
-    app.use(router);
+    app.use(postCanvas);
     app.use(httpErrorMiddleware);
   });
 

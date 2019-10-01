@@ -1,12 +1,12 @@
 import supertest from 'supertest';
 import express from 'express';
-import router from './';
+import { postGoogleAuthcode } from './post.google-authcode';
 import { httpErrorMiddleware } from 'shared/helpers';
 
 describe('POST google-authcode', () => {
 
   const app = express();
-  app.use(router);
+  app.use(postGoogleAuthcode);
   app.use(httpErrorMiddleware);
 
   it('should fail if an invalid google authcode is sent', async () => {

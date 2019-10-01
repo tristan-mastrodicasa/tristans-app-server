@@ -1,31 +1,20 @@
 import express from 'express';
 
-/* tslint:disable */
+import { postGoogleAuthcode } from './auth/google-authcode';
+import { getGoogle } from './auth/google';
+import { getGoogleRedirect } from './auth/google/redirect';
 
-/** @todo if variable clashes disable import-name tslint rule from microsoft-contrib */
-import authGoogleAuthcode from './auth/google-authcode';
-import authGoogle from './auth/google';
-import authGoogleRedirect from './auth/google/redirect';
-
-import authTest from './auth/test';
-import authTestUnprotected from './auth/test/unprotected';
-
-import canvases from './canvases';
-import canvasesDocument from './canvases/document';
-
-/* tslint:enable */
+import { postCanvas } from './canvas';
+import { getCanvasDocument } from './canvas/document';
 
 const router = express.Router();
 
-router.use('/auth/google-authcode', authGoogleAuthcode);
-router.use('/auth/google', authGoogle);
-router.use('/auth/google/redirect', authGoogleRedirect);
+router.use('/auth/google-authcode', postGoogleAuthcode);
+router.use('/auth/google', getGoogle);
+router.use('/auth/google/redirect', getGoogleRedirect);
 
-router.use('/auth/test', authTest);
-router.use('/auth/test/unprotected', authTestUnprotected);
-
-router.use('/canvases', canvasesDocument);
-router.use('/canvases', canvases);
+router.use('/canvas/:id', getCanvasDocument);
+router.use('/canvas', postCanvas);
 
 /** @todo improve image storage / retrieval when we reach production */
 router.use('/images/canvas', express.static('uploads/canvas_images'));

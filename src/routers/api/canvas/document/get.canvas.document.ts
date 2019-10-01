@@ -7,7 +7,7 @@ import env from 'conf/env';
 
 const router = Router({ mergeParams: true });
 
-router.get('/:id', (req, res, next) => {
+router.get('/', (req, res, next) => {
 
   Canvas.findOne(req.params.id).then(
     (canvas: Canvas) => {
@@ -41,4 +41,4 @@ router.get('/:id', (req, res, next) => {
 
 });
 
-export default router;
+export { router as getCanvasDocument };
