@@ -2,7 +2,7 @@ import express from 'express';
 
 /* tslint:disable */
 
-/** @todo if variable clashes disable import-name tslint rule form microsoft-contrib */
+/** @todo if variable clashes disable import-name tslint rule from microsoft-contrib */
 import authGoogleAuthcode from './auth/google-authcode';
 import authGoogle from './auth/google';
 import authGoogleRedirect from './auth/google/redirect';
@@ -24,8 +24,8 @@ router.use('/auth/google/redirect', authGoogleRedirect);
 router.use('/auth/test', authTest);
 router.use('/auth/test/unprotected', authTestUnprotected);
 
+router.use('/canvases', canvasesDocument);
 router.use('/canvases', canvases);
-router.use('/canvases/:id', canvasesDocument);
 
 /** @todo improve image storage / retrieval when we reach production */
 router.use('/images/canvas', express.static('uploads/canvas_images'));

@@ -7,9 +7,7 @@ import env from 'conf/env';
 
 const router = Router({ mergeParams: true });
 
-router.get('/', (req, res, next) => {
-
-  console.log(req.params);
+router.get('/:id', (req, res, next) => {
 
   Canvas.findOne(req.params.id).then(
     (canvas: Canvas) => {
