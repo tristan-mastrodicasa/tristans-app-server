@@ -30,10 +30,17 @@ describe('GET canvas/:id', () => {
     await user.remove(); // Deletes all associated canvases too
   });
 
-  it('should work with ideal inputs', async () => {
+  it('should work with ideal inputs and auth token', async () => {
     const res = await supertest(app)
       .get(`/${canvasId}`)
       .set('Authorization', `Bearer ${userInfo.token}`);
+
+    expect(res.body.type).toEqual('canvas');
+  });
+
+  it('should work with ideal inputs and no auth token', async () => {
+    const res = await supertest(app)
+      .get(`/${canvasId}`);
 
     expect(res.body.type).toEqual('canvas');
   });
@@ -57,17 +64,9 @@ describe('GET canvas/:id', () => {
 
   });
 
-  it('should fail without auth token', async () => {
-    const res = await supertest(app)
-      .get(`/${canvasId}`);
-
-    expect(res.status).toEqual(401);
-  });
-
   it('should fail when id doesn\'t exist', async () => {
     const res = await supertest(app)
-      .get('/1323423423')
-      .set('Authorization', `Bearer ${userInfo.token}`);
+      .get('/1323423423');
 
     expect(res.status).toEqual(404);
     expect(res.body.errors[0]).toBeDefined();

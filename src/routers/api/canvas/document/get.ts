@@ -23,43 +23,49 @@ const router = Router({ mergeParams: true });
  * @apiError (HTTP Error Codes) 401 Unauthorized to get
  * @apiError (HTTP Error Codes) 404 Cannot find canvas
  */
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 
-  const canvas = await Canvas.findOne(req.params.id, { relations: ['user'] });
+  passport.authenticate('jwt', { session: false }, async (_err, user, _info) => {
 
-  if (canvas) {
+    const canvas = await Canvas.findOne(req.params.id, { relations: ['user'] });
 
-    // Check if the canvas has been starred //
-    const reactCount = await getConnection()
-      .getRepository(CanvasReacts)
-      .createQueryBuilder('entity')
-      .where('userId = :uid AND canvasId= :cid', { uid: canvas.user.id, cid: canvas.id })
-      .getCount();
+    if (canvas) {
 
-    const contentCard: ContentCard = {
-      type: EContentType.Canvas,
-      id: canvas.id,
-      users: {
-        primary: {
-          id: canvas.user.id,
-          firstName: canvas.user.firstname,
-          username: canvas.user.username,
-          photo: canvas.user.profileImg },
-      },
-      imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
-      description: canvas.description,
-      stars: canvas.stars,
-      starred: (reactCount > 0 ? true : false), // Check canvas activity
-      utcTime: +canvas.utc,
-    };
+      let reactCount = 0;
 
-    res.send(contentCard);
+      // Check if the canvas has been starred //
+      if (user) {
+        reactCount = await getConnection()
+          .getRepository(CanvasReacts)
+          .createQueryBuilder('entity')
+          .where('userId = :uid AND canvasId = :cid', { uid: canvas.user.id, cid: canvas.id })
+          .getCount();
+      }
 
-  } else {
+      const contentCard: ContentCard = {
+        type: EContentType.Canvas,
+        id: canvas.id,
+        users: {
+          primary: {
+            id: canvas.user.id,
+            firstName: canvas.user.firstname,
+            username: canvas.user.username,
+            photo: canvas.user.profileImg },
+        },
+        imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
+        description: canvas.description,
+        stars: canvas.stars,
+        starred: (reactCount > 0 ? true : false), // Check canvas activity
+        utcTime: +canvas.utc,
+      };
 
-    next({ content: [{ detail: 'Canvas not found' }], status: 404 });
+      return res.send(contentCard);
 
-  }
+    }
+
+    return next({ content: [{ detail: 'Canvas not found' }], status: 404 });
+
+  })(req, res, next);
 
 });
 
