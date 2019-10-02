@@ -33,6 +33,7 @@ describe('POST canvas', () => {
       .field('description', description)
       .attach('canvas', 'src/spec-helpers/images/medium-image.jpg');
 
+    expect(res.status).toBe(201);
     expect(res.body.canvasId).toBeDefined();
 
     const canvas = await Canvas.findOne(res.body.canvasId);

@@ -71,7 +71,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
       }
 
       const canvasId: CanvasUploaded = { canvasId: canvasRecord.id };
-      return res.json(canvasId);
+      return res.status(201).json(canvasId);
 
     }
 

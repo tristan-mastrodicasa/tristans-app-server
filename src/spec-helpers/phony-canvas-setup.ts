@@ -12,7 +12,7 @@ export async function getPhonyCanvas(userid: number): Promise<number> {
 
   // Generate a phony canvas //
   const canvas = new Canvas();
-  canvas.imagePath = 'default_canvas.jpg';
+  canvas.imagePath = `${(+new Date())}.jpg`; // unique image path
   canvas.mimetype = 'image/jpeg';
   canvas.visibility = EVisibility.public; // Only public to start
   canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
