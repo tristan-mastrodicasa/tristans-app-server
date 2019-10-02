@@ -1,12 +1,13 @@
 import supertest from 'supertest';
 import express from 'express';
-import crypto from 'crypto';
+
 import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
-import { httpErrorMiddleware, createNewCanvas } from 'shared/helpers';
+import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
+import { httpErrorMiddleware } from 'shared/helpers';
 import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
-import { EVisibility } from 'shared/models';
+import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 
 describe('GET canvas/:id', () => {
 
@@ -20,30 +21,56 @@ describe('GET canvas/:id', () => {
     app.use('/:id', get);
     app.use(httpErrorMiddleware);
 
-    // Generate a phony canvas to get //
-    const canvas = new Canvas();
-    canvas.imagePath = 'default_canvas.jpg';
-    canvas.mimetype = 'image/jpeg';
-    canvas.visibility = EVisibility.public; // Only public to start
-    canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
-
-    const canvasRecord = await createNewCanvas(canvas, userInfo.userid);
-    canvasId = canvasRecord.id;
+    canvasId = await getPhonyCanvas(userInfo.userid);
   });
 
   // Remove the test authorized user //
   afterAll(async () => {
     const user = await User.findOne(userInfo.userid);
-    await user.remove();
+    await user.remove(); // Deletes all associated canvases too
   });
 
   it('should work with ideal inputs', async () => {
+    const res = await supertest(app)
+      .get(`/${canvasId}`)
+      .set('Authorization', `Bearer ${userInfo.token}`);
+
+    expect(res.body.type).toEqual('canvas');
+  });
+
+  it('should notifiy the user when they star that content', async () => {
+
+    // Simulate starring the canvas //
+    const user = await User.findOne(userInfo.userid);
+    const canvas = await Canvas.findOne(canvasId);
+
+    const reactsRecord = new CanvasReacts();
+    reactsRecord.canvas = canvas;
+    reactsRecord.user = user;
+    await reactsRecord.save();
 
     const res = await supertest(app)
       .get(`/${canvasId}`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
-    console.log(res.body);
+    expect(res.body.starred).toEqual(true);
+
+  });
+
+  it('should fail without auth token', async () => {
+    const res = await supertest(app)
+      .get(`/${canvasId}`);
+
+    expect(res.status).toEqual(401);
+  });
+
+  it('should fail when id doesn\'t exist', async () => {
+    const res = await supertest(app)
+      .get('/1323423423')
+      .set('Authorization', `Bearer ${userInfo.token}`);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.errors[0]).toBeDefined();
   });
 
 });

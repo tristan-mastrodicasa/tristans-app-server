@@ -9,7 +9,6 @@ export * from './jwt-content.interface';
 export * from './profile.interface';
 export * from './user-item.interface';
 
-export * from './canvas-actions.enum';
 export * from './content-type.enum';
 export * from './meme-actions.enum';
 export * from './profile-actions.enum';

@@ -25,7 +25,7 @@ export class MemeActivity extends BaseEntity {
   @ManyToOne(() => Meme, meme => meme.activity, { onDelete: 'CASCADE' })
   public meme: Meme;
 
-  @ManyToOne(() => User, user => user.canvasActivity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.canvasReacts, { onDelete: 'CASCADE' })
   public user: User;
 
 }

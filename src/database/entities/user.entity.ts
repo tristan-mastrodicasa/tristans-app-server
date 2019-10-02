@@ -5,7 +5,7 @@ import { UserStatistics } from './user-statistics.entity';
 import { UserSettings } from './user-settings.entity';
 import { UserActivity } from './user-activity.entity';
 import { Canvas } from './canvas.entity';
-import { CanvasActivity } from './canvas-activity.entity';
+import { CanvasReacts } from './canvas-reacts.entity';
 import { Meme } from './meme.entity';
 import { MemeActivity } from './meme-activity.entity';
 import { CanvasInvites } from './canvas-invites.entity';
@@ -66,8 +66,8 @@ export class User extends BaseEntity {
   @OneToMany(() => Meme, meme => meme.user)
   public memes: Meme[]; // memes of the client
 
-  @OneToMany(() => CanvasActivity, canvasActivity => canvasActivity.user)
-  public canvasActivity: CanvasActivity[]; // actions over canvas
+  @OneToMany(() => CanvasReacts, canvasReacts => canvasReacts.user)
+  public canvasReacts: CanvasReacts[]; // actions over canvas
 
   @OneToMany(() => MemeActivity, memeActivity => memeActivity.user)
   public memeActivity: MemeActivity[]; // actions over memes

@@ -11,13 +11,16 @@ Document: A single resource
 Collection: A collection of resources
 Controller: An action which affects multiple resources (like methods of a class)
 
+DELETE /canvas/:id -> Delete canvas
 GET  /canvas/:id -> Document: Get a canvas
 POST /canvas/:id/star -> Controller: "Star" a canvas
 POST /canvas/:id/remove-star -> Controller: Remove your "Star" from a canvas if you made one
 POST /canvas -> Create a canvas
 
 GET  /canvas/:id/memes ?results ?page -> Collection: Get list of memes for a specific canvas
-POST /canvas/:id/memes -> Create a meme
+
+POST /meme ?canvas_id -> Create a meme
+DELETE /meme/:id -> Delete a meme
 
 GET  /user/:id -> Document: Get a user
 GET  /user/:id/settings -> Document: Settings for a user

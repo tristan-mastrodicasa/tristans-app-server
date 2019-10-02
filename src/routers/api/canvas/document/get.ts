@@ -1,43 +1,51 @@
 import { Router } from 'express';
-
+import passport from 'passport';
+import { getConnection } from 'typeorm';
 import { Canvas } from 'database/entities/canvas.entity';
+import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { ContentCard, EContentType } from 'shared/models';
 
 import env from 'conf/env';
 
 const router = Router({ mergeParams: true });
 
-router.get('/', (req, res, next) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
-  Canvas.findOne(req.params.id).then(
-    (canvas: Canvas) => {
+  const canvas = await Canvas.findOne(req.params.id, { relations: ['user'] });
 
-      if (canvas) {
+  if (canvas) {
 
-        const contentCard: ContentCard = {
-          type: EContentType.Canvas,
-          id: canvas.id,
-          users: {
-            primary: { id: 1, firstName: 'Tristan', username: 'ghoststeam217', photo: '/assets/svg-img/default-profile-picture.svg' },
-          },
-          imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
-          description: canvas.description,
-          stars: canvas.stars,
-          starred: false, // Check canvas activity
-          utcTime: +canvas.utc,
-        };
+    // Check if the canvas has been starred //
+    const reactCount = await getConnection()
+      .getRepository(CanvasReacts)
+      .createQueryBuilder('entity')
+      .where('userId = :uid AND canvasId= :cid', { uid: canvas.user.id, cid: canvas.id })
+      .getCount();
 
-        res.send(contentCard);
+    const contentCard: ContentCard = {
+      type: EContentType.Canvas,
+      id: canvas.id,
+      users: {
+        primary: {
+          id: canvas.user.id,
+          firstName: canvas.user.firstname,
+          username: canvas.user.username,
+          photo: canvas.user.profileImg },
+      },
+      imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
+      description: canvas.description,
+      stars: canvas.stars,
+      starred: (reactCount > 0 ? true : false), // Check canvas activity
+      utcTime: +canvas.utc,
+    };
 
-      } else {
+    res.send(contentCard);
 
-        console.log('error');
-        next({ content: [{ detail: 'Canvas not found' }], status: 404 });
+  } else {
 
-      }
+    next({ content: [{ detail: 'Canvas not found' }], status: 404 });
 
-    },
-  );
+  }
 
 });
 

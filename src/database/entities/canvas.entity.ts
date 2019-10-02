@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { IsOptional, Length, MaxLength, IsEnum, IsInt, IsDate, IsBoolean } from 'class-validator';
+import { IsOptional, Length, MaxLength, IsEnum, IsInt, IsDate } from 'class-validator';
 import { User } from './user.entity';
-import { CanvasActivity } from './canvas-activity.entity';
+import { CanvasReacts } from './canvas-reacts.entity';
 import { CanvasInvites } from './canvas-invites.entity';
 import { Meme } from './meme.entity';
 
@@ -47,16 +47,11 @@ export class Canvas extends BaseEntity {
   @IsDate()
   public utc?: Date;
 
-  @Column('boolean', { default: () => false })
-  @IsOptional()
-  @IsBoolean()
-  public deleted?: boolean;
-
   @ManyToOne(() => User, user => user.canvases, { onDelete: 'CASCADE' })
   public user: User;
 
-  @OneToMany(() => CanvasActivity, canvasActivity => canvasActivity.canvas)
-  public activity: CanvasActivity[];
+  @OneToMany(() => CanvasReacts, canvasReacts => canvasReacts.canvas)
+  public activity: CanvasReacts[];
 
   @OneToMany(() => Meme, meme => meme.canvas)
   public memes: Meme[];
