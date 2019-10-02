@@ -9,6 +9,20 @@ import env from 'conf/env';
 
 const router = Router({ mergeParams: true });
 
+/**
+ * @api {get} /canvas/:id Get a canvas document
+ * @apiName GetCanvas
+ * @apiGroup Canvas
+ *
+ * @apiHeader (Optional Headers) Authorization Bearer [token]
+ *
+ * @apiParam {Number} id The id of the canvas
+ *
+ * @apiSuccess (200) {Object} contentCard JSON object describing the canvas content card
+ *
+ * @apiError (HTTP Error Codes) 401 Unauthorized to get
+ * @apiError (HTTP Error Codes) 404 Cannot find canvas
+ */
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   const canvas = await Canvas.findOne(req.params.id, { relations: ['user'] });

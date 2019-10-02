@@ -28,11 +28,13 @@ const upload = multer({
 /**
  * @api {post} /canvas Create a new canvas
  * @apiName CreateCanvas
- * @apiGroup Canvases
+ * @apiGroup Canvas
+ *
+ * @apiHeader Authorization Bearer [token]
  *
  * @apiParam {String} description The description of the canvas
  *
- * @apiSuccess {String} canvasId The id of the new canvas
+ * @apiSuccess (201) {String} canvasId The id of the new canvas
  *
  * @apiError (HTTP Error Codes) 400 Validation error
  * @apiError (HTTP Error Codes) 401 Unauthorized

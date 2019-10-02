@@ -5,6 +5,18 @@ import { Canvas } from 'database/entities/canvas.entity';
 
 const router = Router({ mergeParams: true });
 
+/**
+ * @api {delete} /canvas/:id Delete canvas document
+ * @apiName DeleteCanvas
+ * @apiGroup Canvas
+ *
+ * @apiHeader Authorization Bearer [token]
+ *
+ * @apiParam {Number} id The id of the canvas
+ *
+ * @apiError (HTTP Error Codes) 401 Unauthorized to delete
+ * @apiError (HTTP Error Codes) 404 Cannot find canvas
+ */
 router.delete('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   const canvas = await Canvas.findOne(req.params.id, { relations: ['user'] });
