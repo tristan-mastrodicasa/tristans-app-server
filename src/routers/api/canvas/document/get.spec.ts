@@ -4,10 +4,8 @@ import express from 'express';
 import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
-import { httpErrorMiddleware } from 'shared/helpers';
+import { httpErrorMiddleware, reactToCanvas } from 'shared/helpers';
 import { User } from 'database/entities/user.entity';
-import { Canvas } from 'database/entities/canvas.entity';
-import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 
 describe('GET canvas/:id', () => {
 
@@ -47,14 +45,8 @@ describe('GET canvas/:id', () => {
 
   it('should notifiy the user when they star that content', async () => {
 
-    // Simulate starring the canvas //
-    const user = await User.findOne(userInfo.userid);
-    const canvas = await Canvas.findOne(canvasId);
-
-    const reactsRecord = new CanvasReacts();
-    reactsRecord.canvas = canvas;
-    reactsRecord.user = user;
-    await reactsRecord.save();
+    // Star the canvas //
+    await reactToCanvas(canvasId, userInfo.userid);
 
     const res = await supertest(app)
       .get(`/${canvasId}`)

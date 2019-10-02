@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { getConnection } from 'typeorm';
+import { checkReactionToCanvas } from 'shared/helpers';
 import { Canvas } from 'database/entities/canvas.entity';
-import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { ContentCard, EContentType } from 'shared/models';
 
 import env from 'conf/env';
@@ -31,15 +30,11 @@ router.get('/', async (req, res, next) => {
 
     if (canvas) {
 
-      let reactCount = 0;
+      let userReacted = false;
 
       // Check if the canvas has been starred //
       if (user) {
-        reactCount = await getConnection()
-          .getRepository(CanvasReacts)
-          .createQueryBuilder('entity')
-          .where('userId = :uid AND canvasId = :cid', { uid: canvas.user.id, cid: canvas.id })
-          .getCount();
+        userReacted = await checkReactionToCanvas(req.params.id, user.id);
       }
 
       const contentCard: ContentCard = {
@@ -55,7 +50,7 @@ router.get('/', async (req, res, next) => {
         imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
         description: canvas.description,
         stars: canvas.stars,
-        starred: (reactCount > 0 ? true : false), // Check canvas activity
+        starred: userReacted,
         utcTime: +canvas.utc,
       };
 
