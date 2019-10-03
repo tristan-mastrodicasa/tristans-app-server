@@ -1,36 +1,30 @@
 import supertest from 'supertest';
 import express from 'express';
-
 import get from './get';
+import { Canvas } from 'database/entities/canvas.entity';
+import { User } from 'database/entities/user.entity';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 import { httpErrorMiddleware, canvasReactmanager } from 'shared/helpers';
-import { User } from 'database/entities/user.entity';
 
 describe('GET canvas/:id', () => {
 
   let app: express.Express;
-  let canvasId: number;
-  let userInfo: { token: string, userid: number };
+  let canvas: Canvas;
+  let userInfo: { token: string, user: User };
 
   beforeAll(async () => {
-    userInfo = await getNewAuthorizedUser();
     app = express();
     app.use('/:id', get);
     app.use(httpErrorMiddleware);
 
-    canvasId = await getPhonyCanvas(userInfo.userid);
-  });
-
-  // Remove the test authorized user //
-  afterAll(async () => {
-    const user = await User.findOne(userInfo.userid);
-    await user.remove(); // Deletes all associated canvases too
+    userInfo = await getNewAuthorizedUser();
+    canvas = await getPhonyCanvas(userInfo.user.id);
   });
 
   it('should work with ideal inputs and auth token', async () => {
     const res = await supertest(app)
-      .get(`/${canvasId}`)
+      .get(`/${canvas.id}`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     expect(res.body.type).toEqual('canvas');
@@ -38,7 +32,7 @@ describe('GET canvas/:id', () => {
 
   it('should work with ideal inputs and no auth token', async () => {
     const res = await supertest(app)
-      .get(`/${canvasId}`);
+      .get(`/${canvas.id}`);
 
     expect(res.body.type).toEqual('canvas');
   });
@@ -46,10 +40,10 @@ describe('GET canvas/:id', () => {
   it('should notifiy the user when they star that content', async () => {
 
     // Star the canvas //
-    await canvasReactmanager('add', canvasId, userInfo.userid);
+    await canvasReactmanager('add', canvas.id, userInfo.user.id);
 
     const res = await supertest(app)
-      .get(`/${canvasId}`)
+      .get(`/${canvas.id}`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     expect(res.body.starred).toEqual(true);

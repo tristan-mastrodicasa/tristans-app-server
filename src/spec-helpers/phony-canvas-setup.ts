@@ -8,7 +8,7 @@ import { createNewCanvas } from 'shared/helpers';
  * @param  userid User to link the canvas too
  * @return        canvas id
  */
-export async function getPhonyCanvas(userid: number): Promise<number> {
+export async function getPhonyCanvas(userid: number): Promise<Canvas> {
 
   // Generate a phony canvas //
   const canvas = new Canvas();
@@ -17,7 +17,6 @@ export async function getPhonyCanvas(userid: number): Promise<number> {
   canvas.visibility = EVisibility.public; // Only public to start
   canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
 
-  const canvasRecord = await createNewCanvas(canvas, userid);
-  return canvasRecord.id;
+  return createNewCanvas(canvas, userid);
 
 }

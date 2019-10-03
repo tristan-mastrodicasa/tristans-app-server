@@ -4,27 +4,19 @@ import post from './post';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware } from 'shared/helpers';
 import { Canvas } from 'database/entities/canvas.entity';
-import { User } from 'database/entities/user.entity';
 
 describe('POST canvas', () => {
 
   let app: express.Express;
-  let userInfo: { token: string, userid: number };
 
   beforeAll(async () => {
-    userInfo = await getNewAuthorizedUser();
     app = express();
     app.use(post);
     app.use(httpErrorMiddleware);
   });
 
-  // Remove the test authorized user //
-  afterAll(async () => {
-    const user = await User.findOne(userInfo.userid);
-    await user.remove();
-  });
-
   it('should create a canvas with ideal inputs', async () => {
+    const userInfo = await getNewAuthorizedUser();
     const description = 'Hi there';
 
     const res = await supertest(app)
@@ -39,8 +31,8 @@ describe('POST canvas', () => {
     const canvas = await Canvas.findOne(res.body.canvasId);
     expect(canvas.description).toEqual(description);
 
-    const user = await User.findOne(userInfo.userid, { relations: ['statistics'] });
-    expect(user.statistics.contentNum).toBeGreaterThan(0);
+    await userInfo.user.statistics.reload();
+    expect(userInfo.user.statistics.contentNum).toBeGreaterThan(0);
 
     await canvas.remove();
   });
@@ -58,7 +50,9 @@ describe('POST canvas', () => {
     expect(res.status).toEqual(401);
   });
 
+  /** Randomly failed (canvas id was not defined) once */
   it('should create a canvas with no description', async () => {
+    const userInfo = await getNewAuthorizedUser();
 
     const res = await supertest(app)
       .post('/')
@@ -76,6 +70,7 @@ describe('POST canvas', () => {
   });
 
   it('should fail with a description that\'s too long', async () => {
+    const userInfo = await getNewAuthorizedUser();
 
     const res = await supertest(app)
       .post('/')
@@ -89,6 +84,7 @@ describe('POST canvas', () => {
   });
 
   it('should fail if canvas image is too big', async () => {
+    const userInfo = await getNewAuthorizedUser();
     const description = 'Testing';
 
     const res = await supertest(app)
@@ -103,6 +99,7 @@ describe('POST canvas', () => {
   });
 
   it('should fail if canvas image is wrong file type', async () => {
+    const userInfo = await getNewAuthorizedUser();
     const description = 'Testing';
 
     const res = await supertest(app)
@@ -117,6 +114,7 @@ describe('POST canvas', () => {
   });
 
   it('should fail if canvas image is missing', async () => {
+    const userInfo = await getNewAuthorizedUser();
     const description = 'Testing';
 
     const res = await supertest(app)
@@ -130,7 +128,7 @@ describe('POST canvas', () => {
   });
 
   it('should fail if > 6 canvases uploaded a day', async () => {
-
+    const userInfo = await getNewAuthorizedUser();
     const canvasArray: number[] = [];
 
     // Create a lot of canvases //
@@ -157,7 +155,7 @@ describe('POST canvas', () => {
   });
 
   it('should succeed if < 6 canvases uploaded a day', async () => {
-
+    const userInfo = await getNewAuthorizedUser();
     const canvasArray: number[] = [];
 
     // Create 6 canvases //

@@ -7,5 +7,12 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+
+  // Reset entire database //
+  const queryRunner = getConnection().createQueryRunner();
+  await queryRunner.dropDatabase(<string>ormconfig.database);
+  await queryRunner.createDatabase(<string>ormconfig.database, true);
+
   await getConnection().close();
+
 });
