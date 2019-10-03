@@ -161,16 +161,16 @@ describe('POST canvas', () => {
     // Create 6 canvases //
     for (let i = 0; i < 6; i += 1) {
       const res = await supertest(app)
-      .post('/')
-      .set('Authorization', `Bearer ${userInfo.token}`)
-      .attach('canvas', 'src/spec-helpers/images/medium-image.jpg');
+        .post('/')
+        .set('Authorization', `Bearer ${userInfo.token}`)
+        .attach('canvas', 'src/spec-helpers/images/medium-image.jpg');
 
       canvasArray.push(res.body.canvasId);
     }
 
     // Set the time of creation for the first canvas to yesterday //
     const canvas = await Canvas.findOne(canvasArray[0]);
-    canvas.utc.setDate(canvas.utc.getDate() - 1);
+    canvas.utc.setDate(canvas.utc.getDate() - 2);
     await canvas.save();
 
     // Create another canvas //

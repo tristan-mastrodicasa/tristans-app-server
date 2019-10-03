@@ -1,6 +1,7 @@
 export * from './api-responses/canvas-uploaded.interface';
 export * from './api-responses/http-error.interface';
 export * from './api-responses/token.interface';
+export * from './api-responses/meme-uploaded.interface';
 
 export * from './content-card.type';
 

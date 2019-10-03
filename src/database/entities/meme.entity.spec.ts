@@ -6,6 +6,7 @@ describe('meme entity', () => {
 
   beforeEach(() => {
     idealMeme.imagePath = '/uploaded_meme/3ABC1345FAE123.jpg';
+    idealMeme.mimetype = 'image/jpeg';
   });
 
   it('should work with an ideal meme', async () => {

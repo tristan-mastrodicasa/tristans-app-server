@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { checkReactionToCanvas } from 'shared/helpers';
+import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { ContentCard, EContentType } from 'shared/models';
 
@@ -30,11 +30,11 @@ router.get('/', async (req, res, next) => {
 
     if (canvas) {
 
-      let userReacted = false;
+      let userReacted = undefined;
 
       // Check if the canvas has been starred //
       if (user) {
-        userReacted = await checkReactionToCanvas(req.params.id, user.id);
+        userReacted = await CanvasReacts.findOne({ canvas, user });
       }
 
       const contentCard: ContentCard = {
@@ -50,7 +50,7 @@ router.get('/', async (req, res, next) => {
         imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
         description: canvas.description,
         stars: canvas.stars,
-        starred: userReacted,
+        starred: (userReacted ? true : false),
         utcTime: +canvas.utc,
       };
 

@@ -14,7 +14,7 @@ const router = Router({ mergeParams: true });
  *
  * @apiParam {Number} id The id of the canvas
  *
- * @apiError (HTTP Error Codes) 401 Unauthorized to react
+ * @apiError (HTTP Error Codes) 401 Unauthorized to remove react
  * @apiError (HTTP Error Codes) 404 Cannot find canvas
  */
 router.delete('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {

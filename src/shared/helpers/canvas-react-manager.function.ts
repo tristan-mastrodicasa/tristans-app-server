@@ -2,7 +2,6 @@ import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { EInfluence } from 'shared/models';
-import { checkReactionToCanvas } from './';
 
 /**
  * Manage reacts to a canvas
@@ -12,15 +11,15 @@ import { checkReactionToCanvas } from './';
  */
 export async function canvasReactmanager(action: 'add' | 'remove', canvasId: number, userId: number): Promise<void> {
 
+  const user = await User.findOne(userId);
+  const canvas = await Canvas.findOne(canvasId, { relations: ['user'] });
+
   // Check react status //
-  const hasReacted = await checkReactionToCanvas(canvasId, userId);
+  const hasReacted = await CanvasReacts.findOne({ canvas, user });
 
   // Do nothing if the action has already occured //
   if (hasReacted && action === 'add') return;
   if (!hasReacted && action === 'remove') return;
-
-  const user = await User.findOne(userId);
-  const canvas = await Canvas.findOne(canvasId, { relations: ['user'] });
 
   // Increase canvas star stats //
   canvas.stars += (action === 'remove' ? -1 : 1);

@@ -13,8 +13,8 @@ Controller: An action which affects multiple resources (like methods of a class)
 
 DELETE /canvas/:id -> Delete canvas
 GET  /canvas/:id -> Document: Get a canvas
-POST /canvas/:id/add-star -> Controller: "Star" a canvas
-POST /canvas/:id/remove-star -> Controller: Remove your "Star" from a canvas if you made one
+POST /canvas/:id/star -> Controller: "Star" a canvas
+DELETE /canvas/:id/star -> Controller: Remove your "Star" from a canvas if you made one
 POST /canvas -> Create a canvas
 
 GET  /canvas/:id/memes ?results ?page -> Collection: Get list of memes for a specific canvas

@@ -3,4 +3,5 @@
  */
 export enum EInfluence {
   star = 5,
+  memeCreated = 25,
 }
