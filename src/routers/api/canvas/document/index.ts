@@ -1,9 +1,9 @@
 import get from './get';
 import del from './del';
-import addStar from './add-star';
+import star from './star';
 
 export default {
   get,
   del,
-  addStar,
+  star,
 };
