@@ -8,7 +8,7 @@ import { httpErrorMiddleware } from 'shared/helpers';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 
-describe('POST canvas/:id/add-star', () => {
+describe('POST canvas/:id/star', () => {
 
   let app: express.Express;
   let canvasId: number;
@@ -17,7 +17,7 @@ describe('POST canvas/:id/add-star', () => {
   beforeAll(async () => {
     userInfo = await getNewAuthorizedUser();
     app = express();
-    app.use('/:id/add-star', post);
+    app.use('/:id/star', post);
     app.use(httpErrorMiddleware);
 
     canvasId = await getPhonyCanvas(userInfo.userid);
@@ -31,7 +31,7 @@ describe('POST canvas/:id/add-star', () => {
 
   it('should work with ideal inputs', async () => {
     const res = await supertest(app)
-      .post(`/${canvasId}/add-star`)
+      .post(`/${canvasId}/star`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     // Expect the canvas star stats to increase //
@@ -47,14 +47,14 @@ describe('POST canvas/:id/add-star', () => {
 
   it('should fail without authorization', async () => {
     const res = await supertest(app)
-      .post(`/${canvasId}/add-star`);
+      .post(`/${canvasId}/star`);
 
     expect(res.status).toEqual(401);
   });
 
   it('should fail if canvas does not exist', async () => {
     const res = await supertest(app)
-      .post('/31513451345145/add-star')
+      .post('/31513451345145/star')
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     expect(res.body).toBeDefined();
@@ -63,11 +63,11 @@ describe('POST canvas/:id/add-star', () => {
 
   it('should not add more than one star', async () => {
     await supertest(app)
-      .post(`/${canvasId}/add-star`)
+      .post(`/${canvasId}/star`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     const res = await supertest(app)
-      .post(`/${canvasId}/add-star`)
+      .post(`/${canvasId}/star`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     // Expect the canvas star stats to remain at 1 //

@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { reactToCanvas } from 'shared/helpers';
+import { canvasReactmanager } from 'shared/helpers';
 import { Canvas } from 'database/entities/canvas.entity';
 
 const router = Router({ mergeParams: true });
 
 /**
- * @api {post} /canvas/:id/add-star Reac to the post (add a star)
+ * @api {post} /canvas/:id/star React to the post (add a star)
  * @apiName ReactCanvas
  * @apiGroup Canvas
  *
@@ -19,12 +19,12 @@ const router = Router({ mergeParams: true });
  */
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
-  const canvas = await Canvas.findOne(req.params.id, { relations: ['user'] });
+  const canvas = await Canvas.findOne(req.params.id);
 
   // Does canvas exist //
   if (canvas) {
 
-    await reactToCanvas(req.params.id, req.user.id);
+    await canvasReactmanager('add', req.params.id, req.user.id);
     return res.status(200).send();
 
   }
