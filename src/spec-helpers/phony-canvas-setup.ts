@@ -6,7 +6,7 @@ import { createNewCanvas } from 'shared/helpers';
 /**
  * Create a phony canvas
  * @param  userid User to link the canvas too
- * @return        canvas id
+ * @return        canvas
  */
 export async function getPhonyCanvas(userid: number): Promise<Canvas> {
 

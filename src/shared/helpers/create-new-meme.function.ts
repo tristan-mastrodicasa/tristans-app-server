@@ -48,8 +48,12 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
   user.statistics.contentNum += 1;
   await user.statistics.save();
 
-  const canvasOwner = await User.findOne(canvas.user.id, { relations: ['statistics'] });
-  canvasOwner.statistics.influence += EInfluence.memeCreated;
+  // Owner of meme should not get influence if memeing own canvas //
+  if (userid !== canvas.user.id) {
+    const canvasOwner = await User.findOne(canvas.user.id, { relations: ['statistics'] });
+    canvasOwner.statistics.influence += EInfluence.memeCreated;
+    canvasOwner.statistics.save();
+  }
 
   return meme.save();
 

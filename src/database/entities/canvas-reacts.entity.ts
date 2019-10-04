@@ -11,7 +11,7 @@ export class CanvasReacts extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @ManyToOne(() => Canvas, canvas => canvas.activity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Canvas, canvas => canvas.reacts, { onDelete: 'CASCADE' })
   public canvas: Canvas;
 
   @ManyToOne(() => User, user => user.canvasReacts, { onDelete: 'CASCADE' })

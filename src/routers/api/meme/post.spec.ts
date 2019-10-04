@@ -6,6 +6,7 @@ import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 import { httpErrorMiddleware } from 'shared/helpers';
 import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
+import { EInfluence } from 'shared/models';
 
 describe('POST meme', () => {
 
@@ -40,6 +41,30 @@ describe('POST meme', () => {
 
     await userInfo.user.statistics.reload();
     expect(userInfo.user.statistics.contentNum).toBeGreaterThan(0);
+
+    // Canvas Owner should not get influence for meming own canvas //
+    await userInfo.user.statistics.reload();
+    expect(userInfo.user.statistics.influence).toEqual(0);
+
+  });
+
+  it('should give canvas owner influence when another user memes the canvas', async () => {
+    const userInfo1 = await getNewAuthorizedUser();
+    const userInfo2 = await getNewAuthorizedUser();
+    const canvas = await getPhonyCanvas(userInfo1.user.id);
+
+    const res = await supertest(app)
+      .post('/')
+      .query(`canvasid=${canvas.id}`)
+      .set('Authorization', `Bearer ${userInfo2.token}`)
+      .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
+
+    expect(res.status).toBe(201);
+    expect(res.body.memeId).toBeDefined();
+
+    // The first user should get influence from second user memeing their canvas  //
+    await userInfo1.user.statistics.reload();
+    expect(userInfo1.user.statistics.influence).toEqual(EInfluence.memeCreated);
 
   });
 

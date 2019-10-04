@@ -2,7 +2,7 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMan
 import { IsInt, IsDate, IsOptional, Length } from 'class-validator';
 import { User } from './user.entity';
 import { Canvas } from './canvas.entity';
-import { MemeActivity } from './meme-activity.entity';
+import { MemeReacts } from './meme-reacts.entity';
 
 /**
  * The canvas model describes everything stored per canvas
@@ -37,7 +37,7 @@ export class Meme extends BaseEntity {
   @ManyToOne(() => Canvas, canvas => canvas.memes, { onDelete: 'CASCADE' })
   public canvas: Canvas;
 
-  @OneToMany(() => MemeActivity, memeActivity => memeActivity.meme)
-  public activity: MemeActivity[];
+  @OneToMany(() => MemeReacts, memeReacts => memeReacts.meme)
+  public reacts: MemeReacts[];
 
 }

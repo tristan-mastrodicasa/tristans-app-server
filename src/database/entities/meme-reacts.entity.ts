@@ -7,8 +7,8 @@ import { EMemeActions } from 'shared/models';
 /**
  * The canvas model describes everything stored per canvas
  */
-@Entity('memes_activity')
-export class MemeActivity extends BaseEntity {
+@Entity('memes_reacts')
+export class MemeReacts extends BaseEntity {
 
   @PrimaryGeneratedColumn('increment')
   public id: number;
@@ -22,7 +22,7 @@ export class MemeActivity extends BaseEntity {
   @IsDate()
   public utc?: Date;
 
-  @ManyToOne(() => Meme, meme => meme.activity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Meme, meme => meme.reacts, { onDelete: 'CASCADE' })
   public meme: Meme;
 
   @ManyToOne(() => User, user => user.canvasReacts, { onDelete: 'CASCADE' })

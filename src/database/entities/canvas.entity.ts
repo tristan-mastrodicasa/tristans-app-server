@@ -51,7 +51,7 @@ export class Canvas extends BaseEntity {
   public user: User;
 
   @OneToMany(() => CanvasReacts, canvasReacts => canvasReacts.canvas)
-  public activity: CanvasReacts[];
+  public reacts: CanvasReacts[];
 
   @OneToMany(() => Meme, meme => meme.canvas)
   public memes: Meme[];

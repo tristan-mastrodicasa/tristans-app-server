@@ -7,7 +7,7 @@ import { UserActivity } from './user-activity.entity';
 import { Canvas } from './canvas.entity';
 import { CanvasReacts } from './canvas-reacts.entity';
 import { Meme } from './meme.entity';
-import { MemeActivity } from './meme-activity.entity';
+import { MemeReacts } from './meme-reacts.entity';
 import { CanvasInvites } from './canvas-invites.entity';
 
 /**
@@ -69,8 +69,8 @@ export class User extends BaseEntity {
   @OneToMany(() => CanvasReacts, canvasReacts => canvasReacts.user)
   public canvasReacts: CanvasReacts[]; // actions over canvas
 
-  @OneToMany(() => MemeActivity, memeActivity => memeActivity.user)
-  public memeActivity: MemeActivity[]; // actions over memes
+  @OneToMany(() => MemeReacts, memeReacts => memeReacts.user)
+  public memeReacts: MemeReacts[]; // actions over memes
 
   @OneToOne(() => UserStatistics, userStatistics => userStatistics.user)
   public statistics: UserStatistics; // This field gives access to all user statistics
