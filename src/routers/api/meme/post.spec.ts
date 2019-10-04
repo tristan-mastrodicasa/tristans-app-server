@@ -41,8 +41,6 @@ describe('POST meme', () => {
     await userInfo.user.statistics.reload();
     expect(userInfo.user.statistics.contentNum).toBeGreaterThan(0);
 
-    await meme.remove();
-
   });
 
   it('should fail if no auth token is present', async () => {
@@ -91,6 +89,9 @@ describe('POST meme', () => {
   });
 
   it('should fail if > 20 memes uploaded a day', async () => {
+    // Delete all existing memes //
+    await Meme.remove(await Meme.find());
+
     const userInfo = await getNewAuthorizedUser();
     const canvas = await getPhonyCanvas(userInfo.user.id);
     const memeArray: number[] = [];
@@ -112,14 +113,12 @@ describe('POST meme', () => {
       }
     }
 
-    memeArray.forEach(async (value) => {
-      const meme = await Meme.findOne(value);
-      await meme.remove();
-    });
-
   });
 
   it('should succeed if < 20 memes uploaded a day', async () => {
+    // Delete all existing memes //
+    await Meme.remove(await Meme.find());
+
     const userInfo = await getNewAuthorizedUser();
     const canvas = await getPhonyCanvas(userInfo.user.id);
     const memeArray: number[] = [];
@@ -149,13 +148,6 @@ describe('POST meme', () => {
 
     // Meme should be made //
     expect(res.body.memeId).toBeDefined();
-
-    memeArray.push(res.body.memeId);
-
-    memeArray.forEach(async (value) => {
-      const meme = await Meme.findOne(value);
-      await meme.remove();
-    });
 
   });
 

@@ -33,8 +33,6 @@ describe('POST canvas', () => {
 
     await userInfo.user.statistics.reload();
     expect(userInfo.user.statistics.contentNum).toBeGreaterThan(0);
-
-    await canvas.remove();
   });
 
   it('should fail if no auth token is present', async () => {
@@ -65,8 +63,6 @@ describe('POST canvas', () => {
     const canvas = await Canvas.findOne(res.body.canvasId);
 
     expect(canvas.description).toEqual(null);
-
-    await canvas.remove();
   });
 
   it('should fail with a description that\'s too long', async () => {
@@ -128,6 +124,9 @@ describe('POST canvas', () => {
   });
 
   it('should fail if > 6 canvases uploaded a day', async () => {
+    // Clear the existing canvases //
+    await Canvas.remove(await Canvas.find());
+
     const userInfo = await getNewAuthorizedUser();
     const canvasArray: number[] = [];
 
@@ -147,14 +146,12 @@ describe('POST canvas', () => {
       }
     }
 
-    canvasArray.forEach(async (value) => {
-      const canvas = await Canvas.findOne(value);
-      await canvas.remove();
-    });
-
   });
 
   it('should succeed if < 6 canvases uploaded a day', async () => {
+    // Clear the existing canvases //
+    await Canvas.remove(await Canvas.find());
+
     const userInfo = await getNewAuthorizedUser();
     const canvasArray: number[] = [];
 
@@ -181,13 +178,6 @@ describe('POST canvas', () => {
 
     // Canvas should be made //
     expect(res.body.canvasId).toBeDefined();
-
-    canvasArray.push(res.body.canvasId);
-
-    canvasArray.forEach(async (value) => {
-      const canvas = await Canvas.findOne(value);
-      await canvas.remove();
-    });
 
   });
 
