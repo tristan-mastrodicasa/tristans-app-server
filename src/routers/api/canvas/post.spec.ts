@@ -149,7 +149,7 @@ describe('POST canvas', () => {
 
     canvasArray.forEach(async (value) => {
       const canvas = await Canvas.findOne(value);
-      canvas.remove();
+      await canvas.remove();
     });
 
   });
@@ -186,7 +186,7 @@ describe('POST canvas', () => {
 
     canvasArray.forEach(async (value) => {
       const canvas = await Canvas.findOne(value);
-      canvas.remove();
+      await canvas.remove();
     });
 
   });

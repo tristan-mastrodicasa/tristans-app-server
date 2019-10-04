@@ -41,6 +41,8 @@ describe('POST meme', () => {
     await userInfo.user.statistics.reload();
     expect(userInfo.user.statistics.contentNum).toBeGreaterThan(0);
 
+    await meme.remove();
+
   });
 
   it('should fail if no auth token is present', async () => {
@@ -112,7 +114,7 @@ describe('POST meme', () => {
 
     memeArray.forEach(async (value) => {
       const meme = await Meme.findOne(value);
-      meme.remove();
+      await meme.remove();
     });
 
   });
@@ -135,7 +137,7 @@ describe('POST meme', () => {
 
     // Set the time of creation for the first meme to yesterday //
     const meme = await Meme.findOne(memeArray[0]);
-    meme.utc.setDate(meme.utc.getDate() - 2);
+    meme.utc.setDate(meme.utc.getDate() - 3);
     await meme.save();
 
     // Create another meme //
@@ -152,7 +154,7 @@ describe('POST meme', () => {
 
     memeArray.forEach(async (value) => {
       const meme = await Meme.findOne(value);
-      meme.remove();
+      await meme.remove();
     });
 
   });
