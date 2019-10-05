@@ -9,7 +9,7 @@ import { EInfluence } from 'shared/models';
  * @param  canvasId Canvas id to react to
  * @param  userId   The user who is reacting to the canvas
  */
-export async function canvasReactmanager(action: 'add' | 'remove', canvasId: number, userId: number): Promise<void> {
+export async function canvasReactManager(action: 'add' | 'remove', canvasId: number, userId: number): Promise<void> {
 
   const user = await User.findOne(userId);
   const canvas = await Canvas.findOne(canvasId, { relations: ['user'] });

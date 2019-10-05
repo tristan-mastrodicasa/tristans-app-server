@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { canvasReactmanager } from 'shared/helpers';
+import { canvasReactManager } from 'shared/helpers';
 import { Canvas } from 'database/entities/canvas.entity';
 
 const router = Router({ mergeParams: true });
@@ -24,7 +24,7 @@ router.delete('/', passport.authenticate('jwt', { session: false }), async (req,
   // Does canvas exist //
   if (canvas) {
 
-    await canvasReactmanager('remove', req.params.id, req.user.id);
+    await canvasReactManager('remove', req.params.id, req.user.id);
     return res.status(200).send();
 
   }

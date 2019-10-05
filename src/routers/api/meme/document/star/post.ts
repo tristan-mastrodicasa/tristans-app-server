@@ -5,18 +5,6 @@ import { Canvas } from 'database/entities/canvas.entity';
 
 const router = Router({ mergeParams: true });
 
-/**
- * @api {post} /canvas/:id/star React to the post (add a star)
- * @apiName ReactCanvas
- * @apiGroup Canvas
- *
- * @apiHeader Authorization Bearer [token]
- *
- * @apiParam {Number} id The id of the canvas
- *
- * @apiError (HTTP Error Codes) 401 Unauthorized to react
- * @apiError (HTTP Error Codes) 404 Cannot find canvas
- */
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   const canvas = await Canvas.findOne(req.params.id);

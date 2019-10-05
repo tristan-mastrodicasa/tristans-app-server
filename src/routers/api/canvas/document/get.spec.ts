@@ -5,7 +5,7 @@ import { Canvas } from 'database/entities/canvas.entity';
 import { User } from 'database/entities/user.entity';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
-import { httpErrorMiddleware, canvasReactmanager } from 'shared/helpers';
+import { httpErrorMiddleware, canvasReactManager } from 'shared/helpers';
 
 describe('GET canvas/:id', () => {
 
@@ -40,7 +40,7 @@ describe('GET canvas/:id', () => {
   it('should notifiy the user when they star that content', async () => {
 
     // Star the canvas //
-    await canvasReactmanager('add', canvas.id, userInfo.user.id);
+    await canvasReactManager('add', canvas.id, userInfo.user.id);
 
     const res = await supertest(app)
       .get(`/${canvas.id}`)

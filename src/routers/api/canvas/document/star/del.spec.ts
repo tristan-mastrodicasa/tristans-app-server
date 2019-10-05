@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import express from 'express';
 import del from './del';
-import { httpErrorMiddleware, canvasReactmanager } from 'shared/helpers';
+import { httpErrorMiddleware, canvasReactManager } from 'shared/helpers';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 
@@ -20,7 +20,7 @@ describe('DELETE canvas/:id/star', () => {
     const canvas = await getPhonyCanvas(userInfo.user.id);
 
     // Star the canvas //
-    await canvasReactmanager('add', canvas.id, userInfo.user.id);
+    await canvasReactManager('add', canvas.id, userInfo.user.id);
 
     await supertest(app)
       .delete(`/${canvas.id}/star`)
@@ -57,7 +57,7 @@ describe('DELETE canvas/:id/star', () => {
     const canvas = await getPhonyCanvas(userInfo.user.id);
 
     // Star the canvas //
-    await canvasReactmanager('add', canvas.id, userInfo.user.id);
+    await canvasReactManager('add', canvas.id, userInfo.user.id);
 
     await supertest(app)
       .delete('/1334613461346/star')
