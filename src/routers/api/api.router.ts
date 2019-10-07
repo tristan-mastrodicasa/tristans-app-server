@@ -13,6 +13,7 @@ router.use('/auth/google/redirect', auth.google.redirect.get);
 router.use('/meme', meme.post);
 router.use('/meme/:id', meme.document.del);
 router.use('/meme/:id/star', meme.document.star.post);
+router.use('/meme/:id/star', meme.document.star.del);
 
 router.use('/canvas/:id/star', canvas.document.star.post);
 router.use('/canvas/:id/star', canvas.document.star.del);
