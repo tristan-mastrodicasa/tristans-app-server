@@ -5,7 +5,7 @@ import { Canvas } from './canvas.entity';
 import { MemeReacts } from './meme-reacts.entity';
 
 /**
- * The canvas model describes everything stored per canvas
+ * The meme model describes everything stored per meme
  */
 @Entity('memes')
 export class Meme extends BaseEntity {

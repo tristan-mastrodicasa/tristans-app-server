@@ -1,23 +1,23 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { canvasReactManager } from 'shared/helpers';
-import { Canvas } from 'database/entities/canvas.entity';
+import { memeReactManager } from 'shared/helpers';
+import { Meme } from 'database/entities/meme.entity';
 
 const router = Router({ mergeParams: true });
 
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
-  const canvas = await Canvas.findOne(req.params.id);
+  const meme = await Meme.findOne(req.params.id);
 
-  // Does canvas exist //
-  if (canvas) {
+  // Does meme exist //
+  if (meme) {
 
-    await canvasReactManager('add', req.params.id, req.user.id);
+    await memeReactManager('add', req.params.id, req.user.id);
     return res.status(200).send();
 
   }
 
-  return next({ content: [{ detail: 'Canvas not found' }], status: 404 });
+  return next({ content: [{ detail: 'Meme not found' }], status: 404 });
 
 });
 
