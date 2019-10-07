@@ -11,7 +11,6 @@ export * from './profile.interface';
 export * from './user-item.interface';
 
 export * from './content-type.enum';
-export * from './meme-actions.enum';
 export * from './profile-actions.enum';
 export * from './visibility.enum';
 export * from './influence.enum';
