@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { UserSettings } from 'database/entities/user-settings.entity';
+import { User } from 'database/entities/user.entity';
 import { IUserSettings } from 'shared/models';
 
 const router = Router({ mergeParams: true });
@@ -20,17 +20,18 @@ const router = Router({ mergeParams: true });
  */
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
+  // if the user does not own these settings //
   if (req.user.id !== +req.params.id) return next({ content: [{ detail: 'Cannot access settings' }], status: 401 });
 
-  const userSettings = await UserSettings.findOne(req.params.id);
+  const user = await User.findOne(req.params.id, { relations: ['settings'] });
 
-  if (userSettings) {
+  if (user) {
     const userSettingsData: IUserSettings = {
       notifications: {
-        canvasInvites: userSettings.nCanvasInvites,
-        subscriptionUploadedACanvas: userSettings.nSubscriptionUploadedACanvas,
-        userMemedMyCanvas: userSettings.nUserMemedMyCanvas,
-        pointsUpdate: userSettings.nPointsUpdate,
+        canvasInvites: user.settings.nCanvasInvites,
+        subscriptionUploadedACanvas: user.settings.nSubscriptionUploadedACanvas,
+        userMemedMyCanvas: user.settings.nUserMemedMyCanvas,
+        pointsUpdate: user.settings.nPointsUpdate,
       },
     };
 
