@@ -14,3 +14,4 @@ export * from './content-type.enum';
 export * from './profile-actions.enum';
 export * from './visibility.enum';
 export * from './influence.enum';
+export * from './user-settings.interface';
