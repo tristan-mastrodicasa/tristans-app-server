@@ -18,11 +18,14 @@ router.use('/meme/:id/star', meme.document.star.del);
 router.use('/canvas/:id/star', canvas.document.star.post);
 router.use('/canvas/:id/star', canvas.document.star.del);
 
+router.use('/canvas/:id/memes', canvas.document.memes.get);
+
 router.use('/canvas/:id', canvas.document.get);
 router.use('/canvas/:id', canvas.document.del);
 router.use('/canvas', canvas.post);
 
 /** @todo improve image storage / retrieval when we reach production */
-router.use('/images/canvas', express.static('uploads/canvas_images'));
+router.use('/canvas/image', express.static('uploads/canvas_images'));
+router.use('/meme/image', express.static('uploads/meme_images'));
 
 export default router;

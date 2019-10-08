@@ -40,7 +40,7 @@ export async function canvasReactManager(action: 'add' | 'remove', canvasId: num
   } else if (action === 'remove') {
 
     const reactsRecord = await CanvasReacts.findOne({ user, canvas });
-    reactsRecord.remove();
+    await reactsRecord.remove();
 
   }
 

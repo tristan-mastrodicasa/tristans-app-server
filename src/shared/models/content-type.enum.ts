@@ -4,4 +4,5 @@
 export enum EContentType {
   Canvas = 'canvas',
   Meme = 'meme',
+  MemeWithHost = 'meme-with-host',
 }

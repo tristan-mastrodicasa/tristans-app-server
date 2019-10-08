@@ -40,7 +40,7 @@ export async function memeReactManager(action: 'add' | 'remove', memeid: number,
   } else if (action === 'remove') {
 
     const reactsRecord = await MemeReacts.findOne({ user, meme });
-    reactsRecord.remove();
+    await reactsRecord.remove();
 
   }
 

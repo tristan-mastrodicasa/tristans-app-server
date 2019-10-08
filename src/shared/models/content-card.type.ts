@@ -3,10 +3,10 @@ import { BasicUser } from './basic-user.interface';
 
 /**
  * A complex type that defines the content card
- * The content card is defined in two ways depending on the type of card
+ * The content card is defined in different ways depending on the type of card
  */
 export type ContentCard = {
-  type: EContentType.Meme;
+  type: EContentType.MemeWithHost;
   id: number;
   cid: number;
   users: {
@@ -28,6 +28,19 @@ export type ContentCard = {
   },
   imagePath: string;
   description?: string;
+  stars: number;
+  starred: boolean;
+  utcTime: number;
+} | {
+  type: EContentType.Meme;
+  id: number;
+  cid?: never;
+  users: {
+    primary: BasicUser;
+    secondary?: never;
+  },
+  imagePath: string;
+  description?: never;
   stars: number;
   starred: boolean;
   utcTime: number;

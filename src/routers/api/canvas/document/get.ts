@@ -19,7 +19,6 @@ const router = Router({ mergeParams: true });
  *
  * @apiSuccess (200) {Object} contentCard JSON object describing the canvas content card
  *
- * @apiError (HTTP Error Codes) 401 Unauthorized to get
  * @apiError (HTTP Error Codes) 404 Cannot find canvas
  */
 router.get('/', async (req, res, next) => {

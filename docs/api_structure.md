@@ -45,6 +45,13 @@ POST /auth/google-authcode -> Controller: Create a new user / find existing user
 
 GET  /images/canvas/:file -> Document: Image for canvas
 
+## Pagination
+
+* Enable local pagination with caching, refresh local cache on "refresh" / certain hooks,
+* batch of 75 memes for canvas,
+* 100 canvases for home,
+* all non expired content for users
+ 
 ## API DOC EXAMPLE
 
 /**
