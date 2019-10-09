@@ -6,9 +6,10 @@ import { EInfluence } from 'shared/models';
 
 /**
  * Create a meme along with all of it's associated relations
- * @param  meme   Meme Object
- * @param  userid The userid of the meme owner
- * @return        The created meme record
+ * @param  meme     Meme Object
+ * @param  canvasid The id of the host canvas
+ * @param  userid   The userid of the meme owner
+ * @return          The created meme record
  */
 export async function createNewMeme(meme: Meme, canvasid: number, userid: number): Promise<Meme> {
 
@@ -52,7 +53,7 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
   if (userid !== canvas.user.id) {
     const canvasOwner = await User.findOne(canvas.user.id, { relations: ['statistics'] });
     canvasOwner.statistics.influence += EInfluence.memeCreated;
-    canvasOwner.statistics.save();
+    await canvasOwner.statistics.save();
   }
 
   return meme.save();
