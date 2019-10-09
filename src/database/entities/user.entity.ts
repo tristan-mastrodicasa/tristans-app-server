@@ -49,6 +49,10 @@ export class User extends BaseEntity {
   @Length(1, 128)
   public profileImg: string; // path of the image
 
+  @Column('varchar', { length: 15 })
+  @Length(1, 15)
+  public profileImgMimeType: string; // Profile image type
+
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
   @IsDate()

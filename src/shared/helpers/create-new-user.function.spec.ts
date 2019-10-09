@@ -12,6 +12,7 @@ describe('create user function', () => {
     idealUser.firstName = 'Chris';
     idealUser.email = 'me@email.com';
     idealUser.profileImg = '/default/picture.jpg';
+    idealUser.profileImgMimeType = 'image/jpeg';
   });
 
   it('should create and delete a user with ideal inputs', async () => {

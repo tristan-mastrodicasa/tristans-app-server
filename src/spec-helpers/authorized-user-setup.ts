@@ -13,6 +13,7 @@ export async function getNewAuthorizedUser(): Promise<{ token: string, user: Use
 
   const user = new User();
   user.profileImg = 'default-image.jpg';
+  user.profileImgMimeType = 'image/jpeg';
 
   const newUser = await createNewUser(user, true);
 

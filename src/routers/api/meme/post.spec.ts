@@ -8,6 +8,7 @@ import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { EInfluence } from 'shared/models';
 
+/** @todo Test image is actually uploaded */
 describe('POST meme', () => {
 
   let app: express.Express;
@@ -85,7 +86,7 @@ describe('POST meme', () => {
       .post('/')
       .set('Authorization', `Bearer ${userInfo.token}`);
       // .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
-      // TCP stream for image upload breaks if query string //
+      // TCP stream for image upload breaks if query string fails validation //
 
     expect(res.status).toEqual(400);
   });

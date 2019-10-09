@@ -9,6 +9,7 @@ describe('user entity', () => {
     idealUser.firstName = 'John';
     idealUser.email = 'me@email.com';
     idealUser.profileImg = '/default/picture.jpg';
+    idealUser.profileImgMimeType = 'image/jpeg';
   });
 
   it('should work with an ideal user', async () => {

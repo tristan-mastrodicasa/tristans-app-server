@@ -60,7 +60,6 @@ describe('PUT user/:id/settings', () => {
       .set('Authorization', `Bearer ${userInfo.token}`)
       .send(updateData);
 
-    // Settings should change //
     expect(res.status).toEqual(401);
   });
 

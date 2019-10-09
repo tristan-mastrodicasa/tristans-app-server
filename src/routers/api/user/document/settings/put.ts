@@ -25,7 +25,7 @@ router.put('/', passport.authenticate('jwt', { session: false }), async (req, re
   // If the user does not own these settings //
   if (req.user.id !== +req.params.id) return next({ content: [{ detail: 'Cannot modify settings' }], status: 401 });
 
-  const user = await User.findOne(req.params.id, { relations: ['settings'] });
+  const user = await User.findOne(req.user.id, { relations: ['settings'] });
 
   if (user) {
     // Explicitly define how the body should be formatted //

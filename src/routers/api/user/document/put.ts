@@ -23,9 +23,9 @@ const router = Router({ mergeParams: true });
 router.put('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   // If the user does not own this resource  //
-  if (req.user.id !== +req.params.id) return next({ content: [{ detail: 'Cannot modify settings' }], status: 401 });
+  if (req.user.id !== +req.params.id) return next({ content: [{ detail: 'Cannot modify profile' }], status: 401 });
 
-  const user = await User.findOne(req.params.id);
+  const user = await User.findOne(req.user.id);
 
   if (user) {
     // Explicitly define how the body should be formatted //

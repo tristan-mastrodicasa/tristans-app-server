@@ -24,6 +24,7 @@ export async function googleSignIn(_accessToken: string, _refreshToken: string, 
   newUser.googleId = profile.id;
   newUser.firstName = profile.name.givenName;
   newUser.profileImg = '/assets/default_image.jpg';
+  newUser.profileImgMimeType = 'image/jpeg';
   newUser.email = (
     profile._json.email ? profile._json.email : (profile.emails[0].value ? profile.emails[0].value : null)
   );
