@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
 import crypto from 'crypto';
-import { ValidationError } from 'class-validator';
 import passport from 'passport';
 import { Canvas } from 'database/entities/canvas.entity';
 import { CanvasUploaded, EVisibility } from 'shared/models';
-import { createNewCanvas } from 'shared/helpers';
+import { createNewCanvas, validationErrorToHttpResponse } from 'shared/helpers';
 
 const router = Router();
 
@@ -62,14 +61,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
         canvasRecord = await createNewCanvas(canvas, req.user.id);
       } catch (err) {
 
-        return next({
-          content: err.map((value: ValidationError) => {
-
-            return { title: value.property, detail: value.constraints[Object.keys(value.constraints)[0]] };
-
-          }),
-          status: 400,
-        });
+        return next(validationErrorToHttpResponse(err));
 
       }
 

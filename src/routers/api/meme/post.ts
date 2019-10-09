@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { ValidationError } from 'class-validator';
 import passport from 'passport';
 import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { MemeUploaded } from 'shared/models';
-import { createNewMeme } from 'shared/helpers';
+import { createNewMeme, validationErrorToHttpResponse } from 'shared/helpers';
 
 const router = Router();
 
@@ -64,14 +63,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
         memeRecord = await createNewMeme(meme, canvas.id, req.user.id);
       } catch (err) {
 
-        return next({
-          content: err.map((value: ValidationError) => {
-
-            return { title: value.property, detail: value.constraints[Object.keys(value.constraints)[0]] };
-
-          }),
-          status: 400,
-        });
+        return next(validationErrorToHttpResponse(err));
 
       }
 

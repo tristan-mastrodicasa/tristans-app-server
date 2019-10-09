@@ -13,6 +13,7 @@ router.use('/auth/google/redirect', auth.google.redirect.get);
 
 router.use('/user/:id', user.document.get);
 router.use('/user/:id/settings', user.document.settings.get);
+router.use('/user/:id/settings', user.document.settings.put);
 
 router.use('/meme', meme.post);
 router.use('/meme/:id', meme.document.del);

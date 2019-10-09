@@ -48,6 +48,7 @@ describe('POST meme', () => {
 
   });
 
+  // Sometimes breaks! WHY!?!
   it('should give canvas owner influence when another user memes the canvas', async () => {
     const userInfo1 = await getNewAuthorizedUser();
     const userInfo2 = await getNewAuthorizedUser();
