@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { User } from 'database/entities/user.entity';
+import { UserNetwork } from 'database/entities/user-network.entity';
 import { Profile } from 'shared/models';
+import { getConnection } from 'typeorm';
 
 const router = Router({ mergeParams: true });
 
@@ -24,13 +26,21 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   const user = await User.findOne(req.params.id, { relations: ['statistics'] });
 
   if (user) {
+
+    // Get number of followers //
+    const followerNumber = await getConnection()
+      .getRepository(UserNetwork)
+      .createQueryBuilder('user_network')
+      .where('user_network.user = :huid', { huid: user.id })
+      .getCount();
+
     const profileData: Profile = {
       id: user.id,
       firstName: user.firstName,
       username: user.username,
       photo: user.profileImg,
       influence: user.statistics.influence,
-      followers: user.statistics.followers,
+      followers: followerNumber,
       contentNumber: user.statistics.contentNum,
     };
 

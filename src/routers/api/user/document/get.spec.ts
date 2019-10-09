@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import express from 'express';
 import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
-import { httpErrorMiddleware } from 'shared/helpers';
+import { httpErrorMiddleware, networkManager } from 'shared/helpers';
 
 describe('GET user/:id', () => {
 
@@ -55,6 +55,22 @@ describe('GET user/:id', () => {
 
     expect(res.status).toEqual(404);
     expect(res.body.errors[0]).toBeDefined();
+  });
+
+  it('should get the correct number of followers', async () => {
+    const userInfo1 = await getNewAuthorizedUser();
+    const userInfo2 = await getNewAuthorizedUser();
+    const userInfo3 = await getNewAuthorizedUser();
+
+    // Give the first user two followers //
+    await networkManager('follow', userInfo2.user.id, userInfo1.user.id);
+    await networkManager('follow', userInfo3.user.id, userInfo1.user.id);
+
+    const res = await supertest(app)
+      .get(`/${userInfo1.user.id}`)
+      .set('Authorization', `Bearer ${userInfo2.token}`);
+
+    expect(res.body.followers).toEqual(2);
   });
 
 });

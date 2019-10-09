@@ -3,7 +3,6 @@ import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, IsDate } from 'cl
 import { UserNetwork } from './user-network.entity';
 import { UserStatistics } from './user-statistics.entity';
 import { UserSettings } from './user-settings.entity';
-import { UserActivity } from './user-activity.entity';
 import { Canvas } from './canvas.entity';
 import { CanvasReacts } from './canvas-reacts.entity';
 import { Meme } from './meme.entity';
@@ -60,9 +59,6 @@ export class User extends BaseEntity {
 
   @OneToMany(() => UserNetwork, userNetwork => userNetwork.user)
   public network: UserNetwork[]; // This field gives access to all the user network info (like followers ecc..), it's used for make joins
-
-  @OneToMany(() => UserActivity, userActivity => userActivity.user)
-  public activity: UserActivity[]; // This field gives access to all the user activities
 
   @OneToMany(() => Canvas, canvas => canvas.user)
   public canvases: Canvas[]; // canvases of the client

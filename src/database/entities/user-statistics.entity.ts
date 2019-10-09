@@ -14,22 +14,12 @@ export class UserStatistics extends BaseEntity {
   @Column('int', { default: () => '0' })
   @IsOptional()
   @IsInt()
-  public influence?: number;
+  public influence?: number; // Can be from number of sources and records which may be deleted later
 
   @Column('int', { default: () => '0' })
   @IsOptional()
   @IsInt()
-  public contentNum?: number; // Number of meme's/canvas
-
-  @Column('int', { default: () => '0' })
-  @IsOptional()
-  @IsInt()
-  public followers?: number; // number of followers
-
-  @Column('int', { default: () => '0' })
-  @IsOptional()
-  @IsInt()
-  public following?: number; // number of users following
+  public contentNum?: number; // Number of meme's/canvas generated in user history
 
   @OneToOne(() => User, user => user.statistics, { onDelete: 'CASCADE' })
   @JoinColumn()

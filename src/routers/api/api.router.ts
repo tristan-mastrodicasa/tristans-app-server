@@ -16,6 +16,7 @@ router.use('/user/:id', user.document.put);
 router.use('/user/:id/settings', user.document.settings.get);
 router.use('/user/:id/settings', user.document.settings.put);
 router.use('/user/:id/image', user.document.image.put);
+router.use('/user/:id/follow', user.document.follow.post);
 
 router.use('/meme', meme.post);
 router.use('/meme/:id', meme.document.del);
@@ -24,9 +25,7 @@ router.use('/meme/:id/star', meme.document.star.del);
 
 router.use('/canvas/:id/star', canvas.document.star.post);
 router.use('/canvas/:id/star', canvas.document.star.del);
-
 router.use('/canvas/:id/memes', canvas.document.memes.get);
-
 router.use('/canvas/:id', canvas.document.get);
 router.use('/canvas/:id', canvas.document.del);
 router.use('/canvas', canvas.post);

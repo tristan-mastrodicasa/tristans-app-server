@@ -6,3 +6,4 @@ export * from './canvas-react-manager.function';
 export * from './create-new-meme.function';
 export * from './meme-react-manager.function';
 export * from './validation-error-to-http-response.function';
+export * from './network-manager.function';
