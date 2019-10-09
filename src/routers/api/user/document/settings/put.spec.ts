@@ -43,6 +43,27 @@ describe('PUT user/:id/settings', () => {
     expect(userInfo.user.settings.nSubscriptionUploadedACanvas).toEqual(false);
   });
 
+  it('should fail if user does not exist', async () => {
+    const userInfo = await getNewAuthorizedUser();
+
+    const updateData: IUserSettings = {
+      notifications: {
+        canvasInvites: false,
+        subscriptionUploadedACanvas: false,
+        userMemedMyCanvas: true,
+        pointsUpdate: true,
+      },
+    };
+
+    const res = await supertest(app)
+      .put('/13123123123123123/settings')
+      .set('Authorization', `Bearer ${userInfo.token}`)
+      .send(updateData);
+
+    // Settings should change //
+    expect(res.status).toEqual(401);
+  });
+
   it('should fail without an auth token', async () => {
     const userInfo = await getNewAuthorizedUser();
 
