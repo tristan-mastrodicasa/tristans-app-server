@@ -17,6 +17,7 @@ router.use('/user/:id/settings', user.document.settings.get);
 router.use('/user/:id/settings', user.document.settings.put);
 router.use('/user/:id/image', user.document.image.put);
 router.use('/user/:id/follow', user.document.follow.post);
+router.use('/user/:id/unfollow', user.document.unfollow.post);
 
 router.use('/meme', meme.post);
 router.use('/meme/:id', meme.document.del);
