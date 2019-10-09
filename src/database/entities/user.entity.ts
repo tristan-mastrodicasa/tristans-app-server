@@ -37,7 +37,7 @@ export class User extends BaseEntity {
   @Column('varchar', { length: 25 })
   @IsAlpha()
   @Length(1, 25)
-  public firstname: string; /** @todo rename to firstName */
+  public firstName: string;
 
   @Column('varchar', { length: 255, nullable: true, unique: true })
   @IsOptional()

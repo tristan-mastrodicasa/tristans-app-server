@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 
         const userItem: UserItem = {
           id: user.id,
-          firstName: user.firstname,
+          firstName: user.firstName,
           username: user.username,
           photo: user.profileImg,
           influence: 100, /** @todo inner join stats */

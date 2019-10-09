@@ -33,7 +33,7 @@ describe('PUT user/:id', () => {
     // User should be updated //
     await userInfo.user.reload();
     expect(userInfo.user.username).toEqual(updateData.username);
-    expect(userInfo.user.firstname).toEqual(updateData.firstName);
+    expect(userInfo.user.firstName).toEqual(updateData.firstName);
 
   });
 
@@ -58,7 +58,7 @@ describe('PUT user/:id', () => {
     const userInfo2 = await getNewAuthorizedUser();
 
     const updateData = {
-      firstName: userInfo2.user.firstname,
+      firstName: userInfo2.user.firstName,
       username: userInfo2.user.username,
     };
 

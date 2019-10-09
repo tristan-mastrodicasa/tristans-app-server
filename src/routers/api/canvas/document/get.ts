@@ -42,7 +42,7 @@ router.get('/', async (req, res, next) => {
         users: {
           primary: {
             id: canvas.user.id,
-            firstName: canvas.user.firstname,
+            firstName: canvas.user.firstName,
             username: canvas.user.username,
             photo: canvas.user.profileImg },
         },

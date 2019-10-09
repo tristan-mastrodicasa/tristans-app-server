@@ -6,7 +6,7 @@ describe('user entity', () => {
 
   beforeEach(() => {
     idealUser.username = 'johna123';
-    idealUser.firstname = 'John';
+    idealUser.firstName = 'John';
     idealUser.email = 'me@email.com';
     idealUser.profileImg = '/default/picture.jpg';
   });
@@ -51,35 +51,35 @@ describe('user entity', () => {
   describe('first name should', () => {
 
     it('fail when too short', async () => {
-      idealUser.firstname = '';
+      idealUser.firstName = '';
 
       const errors = await validate(idealUser);
       expect(errors.length).toEqual(1);
     });
 
     it('fail when too long', async () => {
-      idealUser.firstname = 'a'.repeat(26);
+      idealUser.firstName = 'a'.repeat(26);
 
       const errors = await validate(idealUser);
       expect(errors.length).toEqual(1);
     });
 
     it('fail when not alpha', async () => {
-      idealUser.firstname = 'aba12';
+      idealUser.firstName = 'aba12';
 
       const errors = await validate(idealUser);
       expect(errors.length).toEqual(1);
     });
 
     it('succeed when alpha', async () => {
-      idealUser.firstname = 'ababa';
+      idealUser.firstName = 'ababa';
 
       const errors = await validate(idealUser);
       expect(errors.length).toEqual(0);
     });
 
     it('fail when empty', async () => {
-      idealUser.firstname = null;
+      idealUser.firstName = null;
 
       const errors = await validate(idealUser);
       expect(errors.length).toEqual(1);

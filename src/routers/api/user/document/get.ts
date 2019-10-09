@@ -26,7 +26,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   if (user) {
     const profileData: Profile = {
       id: user.id,
-      firstName: user.firstname,
+      firstName: user.firstName,
       username: user.username,
       photo: user.profileImg,
       influence: user.statistics.influence,

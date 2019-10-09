@@ -20,7 +20,7 @@ export async function createNewUser(user: User, autoFillFixable = false): Promis
     } else {
 
       for (let err of res) { // tslint:disable-line
-        if (err.property === 'firstname') user.firstname = 'Larry';
+        if (err.property === 'firstName') user.firstName = 'Larry';
         else if (err.property === 'username') user.username = `user${+(new Date()) - (10 ** 12)}`;
       }
 

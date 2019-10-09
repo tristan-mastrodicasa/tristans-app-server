@@ -61,7 +61,7 @@ router.get('/', async (req, res, next) => {
           users: {
             primary: {
               id: meme.user.id,
-              firstName: meme.user.firstname,
+              firstName: meme.user.firstName,
               username: meme.user.username,
               photo: meme.user.profileImg,
             },

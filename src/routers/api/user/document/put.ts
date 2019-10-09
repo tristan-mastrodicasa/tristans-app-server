@@ -34,7 +34,7 @@ router.put('/', passport.authenticate('jwt', { session: false }), async (req, re
     // Fail if the sent request is malformed //
     if (!body.firstName || !body.username) return next({ content: [{ detail: 'Malformed body' }], status: 400 });
 
-    user.firstname = body.firstName;
+    user.firstName = body.firstName;
     user.username = body.username;
 
     // Validate the submitted settings to update //

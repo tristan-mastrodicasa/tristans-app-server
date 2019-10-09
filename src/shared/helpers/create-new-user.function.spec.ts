@@ -9,7 +9,7 @@ describe('create user function', () => {
   beforeEach(() => {
     idealUser.googleId = 'asd6iatsid75ia76dsas';
     idealUser.username = 'george123';
-    idealUser.firstname = 'Chris';
+    idealUser.firstName = 'Chris';
     idealUser.email = 'me@email.com';
     idealUser.profileImg = '/default/picture.jpg';
   });
@@ -36,7 +36,7 @@ describe('create user function', () => {
 
   it('should reject with poor input', async () => {
     idealUser.email = '';
-    idealUser.firstname = '';
+    idealUser.firstName = '';
 
     let error: any;
 
@@ -76,13 +76,13 @@ describe('create user function', () => {
   });
 
   it('should auto generate first name and usernames if the flag is set', async () => {
-    idealUser.firstname = 'ghoststeam217';
+    idealUser.firstName = 'ghoststeam217';
     idealUser.username = '';
 
     const user = await createNewUser(idealUser, true);
 
     expect(user.username).toEqual(jasmine.any(String));
-    expect(user.firstname).toEqual(jasmine.any(String));
+    expect(user.firstName).toEqual(jasmine.any(String));
 
     await user.remove();
   });
