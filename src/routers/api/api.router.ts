@@ -12,6 +12,7 @@ router.use('/auth/google', auth.google.get);
 router.use('/auth/google/redirect', auth.google.redirect.get);
 
 router.use('/user/:id', user.document.get);
+router.use('/user/:id', user.document.put);
 router.use('/user/:id/settings', user.document.settings.get);
 router.use('/user/:id/settings', user.document.settings.put);
 
@@ -32,5 +33,6 @@ router.use('/canvas', canvas.post);
 /** @todo improve image storage / retrieval when we reach production */
 router.use('/canvas/image', express.static('uploads/canvas_images'));
 router.use('/meme/image', express.static('uploads/meme_images'));
+router.use('/user/image', express.static('uploads/user_images'));
 
 export default router;
