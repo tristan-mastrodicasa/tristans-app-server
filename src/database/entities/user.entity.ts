@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
+import { BaseEntity, Entity, Index, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { Length, IsAlphanumeric, IsAlpha, IsEmail, IsOptional, IsDate } from 'class-validator';
 import { UserNetwork } from './user-network.entity';
 import { UserStatistics } from './user-statistics.entity';
@@ -28,11 +28,13 @@ export class User extends BaseEntity {
   @Length(1, 100)
   public googleId?: string; // Can be null
 
-  @Column('varchar', { length: 25, unique: true })
+  @Index({ fulltext: true }) // Increases search speed
+  @Column('varchar', { length: 25 })
   @IsAlphanumeric()
   @Length(1, 25)
-  public username: string;
+  public username: string; // must be unique (check during validation)
 
+  @Index({ fulltext: true }) // Increases search speed
   @Column('varchar', { length: 25 })
   @IsAlpha()
   @Length(1, 25)

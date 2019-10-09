@@ -11,6 +11,7 @@ router.use('/auth/google-authcode', auth.googleAuthcode.post);
 router.use('/auth/google', auth.google.get);
 router.use('/auth/google/redirect', auth.google.redirect.get);
 
+router.use('/user', user.get);
 router.use('/user/:id', user.document.get);
 router.use('/user/:id', user.document.put);
 router.use('/user/:id/settings', user.document.settings.get);
