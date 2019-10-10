@@ -3,6 +3,7 @@ import passport from 'passport';
 import { getConnection } from 'typeorm';
 import { User } from 'database/entities/user.entity';
 import { UserItem } from 'shared/models';
+import { checkForActiveCanvases } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -54,16 +55,16 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
     const userItems: UserItem[] = [];
 
     // compile user items and ship //
-    results.forEach((userRow) => {
+    for (const userRow of results) {
       userItems.push({
         id: userRow.id,
         firstName: userRow.firstName,
         username: userRow.username,
         photo: userRow.profileImg,
         influence: userRow.statistics.influence,
-        activeCanvases: 0, /** @todo When you create the 'active-canvas-check' function implment it here */
+        activeCanvases: await checkForActiveCanvases(userRow.id),
       });
-    });
+    }
 
     return res.send(userItems);
 

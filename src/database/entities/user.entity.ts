@@ -60,7 +60,10 @@ export class User extends BaseEntity {
   public utc?: Date;
 
   @OneToMany(() => UserNetwork, userNetwork => userNetwork.user)
-  public network: UserNetwork[]; // This field gives access to all the user network info (like followers ecc..), it's used for make joins
+  public followers: UserNetwork[]; // All followers
+
+  @OneToMany(() => UserNetwork, userNetwork => userNetwork.follower)
+  public following: UserNetwork[]; // People you follow
 
   @OneToMany(() => Canvas, canvas => canvas.user)
   public canvases: Canvas[]; // canvases of the client
