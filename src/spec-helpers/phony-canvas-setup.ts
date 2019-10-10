@@ -17,6 +17,6 @@ export async function getPhonyCanvas(userid: number): Promise<Canvas> {
   canvas.visibility = EVisibility.public; // Only public to start
   canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
 
-  return createNewCanvas(canvas, userid);
+  return createNewCanvas(canvas, userid, true);
 
 }

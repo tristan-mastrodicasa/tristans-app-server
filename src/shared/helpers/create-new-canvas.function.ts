@@ -4,11 +4,12 @@ import { validate, ValidationError } from 'class-validator';
 
 /**
  * Create a canvas along with all of it's associated relations
- * @param  canvas Canvas Object
- * @param  userid The userid of the canvas owner
- * @return        The created canvas record
+ * @param  canvas      Canvas Object
+ * @param  userid      The userid of the canvas owner
+ * @param  ignoreLimit Create as many canvases as you want
+ * @return             The created canvas record
  */
-export async function createNewCanvas(canvas: Canvas, userid: number): Promise<Canvas> {
+export async function createNewCanvas(canvas: Canvas, userid: number, ignoreLimit?: boolean): Promise<Canvas> {
 
   // Validate the canvas record //
   const res = await validate(canvas);
@@ -26,7 +27,7 @@ export async function createNewCanvas(canvas: Canvas, userid: number): Promise<C
   // Validate that the user has uploaded less than 6 canvases a day //
   const canvasList = user.canvases;
 
-  if (canvasList.length >= 6) {
+  if (canvasList.length >= 6 && !ignoreLimit) {
 
     const canvas = canvasList[canvasList.length - 6];
     const diffTime = +new Date() - +canvas.utc;

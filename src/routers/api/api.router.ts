@@ -14,6 +14,7 @@ router.use('/auth/google/redirect', auth.google.redirect.get);
 router.use('/user', user.get);
 router.use('/user/:id', user.document.get);
 router.use('/user/:id', user.document.put);
+router.use('/user/:id/content-cards', user.document.contentCards.get);
 router.use('/user/:id/settings', user.document.settings.get);
 router.use('/user/:id/settings', user.document.settings.put);
 router.use('/user/:id/image', user.document.image.put);
