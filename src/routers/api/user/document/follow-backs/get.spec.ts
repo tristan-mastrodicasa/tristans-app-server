@@ -6,13 +6,13 @@ import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 import { httpErrorMiddleware, networkManager } from 'shared/helpers';
 import { UserItem } from 'shared/models';
 
-describe('GET user/:id/following', () => {
+describe('GET user/:id/follow-backs', () => {
 
   let app: express.Express;
 
   beforeAll(async () => {
     app = express();
-    app.use('/:id/following', get);
+    app.use('/:id/follow-backs', get);
     app.use(httpErrorMiddleware);
   });
 
@@ -20,6 +20,7 @@ describe('GET user/:id/following', () => {
     const userInfo1 = await getNewAuthorizedUser();
     const userInfo2 = await getNewAuthorizedUser();
     const userInfo3 = await getNewAuthorizedUser();
+    const userInfo4 = await getNewAuthorizedUser();
 
     // Make the third user create 2 new canvases //
     await getPhonyCanvas(userInfo3.user.id);
@@ -34,15 +35,20 @@ describe('GET user/:id/following', () => {
     userInfo2.user.statistics.influence += 109;
     await userInfo2.user.statistics.save();
 
-    // The first user should follow two people //
+    // The first user follows 3 people //
     await networkManager('follow', userInfo1.user.id, userInfo2.user.id);
     await networkManager('follow', userInfo1.user.id, userInfo3.user.id);
+    await networkManager('follow', userInfo1.user.id, userInfo4.user.id);
+
+    // Give the first user two followers //
+    await networkManager('follow', userInfo2.user.id, userInfo1.user.id);
+    await networkManager('follow', userInfo3.user.id, userInfo1.user.id);
 
     const res = await supertest(app)
-      .get(`/${userInfo1.user.id}/following`)
+      .get(`/${userInfo1.user.id}/follow-backs`)
       .set('Authorization', `Bearer ${userInfo1.token}`);
 
-    // Both subscriptions should return //
+    // Two follow backs should return (fourth user does not follow back) //
     expect(res.body.length).toEqual(2);
 
     res.body.forEach((user: UserItem) => {
@@ -58,17 +64,17 @@ describe('GET user/:id/following', () => {
     const userInfo = await getNewAuthorizedUser();
 
     const res = await supertest(app)
-      .get(`/${userInfo.user.id}/following`);
+      .get(`/${userInfo.user.id}/follow-backs`);
 
     expect(res.status).toEqual(401);
   });
 
-  it('should fail if you attempt to get someone elses following list', async () => {
+  it('should fail if you attempt to get someone elses follow back list', async () => {
     const userInfo1 = await getNewAuthorizedUser();
     const userInfo2 = await getNewAuthorizedUser();
 
     const res = await supertest(app)
-      .get(`/${userInfo2.user.id}/following`)
+      .get(`/${userInfo2.user.id}/follow-backs`)
       .set('Authorization', `Bearer ${userInfo1.token}`);
 
     expect(res.status).toEqual(401);
@@ -83,7 +89,7 @@ describe('GET user/:id/following', () => {
 
     // Try to get its follower list //
     const res = await supertest(app)
-      .get(`/${userInfo.user.id}/following`)
+      .get(`/${userInfo.user.id}/follow-backs`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     // Should break //
@@ -93,10 +99,11 @@ describe('GET user/:id/following', () => {
   it('should only return 150 user items', async () => {
     const userInfo = await getNewAuthorizedUser();
 
-    // Follow > 150 people //
+    // Create > 150 follow backs //
     for (let i = 0; i < 155; i += 1) {
       const newUser = await getNewAuthorizedUser();
       await networkManager('follow', userInfo.user.id, newUser.user.id);
+      await networkManager('follow', newUser.user.id, userInfo.user.id);
 
       // Every 10 users add a canvas //
       if (i % 10 === 0) {
@@ -110,7 +117,7 @@ describe('GET user/:id/following', () => {
     }
 
     const res = await supertest(app)
-      .get(`/${userInfo.user.id}/following`)
+      .get(`/${userInfo.user.id}/follow-backs`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     // Should return MAX 150 users //
@@ -122,11 +129,11 @@ describe('GET user/:id/following', () => {
     expect(res.body[100].activeCanvases).toEqual(0);
   });
 
-  it('should return 404 when no subscriptions exist', async () => {
+  it('should return 404 when no follow backs exist', async () => {
     const userInfo = await getNewAuthorizedUser();
 
     const res = await supertest(app)
-      .get(`/${userInfo.user.id}/following`)
+      .get(`/${userInfo.user.id}/follow-backs`)
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     // Should return none found //

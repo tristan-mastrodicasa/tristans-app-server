@@ -1,17 +1,19 @@
 import { UserItem } from 'shared/models';
 import { User } from 'database/entities/user.entity';
+import { UserNetwork } from 'database/entities/user-network.entity';
 import { checkForActiveCanvases } from 'shared/helpers';
-
-/** @todo When reaching production allow pagination for whole user list */
-/** @todo When ordering by canvas do it before getting the most recent users (in prod)*/
 
 /**
  * Get a network of users for a specific user
- * @param  networkType The followers or follwing etc
+ *
+ * @todo When reaching production allow pagination for whole user list
+ * @todo When ordering by canvas do it before getting the most recent users (in prod)
+ *
+ * @param  networkType The followers or following etc
  * @param  userid      The user to get the network from
  * @return             List of user items to send to the client
  */
-export async function getUserNetwork(networkType: 'followers' | 'following', userid: number): Promise<UserItem[]> {
+export async function getUserNetwork(networkType: 'followers' | 'following' | 'follow-backs', userid: number): Promise<UserItem[]> {
 
   let user: User;
 
@@ -19,6 +21,17 @@ export async function getUserNetwork(networkType: 'followers' | 'following', use
     user = await User.findOne(userid, { relations: ['followers', 'followers.follower', 'followers.follower.statistics'] });
   } else if (networkType === 'following') {
     user = await User.findOne(userid, { relations: ['following', 'following.user', 'following.user.statistics'] });
+  } else if (networkType === 'follow-backs') {
+
+    const followBackList: UserNetwork[] = [];
+
+    user = await User.findOne(userid, { relations: ['following', 'following.user', 'following.user.statistics'] });
+    for (const networkRecord of user.following) {
+      // Does the subscription follow you? //
+      if (await UserNetwork.findOne({ user, follower: networkRecord.user })) followBackList.push(networkRecord);
+    }
+
+    user.following = followBackList;
   }
 
   // Container for user items //
