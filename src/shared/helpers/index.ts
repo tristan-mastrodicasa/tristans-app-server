@@ -8,3 +8,4 @@ export * from './meme-react-manager.function';
 export * from './validation-error-to-http-response.function';
 export * from './network-manager.function';
 export * from './check-for-active-canvases.function';
+export * from './get-user-network.function';

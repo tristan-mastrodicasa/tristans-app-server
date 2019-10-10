@@ -6,6 +6,7 @@ import follow from './follow';
 import unfollow from './unfollow';
 import contentCards from './content-cards';
 import followers from './followers';
+import following from './following';
 
 export default {
   get,
@@ -13,6 +14,7 @@ export default {
   contentCards,
   followers,
   follow,
+  following,
   unfollow,
   image,
   settings,

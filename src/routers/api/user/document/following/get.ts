@@ -5,8 +5,8 @@ import { getUserNetwork } from 'shared/helpers';
 const router = Router({ mergeParams: true });
 
 /**
- * @api {get} /user/:id/followers Get the followers for a user
- * @apiName GetUserFollowers
+ * @api {get} /user/:id/following Get the subscriptions for a user
+ * @apiName GetUserSubscriptions
  * @apiGroup User
  *
  * @apiHeader Authorization Bearer [token]
@@ -15,17 +15,18 @@ const router = Router({ mergeParams: true });
  *
  * @apiSuccess (200) {UserItem[]} body Array of JSON objects describing users
  *
- * @apiError (HTTP Error Codes) 404 Cannot find any followers
+ * @apiError (HTTP Error Codes) 404 Cannot find any subscriptions
  * @apiError (HTTP Error Codes) 401 Unauthorized
  */
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   // If the user does not own this account, REJECT FAM //
-  if (req.user.id !== +req.params.id) return next({ content: [{ detail: 'Cannot access follower list' }], status: 401 });
+  if (req.user.id !== +req.params.id) return next({ content: [{ detail: 'Cannot access following list' }], status: 401 });
 
-  // Get the user's follower list //
-  const userItems = await getUserNetwork('followers', req.user.id);
+  // Get the user's following list //
+  const userItems = await getUserNetwork('following', req.user.id);
 
+  // Return user items if they exist //
   if (userItems.length > 0) return res.json(userItems);
 
   // No user items returned //
