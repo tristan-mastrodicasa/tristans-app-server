@@ -2,10 +2,10 @@ import supertest from 'supertest';
 import express from 'express';
 import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
-import { httpErrorMiddleware } from 'shared/helpers';
+import { httpErrorMiddleware, runAsyncConcurrently } from 'shared/helpers';
 import { UserItem } from 'shared/models';
 
-describe('GET user', () => {
+fdescribe('GET user', () => {
 
   let app: express.Express;
 
@@ -79,9 +79,12 @@ describe('GET user', () => {
     const userInfo = await getNewAuthorizedUser();
 
     // Create > 50 users //
-    for (let i = 0; i < 55; i += 1) {
-      await getNewAuthorizedUser();
-    }
+    await runAsyncConcurrently(
+      async () => {
+        await getNewAuthorizedUser();
+      },
+      55,
+    );
 
     const res = await supertest(app)
       .get('/user')
