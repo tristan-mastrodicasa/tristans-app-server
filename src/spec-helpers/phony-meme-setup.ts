@@ -11,7 +11,7 @@ export async function getPhonyMeme(canvasid: number, userid: number): Promise<Me
 
   // Generate a phony canvas //
   const idealMeme = new Meme();
-  idealMeme.imagePath = `${(+new Date())}.jpg`; // unique image path
+  idealMeme.imagePath = `${Math.random() * 10000}.jpg`; // unique image path
   idealMeme.mimetype = 'image/jpeg';
 
   return createNewMeme(idealMeme, canvasid, userid);

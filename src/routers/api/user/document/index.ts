@@ -8,11 +8,13 @@ import contentCards from './content-cards';
 import followers from './followers';
 import following from './following';
 import followBacks from './follow-backs';
+import dailySuggestions from './daily-suggestions';
 
 export default {
   get,
   put,
   contentCards,
+  dailySuggestions,
   followers,
   follow,
   following,
