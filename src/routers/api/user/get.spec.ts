@@ -5,7 +5,7 @@ import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware, runAsyncConcurrently } from 'shared/helpers';
 import { UserItem } from 'shared/models';
 
-fdescribe('GET user', () => {
+describe('GET user', () => {
 
   let app: express.Express;
 
