@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
-import { Profile } from 'shared/models';
+import { IUser } from 'shared/models';
 import { getConnection } from 'typeorm';
 
 const router = Router({ mergeParams: true });
@@ -34,7 +34,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       .where('user_network.user = :huid', { huid: user.id })
       .getCount();
 
-    const profileData: Profile = {
+    const profileData: Omit<IUser, 'activeCanvases'> = {
       id: user.id,
       firstName: user.firstName,
       username: user.username,

@@ -31,6 +31,9 @@
         ]
       }
     ],
+    "member-access": true,
+    "no-shadowed-variable": false,
+    "interface-name": true,
     "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
   }
 }

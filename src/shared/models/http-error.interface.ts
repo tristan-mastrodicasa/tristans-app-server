@@ -2,7 +2,7 @@
  * Error interface
  * https://jsonapi.org/examples/#error-objects
  */
-export interface HttpError {
+export interface IHttpError {
   status?: number;
   source?: { pointer?: string };
   title?: string;

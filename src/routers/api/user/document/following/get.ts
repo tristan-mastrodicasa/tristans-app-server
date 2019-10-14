@@ -13,7 +13,7 @@ const router = Router({ mergeParams: true });
  *
  * @apiParam {Number} id The id of the user
  *
- * @apiSuccess (200) {UserItem[]} body Array of JSON objects describing users
+ * @apiSuccess (200) {Omit<IUser, 'followers' | 'contentNumber'>[]} body Array of JSON objects describing users
  *
  * @apiError (HTTP Error Codes) 404 Cannot find any subscriptions
  * @apiError (HTTP Error Codes) 401 Unauthorized

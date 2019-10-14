@@ -1,4 +1,4 @@
-import { UserItem } from 'shared/models';
+import { IUser } from 'shared/models';
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
 import { checkForActiveCanvases } from 'shared/helpers';
@@ -13,7 +13,7 @@ import { checkForActiveCanvases } from 'shared/helpers';
  * @param  userid      The user to get the network from
  * @return             List of user items to send to the client
  */
-export async function getUserNetwork(networkType: 'followers' | 'following' | 'follow-backs', userid: number): Promise<UserItem[]> {
+export async function getUserNetwork(networkType: 'followers' | 'following' | 'follow-backs', userid: number): Promise<Omit<IUser, 'followers' | 'contentNumber'>[]> {
 
   let user: User;
 
@@ -35,7 +35,7 @@ export async function getUserNetwork(networkType: 'followers' | 'following' | 'f
   }
 
   // Container for user items //
-  const userItems: UserItem[] = [];
+  const userItems: Omit<IUser, 'followers' | 'contentNumber'>[] = [];
 
   let network = (networkType === 'followers' ? user.followers : user.following);
 

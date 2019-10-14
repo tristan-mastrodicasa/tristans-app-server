@@ -1,6 +1,6 @@
 /**
  * How the jwt will be formatted
  */
-export interface JwtContent {
+export interface IJwt {
   id: number;
 }

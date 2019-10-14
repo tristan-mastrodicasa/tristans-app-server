@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { HttpError } from 'shared/models';
+import { IHttpError } from 'shared/models';
 
 /**
  * Formats and sends http errors correctly
@@ -8,7 +8,7 @@ import { HttpError } from 'shared/models';
  * @param res     Response object
  * @param _next   Next function
  */
-export function httpErrorMiddleware(err: { status: number, content: HttpError[] }, _req: Request, res: Response, _next: NextFunction): void {
+export function httpErrorMiddleware(err: { status: number, content: IHttpError[] }, _req: Request, res: Response, _next: NextFunction): void {
 
   res.status(err.status || 400).json({ errors: err.content });
 

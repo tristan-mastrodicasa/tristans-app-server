@@ -3,7 +3,7 @@ import multer from 'multer';
 import crypto from 'crypto';
 import passport from 'passport';
 import { Canvas } from 'database/entities/canvas.entity';
-import { CanvasUploaded, EVisibility } from 'shared/models';
+import { EVisibility } from 'shared/models';
 import { createNewCanvas, validationErrorToHttpResponse } from 'shared/helpers';
 
 const router = Router();
@@ -65,7 +65,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
 
       }
 
-      return res.status(201).json(<CanvasUploaded>{ canvasId: canvasRecord.id });
+      return res.status(201).json({ canvasId: canvasRecord.id });
 
     }
 

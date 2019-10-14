@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import jsonwebtoken from 'jsonwebtoken';
 import env from 'conf/env';
-import { JwtContent, Token } from 'shared/models';
+import { IJwt } from 'shared/models';
 
 const router = Router();
 
@@ -26,10 +26,7 @@ router.post('/', (req, res, next) => {
     // Return the token //
     if (user) {
 
-      const jwtContent: JwtContent = { id: user.id };
-      const token: Token = { token: jsonwebtoken.sign(jwtContent, env.jwt_key, { expiresIn: '30d' }) };
-
-      res.json(token);
+      res.json({ token: jsonwebtoken.sign(<IJwt>{ id: user.id }, env.jwt_key, { expiresIn: '30d' }) });
 
     } else {
 

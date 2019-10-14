@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import { getConnection } from 'typeorm';
 import { User } from 'database/entities/user.entity';
-import { UserItem } from 'shared/models';
+import { IUser } from 'shared/models';
 import { checkForActiveCanvases } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
@@ -52,7 +52,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   if (results.length > 0) {
 
-    const userItems: UserItem[] = [];
+    const userItems: Omit<IUser, 'followers' | 'contentNumber'>[] = [];
 
     // compile user items and ship //
     for (const userRow of results) {

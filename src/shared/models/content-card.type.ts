@@ -1,5 +1,5 @@
 import { EContentType } from './content-type.enum';
-import { BasicUser } from './basic-user.interface';
+import { IUser } from './user.interface';
 
 /**
  * A complex type that defines the content card
@@ -10,8 +10,8 @@ export type ContentCard = {
   id: number;
   cid: number;
   users: {
-    primary: BasicUser;
-    secondary: BasicUser;
+    primary: Pick<IUser, 'id' | 'firstName' | 'username' | 'photo'>;
+    secondary: Pick<IUser, 'id' | 'firstName' | 'username' | 'photo'>;
   },
   imagePath: string;
   description?: string;
@@ -23,7 +23,7 @@ export type ContentCard = {
   id: number;
   cid?: never;
   users: {
-    primary: BasicUser;
+    primary: Pick<IUser, 'id' | 'firstName' | 'username' | 'photo'>;
     secondary?: never;
   },
   imagePath: string;
@@ -36,7 +36,7 @@ export type ContentCard = {
   id: number;
   cid?: never;
   users: {
-    primary: BasicUser;
+    primary: Pick<IUser, 'id' | 'firstName' | 'username' | 'photo'>;
     secondary?: never;
   },
   imagePath: string;

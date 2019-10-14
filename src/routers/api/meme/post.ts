@@ -3,7 +3,6 @@ import multer from 'multer';
 import passport from 'passport';
 import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
-import { MemeUploaded } from 'shared/models';
 import { createNewMeme, validationErrorToHttpResponse } from 'shared/helpers';
 
 const router = Router();
@@ -67,7 +66,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
 
       }
 
-      return res.status(201).json(<MemeUploaded>{ memeId: memeRecord.id });
+      return res.status(201).json({ memeId: memeRecord.id });
 
     }
 
