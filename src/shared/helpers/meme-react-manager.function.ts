@@ -2,6 +2,7 @@ import { User } from 'database/entities/user.entity';
 import { Meme } from 'database/entities/meme.entity';
 import { MemeReacts } from 'database/entities/meme-reacts.entity';
 import { EInfluence } from 'shared/models';
+import { userInfluenceManager } from 'shared/helpers';
 
 /**
  * Add and remove reacts from memes
@@ -21,15 +22,6 @@ export async function memeReactManager(action: 'add' | 'remove', memeid: number,
   if (hasReacted && action === 'add') return;
   if (!hasReacted && action === 'remove') return;
 
-  // Increase meme star stats //
-  meme.stars += (action === 'remove' ? -1 : 1);
-  await meme.save();
-
-  // Increase influence of the canvas owner //
-  const memeOwner = await User.findOne(meme.user.id, { relations: ['statistics'] });
-  memeOwner.statistics.influence += (action === 'remove' ? -EInfluence.star : EInfluence.star);
-  await memeOwner.statistics.save();
-
   if (action === 'add') {
 
     const reactsRecord = new MemeReacts();
@@ -42,5 +34,12 @@ export async function memeReactManager(action: 'add' | 'remove', memeid: number,
     await hasReacted.remove();
 
   }
+
+  // Update meme star stats //
+  meme.stars = await MemeReacts.count({ where: { meme: memeid } });
+  await meme.save();
+
+  // Update influence of the meme owner //
+  await userInfluenceManager(action, meme.user.id, EInfluence.star);
 
 }

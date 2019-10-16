@@ -12,7 +12,8 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
     "test": "SET NODE_ENV=development&& ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine",
-    "apidoc": "apidoc -o api-doc -i src/routers"
+    "apidoc": "apidoc -o api-doc -i src/routers",
+    "populateDatabase": "ts-node -r tsconfig-paths/register src/spec-helpers/populate-database.ts"
   },
   "repository": {
     "type": "git",
@@ -66,6 +67,6 @@
     "passport-google-authcode": "^0.1.5",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
-    "typeorm": "^0.2.18"
+    "typeorm": "^0.2.19"
   }
 }

@@ -3,7 +3,6 @@ import passport from 'passport';
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
 import { IUser } from 'shared/models';
-import { getConnection } from 'typeorm';
 
 const router = Router({ mergeParams: true });
 
@@ -27,20 +26,13 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   if (user) {
 
-    // Get number of followers //
-    const followerNumber = await getConnection()
-      .getRepository(UserNetwork)
-      .createQueryBuilder('user_network')
-      .where('user_network.user = :huid', { huid: user.id })
-      .getCount();
-
     const profileData: Omit<IUser, 'activeCanvases'> = {
       id: user.id,
       firstName: user.firstName,
       username: user.username,
       photo: user.profileImg,
       influence: user.statistics.influence,
-      followers: followerNumber,
+      followers: await UserNetwork.count({ where: { user } }),
       contentNumber: user.statistics.contentNum,
     };
 

@@ -20,3 +20,6 @@ src/conf/env.prod.ts
 
 # apidoc output
 /api-doc
+
+# Cached test database
+*/**/populate-database.sql

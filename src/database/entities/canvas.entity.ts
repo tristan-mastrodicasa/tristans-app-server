@@ -21,7 +21,7 @@ export class Canvas extends BaseEntity {
   @MaxLength(255)
   public description?: string;
 
-  @Column('varchar', { length: 64, unique: true })
+  @Column('varchar', { length: 64 })
   @Length(1, 64)
   public imagePath: string;
 
@@ -40,7 +40,7 @@ export class Canvas extends BaseEntity {
   @Column('int', { default: () => 0 })
   @IsOptional()
   @IsInt()
-  public stars?: number;
+  public stars?: number; /** @todo remove and rely on COUNT(*) from canvas_reacts */
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()

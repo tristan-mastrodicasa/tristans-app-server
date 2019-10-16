@@ -5,7 +5,7 @@ import { Meme } from './meme.entity';
 /**
  * The canvas model describes everything stored per canvas
  */
-@Entity('memes_reacts')
+@Entity('meme_reacts')
 export class MemeReacts extends BaseEntity {
 
   @PrimaryGeneratedColumn('increment')

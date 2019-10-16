@@ -10,3 +10,4 @@ export * from './network-manager.function';
 export * from './check-for-active-canvases.function';
 export * from './get-user-network.function';
 export * from './run-async-concurrently.function';
+export * from './user-influence-manager.function';

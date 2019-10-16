@@ -13,7 +13,7 @@ export class Meme extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('varchar', { length: 64, unique: true })
+  @Column('varchar', { length: 64 })
   @Length(1, 64)
   public imagePath: string;
 
@@ -24,7 +24,7 @@ export class Meme extends BaseEntity {
   @Column('int', { default: () => '0' })
   @IsOptional()
   @IsInt()
-  public stars?: number;
+  public stars?: number; /** @todo remove and rely on COUNT(*) from meme_reacts */
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()

@@ -3,6 +3,7 @@ import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { validate, ValidationError } from 'class-validator';
 import { EInfluence } from 'shared/models';
+import { userInfluenceManager } from 'shared/helpers';
 
 /**
  * Create a meme along with all of it's associated relations
@@ -51,9 +52,8 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
 
   // Owner of meme should not get influence if memeing own canvas //
   if (userid !== canvas.user.id) {
-    const canvasOwner = await User.findOne(canvas.user.id, { relations: ['statistics'] });
-    canvasOwner.statistics.influence += EInfluence.memeCreated;
-    await canvasOwner.statistics.save();
+    // Update influence of the canvas owner //
+    await userInfluenceManager('add', canvas.user.id, EInfluence.memeCreated);
   }
 
   return meme.save();

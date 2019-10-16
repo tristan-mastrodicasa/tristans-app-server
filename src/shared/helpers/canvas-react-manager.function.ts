@@ -2,6 +2,7 @@ import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { EInfluence } from 'shared/models';
+import { userInfluenceManager } from 'shared/helpers';
 
 /**
  * Manage reacts to a canvas
@@ -21,15 +22,6 @@ export async function canvasReactManager(action: 'add' | 'remove', canvasId: num
   if (hasReacted && action === 'add') return;
   if (!hasReacted && action === 'remove') return;
 
-  // Increase canvas star stats //
-  canvas.stars += (action === 'remove' ? -1 : 1);
-  await canvas.save();
-
-  // Increase influence of the canvas owner //
-  const canvasOwner = await User.findOne(canvas.user.id, { relations: ['statistics'] });
-  canvasOwner.statistics.influence += (action === 'remove' ? -EInfluence.star : EInfluence.star);
-  await canvasOwner.statistics.save();
-
   if (action === 'add') {
 
     const reactsRecord = new CanvasReacts();
@@ -43,5 +35,12 @@ export async function canvasReactManager(action: 'add' | 'remove', canvasId: num
     await reactsRecord.remove();
 
   }
+
+  // Update canvas star stats //
+  canvas.stars = await CanvasReacts.count({ where: { canvas: canvasId } });
+  await canvas.save();
+
+  // Update influence of the canvas owner //
+  await userInfluenceManager(action, canvas.user.id, EInfluence.star);
 
 }
