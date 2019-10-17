@@ -3,6 +3,7 @@ import { UserNetwork } from 'database/entities/user-network.entity';
 
 /**
  * Manages the following and unfollowing of users
+ * @todo investigate the double up of followers (when people follow in quick sucession)
  * @param  action Follow or unfollow
  * @param  cuid   user who will follow
  * @param  huid   user who is being followed

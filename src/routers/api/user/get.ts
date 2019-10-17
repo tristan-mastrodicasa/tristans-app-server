@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import { getConnection } from 'typeorm';
 import { User } from 'database/entities/user.entity';
-import { IUser } from 'shared/models';
+import { IUserItem } from 'shared/models';
 import { checkForActiveCanvases } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
@@ -19,7 +19,7 @@ const router = Router({ mergeParams: true });
  *
  * @apiParam {String} query The query string to search the database
  *
- * @apiSuccess (200) {Object[]} body List of user items form the database
+ * @apiSuccess (200) {Object[]} body List of user items from the database
  *
  * @apiError (HTTP Error Codes) 401 Unauthorized
  * @apiError (HTTP Error Codes) 404 Cannot find any users
@@ -28,12 +28,16 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   let results: User[] = [];
 
+  /** @todo Write a test to assert order by influence */
+  /** @todo Write a test to assert that the user follows you and display it */
+  /** @todo Change these horrible queries to User.find() calls */
   if (!req.query.query) {
     results = await getConnection()
       .getRepository(User)
       .createQueryBuilder('user')
       .select()
       .leftJoinAndSelect('user.statistics', 'user_statistics')
+      .orderBy('user_statistics.influence', 'DESC')
       .limit(50)
       .getMany();
   } else {
@@ -52,7 +56,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   if (results.length > 0) {
 
-    const userItems: Omit<IUser, 'followers' | 'contentNumber'>[] = [];
+    const userItems: IUserItem[] = [];
 
     // compile user items and ship //
     for (const userRow of results) {

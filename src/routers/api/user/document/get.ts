@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
-import { IUser } from 'shared/models';
+import { IProfile } from 'shared/models';
 
 const router = Router({ mergeParams: true });
 
@@ -15,7 +15,7 @@ const router = Router({ mergeParams: true });
  *
  * @apiParam {Number} id The id of the user
  *
- * @apiSuccess (200) {Object} profile JSON object describing the user
+ * @apiSuccess (200) {IProfile} profile JSON object describing the user
  *
  * @apiError (HTTP Error Codes) 401 Unauthorized
  * @apiError (HTTP Error Codes) 404 Cannot find user
@@ -26,7 +26,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   if (user) {
 
-    const profileData: Omit<IUser, 'activeCanvases'> = {
+    const profileData: IProfile = {
       id: user.id,
       firstName: user.firstName,
       username: user.username,

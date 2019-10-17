@@ -3,7 +3,7 @@ import express from 'express';
 import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { httpErrorMiddleware, runAsyncConcurrently } from 'shared/helpers';
-import { IUser } from 'shared/models';
+import { IUserItem } from 'shared/models';
 
 describe('GET user', () => {
 
@@ -47,7 +47,7 @@ describe('GET user', () => {
     expect(res.body.length).toEqual(3);
 
     // Check that the influence is being sent correctly //
-    res.body.forEach((userItem: Omit<IUser, 'followers' | 'contentNumber'>) => {
+    res.body.forEach((userItem: IUserItem) => {
       if (userItem.id === userInfo2.user.id) {
         expect(userItem.influence).toBe(userInfo2.user.statistics.influence);
       }

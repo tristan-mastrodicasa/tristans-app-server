@@ -4,7 +4,7 @@ import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 import { httpErrorMiddleware, networkManager } from 'shared/helpers';
-import { IUser } from 'shared/models';
+import { IUserItem } from 'shared/models';
 
 describe('GET user/:id/follow-backs', () => {
 
@@ -51,7 +51,7 @@ describe('GET user/:id/follow-backs', () => {
     // Two follow backs should return (fourth user does not follow back) //
     expect(res.body.length).toEqual(2);
 
-    res.body.forEach((user: Omit<IUser, 'followers' | 'contentNumber'>) => {
+    res.body.forEach((user: IUserItem) => {
       // One subscription should have influence //
       if (user.id === userInfo2.user.id) expect(user.influence).toEqual(userInfo2.user.statistics.influence);
 
