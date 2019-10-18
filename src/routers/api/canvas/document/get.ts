@@ -3,8 +3,7 @@ import passport from 'passport';
 import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { ContentCard, EContentType } from 'shared/models';
-
-import env from 'conf/env';
+import { buildImageUrl } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -46,7 +45,7 @@ router.get('/', async (req, res, next) => {
             username: canvas.user.username,
             photo: canvas.user.profileImg },
         },
-        imagePath: `${env.host}/api/canvas/image/${canvas.imagePath}`,
+        imagePath: buildImageUrl(canvas.imagePath),
         description: canvas.description,
         stars: canvas.stars,
         starred: (userReacted ? true : false),

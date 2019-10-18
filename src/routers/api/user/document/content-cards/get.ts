@@ -6,8 +6,7 @@ import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
 import { ContentCard, EContentType } from 'shared/models';
-
-import env from 'conf/env';
+import { buildImageUrl } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -72,19 +71,19 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
           cid: entity.canvas.id,
           users: {
             primary: {
-              id: entity.user.id,
-              firstName: entity.user.firstName,
-              username: entity.user.username,
-              photo: entity.user.profileImg,
-            },
-            secondary: {
               id: entity.canvas.user.id,
               firstName: entity.canvas.user.firstName,
               username: entity.canvas.user.username,
               photo: entity.canvas.user.profileImg,
             },
+            secondary: {
+              id: entity.user.id,
+              firstName: entity.user.firstName,
+              username: entity.user.username,
+              photo: entity.user.profileImg,
+            },
           },
-          imagePath: `${env.host}/api/meme/image/${entity.imagePath}`,
+          imagePath: buildImageUrl(entity.imagePath),
           stars: entity.stars,
           starred: (userReacted ? true : false),
           utcTime: +entity.utc,
@@ -107,7 +106,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
             },
           },
           description: entity.description,
-          imagePath: `${env.host}/api/meme/image/${entity.imagePath}`,
+          imagePath: buildImageUrl(entity.imagePath),
           stars: entity.stars,
           starred: (userReacted ? true : false),
           utcTime: +entity.utc,
