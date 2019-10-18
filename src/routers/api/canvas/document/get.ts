@@ -45,7 +45,7 @@ router.get('/', async (req, res, next) => {
             username: canvas.user.username,
             photo: canvas.user.profileImg },
         },
-        imagePath: buildImageUrl(canvas.imagePath),
+        imagePath: buildImageUrl('canvas', canvas.imagePath),
         description: canvas.description,
         stars: canvas.stars,
         starred: (userReacted ? true : false),

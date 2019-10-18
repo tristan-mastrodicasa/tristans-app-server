@@ -5,8 +5,7 @@ import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
 import { ContentCard, EContentType } from 'shared/models';
 import { getConnection } from 'typeorm';
-
-import env from 'conf/env';
+import { buildImageUrl } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -66,7 +65,7 @@ router.get('/', async (req, res, next) => {
               photo: meme.user.profileImg,
             },
           },
-          imagePath: `${env.host}/api/meme/image/${meme.imagePath}`,
+          imagePath: buildImageUrl('meme', meme.imagePath),
           stars: meme.stars,
           starred: (userReacted ? true : false),
           utcTime: +meme.utc,
