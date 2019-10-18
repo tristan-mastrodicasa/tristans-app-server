@@ -27,7 +27,7 @@ createConnection(ormconfig).then((_connection) => {
   // Heads up to accessed routes during development //
   if (!env.production) {
     server.use((req, _res, next) => {
-      console.log(req.originalUrl);
+      console.log(`${req.method} ${req.originalUrl}`);
       next();
     });
   }
@@ -37,6 +37,7 @@ createConnection(ormconfig).then((_connection) => {
 
     res.setHeader('Access-Control-Allow-Origin', '*'); /** @todo Change in production to prevent XSRF attacks */
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT');
     next();
 
   });
