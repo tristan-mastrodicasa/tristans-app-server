@@ -38,6 +38,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   if (user) {
 
     /**
+     * @todo Write unit tests to properly test if the 'starred' property is returned correctly
      * @todo load only recent memes and canvases to enable that ephemeral effect
      * outlined in the business strategy
      */
@@ -63,7 +64,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       if (entity instanceof Meme) {
 
         // Check if the meme has been starred by the user //
-        userReacted = await MemeReacts.findOne({ user, meme: entity });
+        userReacted = await MemeReacts.findOne({ user: req.user.id, meme: entity });
 
         contentCard = {
           type: EContentType.MemeWithHost,
@@ -92,7 +93,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       } else if (entity instanceof Canvas) {
 
         // Check if the meme has been starred by the user //
-        userReacted = await CanvasReacts.findOne({ user, canvas: entity });
+        userReacted = await CanvasReacts.findOne({ user: req.user.id, canvas: entity });
 
         contentCard = {
           type: EContentType.Canvas,
