@@ -2,7 +2,8 @@
  * Interface defining how to structure your environment objects
  * @author Tristan Mastrodicasa
  */
-export interface Env {
+export interface IEnv {
+  production: boolean;
   host: string;
   database_username: string;
   database_password: string;
