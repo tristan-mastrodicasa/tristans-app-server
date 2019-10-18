@@ -47,6 +47,7 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
   }
 
   // Update user stats //
+  /** @todo convert incremation to a similar strategy used by userInfluenceManager */
   user.statistics.contentNum += 1;
   await user.statistics.save();
 
