@@ -21,9 +21,6 @@ import 'conf/passport';
  * Populate the entire databse with fake content to
  * simulate what a full database of users and content would look
  * and feel like on the client
- *
- * There may be a populate-database.sql script you can use instead to save time,
- * if it is outdated please remake it
  */
 (async () => {
 
@@ -35,8 +32,8 @@ import 'conf/passport';
   const conn = await createConnection(ormconfig);
   await conn.synchronize(true);
 
-  // Create a number of users, store their ID's, (about 10,000) //
-  console.log('Generating ~10,000 users');
+  // Create a number of users, store their ID's //
+  console.log('Generating ~500 users');
   await runAsyncConcurrently(
     async () => {
       try {
@@ -45,17 +42,18 @@ import 'conf/passport';
         user.username = `${faker.lorem.word()}${faker.random.number()}`;
         user.profileImg = faker.fake('{{image.avatar}}');
         user.profileImgMimeType = 'image/jpeg';
-        user.utc = getRandomDate(new Date(2017, 1, 1), new Date());
+        const weekAgo = new Date(); weekAgo.setDate(new Date().getDate() - 7);
+        user.utc = getRandomDate(weekAgo, new Date());
 
         const userRecord = await createNewUser(user);
         users.push({ id: userRecord.id, utc: user.utc });
       } catch (err) {} // Validation errors are skipped
     },
-    10000,
+    500,
   );
 
   // Have some of them create canvases with varied times of creation, store ID's (about 1,000)//
-  console.log('Generating ~1,000 canvases');
+  console.log('Generating ~40 canvases');
   await runAsyncConcurrently(
     async () => {
       try {
@@ -72,11 +70,11 @@ import 'conf/passport';
         canvases.push({ id: canvasRecord.id, utc: canvas.utc });
       } catch (err) {} // Validation errors are skipped
     },
-    1000,
+    40,
   );
 
-  // Have some of them create memes for some of the canvases, with varied time after the canvas creation (about 5,000) (store ID's)//
-  console.log('Generating ~5,000 memes');
+  // Have some of them create memes for some of the canvases, with varied time after the canvas creation //
+  console.log('Generating ~500 memes');
   await runAsyncConcurrently(
     async () => {
       try {
@@ -93,50 +91,44 @@ import 'conf/passport';
         memes.push({ id: memeRecord.id, utc: canvas.utc });
       } catch (err) {} // Validation errors are skipped
     },
-    5000,
+    500,
   );
 
-  // Have the users react to random canvases (70,000 reacts) //
-  process.stdout.write('Generating ~70,000 reacts to canvases');
-  for (let i = 0; i < 7; i += 1) {
-    process.stdout.write('.');
-    await runAsyncConcurrently(
-      async () => {
-        // Get a random user and canvas //
-        const user = users[Math.floor((Math.random() * users.length - 1) + 1)];
-        const canvas = canvases[Math.floor((Math.random() * canvases.length - 1) + 1)];
+  // Have the users react to random canvases //
+  process.stdout.write('Generating ~1000 reacts to canvases');
+  await runAsyncConcurrently(
+    async () => {
+      // Get a random user and canvas //
+      const user = users[Math.floor((Math.random() * users.length - 1) + 1)];
+      const canvas = canvases[Math.floor((Math.random() * canvases.length - 1) + 1)];
 
-        await canvasReactManager('add', canvas.id, user.id);
-      },
-      10000,
-    );
-  }
+      await canvasReactManager('add', canvas.id, user.id);
+    },
+    1000,
+  );
 
   console.log();
 
-  // Have the users react to random memes (150,000 reacts) //
-  process.stdout.write('Generating ~150,000 reacts to memes');
-  for (let i = 0; i < 15; i += 1) {
-    process.stdout.write('.');
-    await runAsyncConcurrently(
-      async () => {
-        // Get a random user and meme //
-        const user = users[Math.floor((Math.random() * users.length - 1) + 1)];
-        const meme = memes[Math.floor((Math.random() * canvases.length - 1) + 1)];
+  // Have the users react to random memes //
+  process.stdout.write('Generating ~2000 reacts to memes');
+  await runAsyncConcurrently(
+    async () => {
+      // Get a random user and meme //
+      const user = users[Math.floor((Math.random() * users.length - 1) + 1)];
+      const meme = memes[Math.floor((Math.random() * canvases.length - 1) + 1)];
 
-        await memeReactManager('add', meme.id, user.id);
-      },
-      10000,
-    );
-  }
+      await memeReactManager('add', meme.id, user.id);
+    },
+    2000,
+  );
 
   console.log();
 
-  // Have the users follow a random selection of other users (between 10 - 1000) //
+  // Have the users follow a random selection of other users //
   process.stdout.write('Users following users');
-  for (let i = 0; i < (users.length / 2); i += 1) {
+  for (let i = 0; i < (users.length); i += 1) {
 
-    if (i % 500 === 0) process.stdout.write('.');
+    if (i % 10 === 0) process.stdout.write('.');
 
     await runAsyncConcurrently(
       async () => {
@@ -146,7 +138,7 @@ import 'conf/passport';
 
         await networkManager('follow', user.id, otherUser.id);
       },
-      Math.floor((Math.random() * 500) + 10),
+      Math.floor((Math.random() * 50) + 10),
     );
   }
 
@@ -157,7 +149,7 @@ import 'conf/passport';
 })();
 
 /**
- * Return a random date between 2017 and now
+ * Return a random date between two others
  */
 function getRandomDate(start: Date, end: Date): Date {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
