@@ -1,5 +1,7 @@
 import faker from 'faker';
 import crypto from 'crypto';
+import fs from 'fs';
+import jsImageGenerator from 'js-image-generator';
 import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
@@ -59,8 +61,9 @@ import 'conf/passport';
       try {
         const user = users[Math.floor((Math.random() * users.length - 1) + 1)];
         const canvas = new Canvas();
+
         canvas.description = faker.lorem.sentence();
-        canvas.imagePath = faker.image.imageUrl();
+        canvas.imagePath = createImage('canvas');
         canvas.mimetype = 'image/jpeg';
         canvas.visibility = EVisibility.public; // Only public to start
         canvas.uniqueKey = crypto.randomBytes(32).toString('hex');
@@ -68,7 +71,7 @@ import 'conf/passport';
 
         const canvasRecord = await createNewCanvas(canvas, user.id);
         canvases.push({ id: canvasRecord.id, utc: canvas.utc });
-      } catch (err) {} // Validation errors are skipped
+      } catch (err) { console.log(err); } // Validation errors are skipped
     },
     40,
   );
@@ -153,4 +156,21 @@ import 'conf/passport';
  */
 function getRandomDate(start: Date, end: Date): Date {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+/**
+ * Create a fake image
+ * @param  imageType Which path the function should output the image too
+ * @return           File name
+ */
+function createImage(imageType: 'canvas' | 'meme'): string {
+  // Generate a new image //
+  const fileName = `${Math.random() * 10000}`;
+
+  jsImageGenerator.generateImage(800, 600, 40, (_err: any, image: any) => {
+    const imgPath = `uploads/${imageType}_images/${fileName}`;
+    fs.writeFileSync(imgPath, image.data);
+  });
+
+  return fileName;
 }
