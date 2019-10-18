@@ -3,7 +3,11 @@ import { ormconfig } from 'conf/ormconfig';
 import 'conf/passport';
 
 beforeAll(async () => {
-  const conn = await createConnection(ormconfig);
+  // Unit tests should work with the db_test database //
+  const dbConfig = { ...ormconfig };
+  dbConfig.database = `${dbConfig.database}_test`;
+
+  const conn = await createConnection(dbConfig);
   await conn.synchronize(true);
 });
 
