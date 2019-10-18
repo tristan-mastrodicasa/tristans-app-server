@@ -14,6 +14,7 @@ export interface IBasicUser {
 export interface IProfile extends IBasicUser {
   influence: number;
   followers: number;
+  youAreFollowing?: boolean;
   contentNumber: number;
 }
 

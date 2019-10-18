@@ -26,6 +26,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   if (user) {
 
+    /** @todo write unit test for youAreFollowing */
     const profileData: IProfile = {
       id: user.id,
       firstName: user.firstName,
@@ -33,6 +34,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       photo: user.profileImg,
       influence: user.statistics.influence,
       followers: await UserNetwork.count({ where: { user } }),
+      youAreFollowing: (await UserNetwork.findOne({ user, follower: req.user.id }) ? true : false),
       contentNumber: user.statistics.contentNum,
     };
 

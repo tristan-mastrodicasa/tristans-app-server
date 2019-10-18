@@ -2,6 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import { getConnection } from 'typeorm';
 import { User } from 'database/entities/user.entity';
+import { UserNetwork } from 'database/entities/user-network.entity';
 import { IUserItem } from 'shared/models';
 import { checkForActiveCanvases } from 'shared/helpers';
 
@@ -66,6 +67,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
         username: userRow.username,
         photo: userRow.profileImg,
         influence: userRow.statistics.influence,
+        youAreFollowing: (await UserNetwork.findOne({ user: userRow, follower: req.user.id }) ? true : false),
         activeCanvases: await checkForActiveCanvases(userRow.id),
       });
     }
