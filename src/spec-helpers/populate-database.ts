@@ -165,7 +165,7 @@ function getRandomDate(start: Date, end: Date): Date {
  */
 function createImage(imageType: 'canvas' | 'meme'): string {
   // Generate a new image //
-  const fileName = `${Math.random() * 10000}`;
+  const fileName = `${Math.random() * 10000}.jpg`;
 
   jsImageGenerator.generateImage(800, 600, 40, (_err: any, image: any) => {
     const imgPath = `uploads/${imageType}_images/${fileName}`;

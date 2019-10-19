@@ -84,7 +84,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
               photo: entity.user.profileImg,
             },
           },
-          imagePath: buildImageUrl('canvas', entity.imagePath),
+          imagePath: buildImageUrl('meme', entity.imagePath),
           stars: entity.stars,
           starred: (userReacted ? true : false),
           utcTime: +entity.utc,
