@@ -41,7 +41,7 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   expressRateLimit({
     windowMs: 1440 * 60 * 1000, // 1 day
-    max: 10, // change profile 15 times from one user per day
+    max: 10,
     keyGenerator: (req, _res) => {
       return req.user.id; // rate limit user id
     },

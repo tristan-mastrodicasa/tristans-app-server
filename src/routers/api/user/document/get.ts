@@ -3,6 +3,7 @@ import passport from 'passport';
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
 import { IProfile } from 'shared/models';
+import { buildImageUrl } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -31,7 +32,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       id: user.id,
       firstName: user.firstName,
       username: user.username,
-      photo: user.profileImg,
+      photo: buildImageUrl('user', user.profileImg),
       influence: user.statistics.influence,
       followers: await UserNetwork.count({ where: { user } }),
       youAreFollowing: (await UserNetwork.findOne({ user, follower: req.user.id }) ? true : false),

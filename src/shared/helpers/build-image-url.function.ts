@@ -9,6 +9,7 @@ import env from 'conf/env';
  */
 export function buildImageUrl(imageType: 'canvas' | 'user' | 'meme', imagePath: string): string {
   if (imagePath.slice(0, 4) === 'http') return imagePath; // If a test image
+  if (imagePath.slice(0, 1) === '/') return imagePath; // If a local image
 
   return `${env.host}/api/${imageType}/image/${imagePath}`;
 }
