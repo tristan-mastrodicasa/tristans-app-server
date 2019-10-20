@@ -5,6 +5,7 @@ import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
 import { ContentCard, EContentType } from 'shared/models';
+import { buildImageUrl } from 'shared/helpers';
 import { Raw } from 'typeorm';
 
 import env from 'conf/env';
@@ -113,7 +114,7 @@ router.get('/', async (req, res, next) => {
                 photo: entity.canvas.user.profileImg,
               },
             },
-            imagePath: `${env.host}/api/meme/image/${entity.imagePath}`,
+            imagePath: buildImageUrl('meme', entity.imagePath),
             stars: entity.stars,
             starred: (userReacted ? true : false),
             utcTime: +entity.utc,
@@ -136,7 +137,7 @@ router.get('/', async (req, res, next) => {
               },
             },
             description: entity.description,
-            imagePath: `${env.host}/api/meme/image/${entity.imagePath}`,
+            imagePath: buildImageUrl('canvas', entity.imagePath),
             stars: entity.stars,
             starred: (userReacted ? true : false),
             utcTime: +entity.utc,
