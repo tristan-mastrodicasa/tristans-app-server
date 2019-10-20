@@ -14,8 +14,8 @@ const router = Router({ mergeParams: true });
  * @apiHeader Authorization Bearer [token]
  *
  * @apiParam {Number} id The id of the user
- * @apiParam {String} firstName The new first name
- * @apiParam {String} username The new username
+ * @apiParam {String} body.firstName The new first name
+ * @apiParam {String} body.username The new username
  *
  * @apiError (HTTP Error Codes) 401 Unauthorized
  * @apiError (HTTP Error Codes) 400 Malformed body request / Username taken
@@ -30,6 +30,7 @@ router.put('/', passport.authenticate('jwt', { session: false }), async (req, re
   if (user) {
     // Explicitly define how the body should be formatted //
     const body: { username: string; firstName: string; } = req.body;
+    const originalUsername = user.username;
 
     // Fail if the sent request is malformed //
     if (!body.firstName || !body.username) return next({ content: [{ detail: 'Malformed body' }], status: 400 });
@@ -44,7 +45,10 @@ router.put('/', passport.authenticate('jwt', { session: false }), async (req, re
     }
 
     // Check no other usernames exist //
-    if (await User.findOne({ username: user.username })) return next({ content: [{ detail: 'Username taken' }], status: 400 });
+    /** @todo write unit test to make sure the original username can be uploaded without causing a Username taken error */
+    if (originalUsername !== user.username) {
+      if (await User.findOne({ username: user.username })) return next({ content: [{ detail: 'Username taken' }], status: 400 });
+    }
 
     // Catches errors (mostly when non nullable fields are null) //
     try {
