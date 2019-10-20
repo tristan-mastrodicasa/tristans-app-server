@@ -100,16 +100,16 @@ router.get('/', async (req, res, next) => {
             cid: entity.canvas.id,
             users: {
               primary: {
-                id: entity.user.id,
-                firstName: entity.user.firstName,
-                username: entity.user.username,
-                photo: buildImageUrl('user', entity.user.profileImg),
-              },
-              secondary: {
                 id: entity.canvas.user.id,
                 firstName: entity.canvas.user.firstName,
                 username: entity.canvas.user.username,
                 photo: buildImageUrl('user', entity.canvas.user.profileImg),
+              },
+              secondary: {
+                id: entity.user.id,
+                firstName: entity.user.firstName,
+                username: entity.user.username,
+                photo: buildImageUrl('user', entity.user.profileImg),
               },
             },
             imagePath: buildImageUrl('meme', entity.imagePath),
