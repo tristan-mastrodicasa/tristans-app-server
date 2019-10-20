@@ -62,7 +62,7 @@ router.get('/', async (req, res, next) => {
               id: meme.user.id,
               firstName: meme.user.firstName,
               username: meme.user.username,
-              photo: meme.user.profileImg,
+              photo: buildImageUrl('user', meme.user.profileImg),
             },
           },
           imagePath: buildImageUrl('meme', meme.imagePath),

@@ -1,7 +1,7 @@
 import { IUserItem } from 'shared/models';
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
-import { checkForActiveCanvases } from 'shared/helpers';
+import { checkForActiveCanvases, buildImageUrl } from 'shared/helpers';
 
 /**
  * Get a network of users for a specific user
@@ -56,7 +56,7 @@ export async function getUserNetwork(networkType: 'followers' | 'following' | 'f
       id: user.id,
       firstName: user.firstName,
       username: user.username,
-      photo: user.profileImg,
+      photo: buildImageUrl('user', user.profileImg),
       influence: user.statistics.influence,
       activeCanvases: await checkForActiveCanvases(user.id),
     });

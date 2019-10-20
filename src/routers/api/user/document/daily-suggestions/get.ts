@@ -8,8 +8,6 @@ import { ContentCard, EContentType } from 'shared/models';
 import { buildImageUrl } from 'shared/helpers';
 import { Raw } from 'typeorm';
 
-import env from 'conf/env';
-
 const router = Router({ mergeParams: true });
 
 // Get top 25 canvases + 125 memes for the last 3 days
@@ -105,13 +103,13 @@ router.get('/', async (req, res, next) => {
                 id: entity.user.id,
                 firstName: entity.user.firstName,
                 username: entity.user.username,
-                photo: entity.user.profileImg,
+                photo: buildImageUrl('user', entity.user.profileImg),
               },
               secondary: {
                 id: entity.canvas.user.id,
                 firstName: entity.canvas.user.firstName,
                 username: entity.canvas.user.username,
-                photo: entity.canvas.user.profileImg,
+                photo: buildImageUrl('user', entity.canvas.user.profileImg),
               },
             },
             imagePath: buildImageUrl('meme', entity.imagePath),
@@ -133,7 +131,7 @@ router.get('/', async (req, res, next) => {
                 id: entity.user.id,
                 firstName: entity.user.firstName,
                 username: entity.user.username,
-                photo: entity.user.profileImg,
+                photo: buildImageUrl('user', entity.user.profileImg),
               },
             },
             description: entity.description,
