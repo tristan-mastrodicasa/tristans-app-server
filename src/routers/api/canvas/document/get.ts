@@ -35,6 +35,7 @@ router.get('/', async (req, res, next) => {
         userReacted = await CanvasReacts.findOne({ canvas, user });
       }
 
+      /** @todo consider centeralizing content card building */
       const contentCard: ContentCard = {
         type: EContentType.Canvas,
         id: canvas.id,
