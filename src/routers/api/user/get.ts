@@ -29,9 +29,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 
   let results: User[] = [];
 
-  /** @todo Write a test to assert order by influence */
-  /** @todo Write a test to assert that the user follows you and display it */
-  /** @todo Change these horrible queries to User.find() calls */
   if (!req.query.query) {
     results = await getConnection()
       .getRepository(User)
@@ -42,7 +39,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       .limit(50)
       .getMany();
   } else {
-
     // Search database //
     results = await getConnection()
       .getRepository(User)
@@ -52,7 +48,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
       .orWhere('MATCH(firstName) AGAINST (:searchTerm IN BOOLEAN MODE)', { searchTerm: `${req.query.query}*` })
       .limit(50)
       .getMany();
-
   }
 
   if (results.length > 0) {

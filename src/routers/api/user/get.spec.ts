@@ -2,7 +2,11 @@ import supertest from 'supertest';
 import express from 'express';
 import get from './get';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
-import { httpErrorMiddleware, runAsyncConcurrently } from 'shared/helpers';
+import {
+  httpErrorMiddleware,
+  runAsyncConcurrently,
+  networkManager,
+} from 'shared/helpers';
 import { IUserItem } from 'shared/models';
 
 describe('GET user', () => {
@@ -73,6 +77,51 @@ describe('GET user', () => {
 
     // Return something //
     expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  it('should be ordered by influence when query is empty', async () => {
+    const primaryUserInfo = await getNewAuthorizedUser();
+
+    for (let i = 0; i < 10; i += 1) {
+      const userInfo = await getNewAuthorizedUser();
+      userInfo.user.statistics.influence += 30 * i;
+      await userInfo.user.statistics.save();
+    }
+
+    const res = await supertest(app)
+      .get('/user')
+      .query({ query: '' })
+      .set('Authorization', `Bearer ${primaryUserInfo.token}`);
+
+    // Return something //
+    expect(res.body.length).toBeGreaterThan(0);
+
+    // Should be ordered by influence //
+    expect(res.body[0].influence).toBeGreaterThanOrEqual(res.body[1].influence);
+    expect(res.body[1].influence).toBeGreaterThanOrEqual(res.body[2].influence);
+    expect(res.body[2].influence).toBeGreaterThanOrEqual(res.body[3].influence);
+  });
+
+  it('should display that you follow a user', async () => {
+    const primaryUserInfo = await getNewAuthorizedUser();
+
+    const secondaryUserInfo = await getNewAuthorizedUser();
+    secondaryUserInfo.user.username = 'veryunique12893718923';
+    secondaryUserInfo.user.save();
+
+    await networkManager('follow', primaryUserInfo.user.id, secondaryUserInfo.user.id);
+
+    const res = await supertest(app)
+      .get('/user')
+      .query({ query: secondaryUserInfo.user.username })
+      .set('Authorization', `Bearer ${primaryUserInfo.token}`);
+
+    // Return something //
+    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body[0].username).toBe(secondaryUserInfo.user.username);
+
+    // Displays the fact you follow this user //
+    expect(res.body[0].youAreFollowing).toEqual(true);
   });
 
   it('should limit to 50 results', async () => {
