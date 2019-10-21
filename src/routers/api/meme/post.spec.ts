@@ -120,14 +120,15 @@ describe('POST meme', () => {
     await Meme.remove(await Meme.find());
 
     const userInfo = await getNewAuthorizedUser();
-    const canvas = await getPhonyCanvas(userInfo.user.id);
     const memeArray: number[] = [];
 
     // Create a lot of memes //
     for (let i = 0; i < 21; i += 1) {
+      const newCanvas = await getPhonyCanvas(userInfo.user.id);
+
       const res = await supertest(app)
       .post('/')
-      .query(`canvasid=${canvas.id}`)
+      .query(`canvasid=${newCanvas.id}`)
       .set('Authorization', `Bearer ${userInfo.token}`)
       .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
 
@@ -152,9 +153,11 @@ describe('POST meme', () => {
 
     // Create 20 memes //
     for (let i = 0; i < 20; i += 1) {
+      const newCanvas = await getPhonyCanvas(userInfo.user.id);
+
       const res = await supertest(app)
         .post('/')
-        .query(`canvasid=${canvas.id}`)
+        .query(`canvasid=${newCanvas.id}`)
         .set('Authorization', `Bearer ${userInfo.token}`)
         .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
 
@@ -175,6 +178,31 @@ describe('POST meme', () => {
 
     // Meme should be made //
     expect(res.body.memeId).toBeDefined();
+
+  });
+
+  it('should fail if > 3 memes are made on one canvas', async () => {
+    const userInfo = await getNewAuthorizedUser();
+    const canvas = await getPhonyCanvas(userInfo.user.id);
+
+    // Create 3 memes on one canvas //
+    for (let i = 0; i < 3; i += 1) {
+      await supertest(app)
+        .post('/')
+        .query(`canvasid=${canvas.id}`)
+        .set('Authorization', `Bearer ${userInfo.token}`)
+        .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
+    }
+
+    // Create another meme //
+    const res = await supertest(app)
+      .post('/')
+      .query(`canvasid=${canvas.id}`)
+      .set('Authorization', `Bearer ${userInfo.token}`)
+      .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
+
+    // Meme fail //
+    expect(res.status).toEqual(400);
 
   });
 

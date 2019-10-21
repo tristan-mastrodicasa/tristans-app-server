@@ -35,8 +35,6 @@ const upload = multer({
   },
 }).single('meme');
 
-/** @todo restrict 3 memes per canvas, add unit test */
-
 /**
  * @api {post} /meme Create a new meme
  * @apiName CreateMeme
@@ -63,6 +61,10 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
 
     const canvas = await Canvas.findOne(req.query.canvasid);
     if (!canvas) return next({ content: [{ detail: 'The canvas id you passed did not match one in the database' }], status: 400 });
+
+    // Check if the maxmimum meme limit is reached //
+    const count = await Meme.count({ where: { canvas, user: req.user.id } });
+    if (count > 2) return next({ content: [{ detail: 'You are only allowed to meme a canvas 3 times' }], status: 400 });
 
     if (req.file) {
 
