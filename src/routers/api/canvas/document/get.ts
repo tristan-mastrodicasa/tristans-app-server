@@ -26,7 +26,6 @@ router.get('/', async (req, res, next) => {
 
     if (canvas) {
 
-      /** @todo consider centeralizing content card building */
       const contentCard = await buildCanvasCard(canvas, user);
 
       return res.send(contentCard);

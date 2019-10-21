@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { MemeReacts } from 'database/entities/meme-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
-import { ContentCard, EContentType } from 'shared/models';
+import { ContentCard } from 'shared/models';
 import { getConnection } from 'typeorm';
-import { buildImageUrl } from 'shared/helpers';
+import { buildMemeCard } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -46,30 +45,7 @@ router.get('/', async (req, res, next) => {
 
       for (const meme of memes) {
 
-        let userReacted = undefined;
-
-        // Check if the meme has been starred by the user //
-        if (user) {
-          userReacted = await MemeReacts.findOne({ meme, user });
-        }
-
-        // Compile the card for shipping //
-        const contentCard: ContentCard = {
-          type: EContentType.Meme,
-          id: meme.id,
-          users: {
-            primary: {
-              id: meme.user.id,
-              firstName: meme.user.firstName,
-              username: meme.user.username,
-              photo: buildImageUrl('user', meme.user.profileImg),
-            },
-          },
-          imagePath: buildImageUrl('meme', meme.imagePath),
-          stars: meme.stars,
-          starred: (userReacted ? true : false),
-          utcTime: +meme.utc,
-        };
+        const contentCard = await buildMemeCard(meme, user);
 
         contentCardList.push(contentCard);
 
