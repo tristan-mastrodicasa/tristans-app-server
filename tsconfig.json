@@ -9,7 +9,7 @@
     "target": "es5",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -19,5 +19,9 @@
       "*": ["*"]
     }
   },
-  "lib": ["es2018"]
+  "lib": ["es2018"],
+  "exclude": [
+    "**/spec-helpers",
+    "**/*.spec.ts"
+  ]
 }

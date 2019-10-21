@@ -8,12 +8,14 @@
   },
   "scripts": {
     "build": "tsc",
-    "devWindows": "SET NODE_ENV=development&& nodemon",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "startProd": "SET NODE_PATH=./dist&& node ./dist/server.js",
+    "startDev": "SET NODE_PATH=./dist&& SET NODE_ENV=development&& node ./dist/server.js",
+    "devWindows": "SET NODE_PATH=./src&& SET NODE_ENV=development&& nodemon",
+    "typeorm": "SET NODE_PATH=./src&& ts-node ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
-    "test": "SET NODE_ENV=development&& ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine",
+    "test": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node node_modules/jasmine/bin/jasmine",
     "apidoc": "apidoc -o api-doc -i src/routers",
-    "populateDatabase": "ts-node -r tsconfig-paths/register src/spec-helpers/populate-database.ts"
+    "populateDatabase": "SET NODE_PATH=./src&& ts-node src/spec-helpers/populate-database.ts"
   },
   "repository": {
     "type": "git",
@@ -52,7 +54,6 @@
     "nodemon": "^1.19.0",
     "supertest": "^4.0.2",
     "ts-node": "^8.3.0",
-    "tsconfig-paths": "^3.9.0",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-microsoft-contrib": "^6.2.0",

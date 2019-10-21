@@ -1,4 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
+import path from 'path';
 import env from './env';
 
 export const ormconfig: ConnectionOptions = {
@@ -11,14 +12,10 @@ export const ormconfig: ConnectionOptions = {
   charset: 'utf8mb4',
   logging: false,
   entities: [
-    'src/database/entities/**/*.entity.ts',
+    `${path.resolve(__dirname)}/../database/entities/*.entity{.ts,.js}`,
   ],
-  migrations: [
-    'src/database/migrations/**/*.ts',
-  ],
-  subscribers: [
-    'src/database/subscribers/**/*.ts',
-  ],
+  migrations: [],
+  subscribers: [],
   cli: {
     entitiesDir: 'src/database/entity',
     migrationsDir: 'src/database/migration',
