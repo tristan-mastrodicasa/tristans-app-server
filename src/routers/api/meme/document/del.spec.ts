@@ -2,7 +2,8 @@ import supertest from 'supertest';
 import express from 'express';
 import del from './del';
 import { Meme } from 'database/entities/meme.entity';
-import { httpErrorMiddleware } from 'shared/helpers';
+import { MemeReacts } from 'database/entities/meme-reacts.entity';
+import { httpErrorMiddleware, memeReactManager } from 'shared/helpers';
 import { getNewAuthorizedUser } from 'spec-helpers/authorized-user-setup';
 import { getPhonyCanvas } from 'spec-helpers/phony-canvas-setup';
 import { getPhonyMeme } from 'spec-helpers/phony-meme-setup';
@@ -22,6 +23,13 @@ describe('DELETE meme/:id', () => {
     const canvas = await getPhonyCanvas(userInfo.user.id);
     const meme = await getPhonyMeme(canvas.id, userInfo.user.id);
 
+    // React to the meme //
+    await memeReactManager('add', meme.id, userInfo.user.id);
+
+    // react should exist //
+    const userReacted = await MemeReacts.findOne({ meme, user: userInfo.user });
+    expect(userReacted).toBeTruthy();
+
     const res = await supertest(app)
       .delete(`/${meme.id}`)
       .set('Authorization', `Bearer ${userInfo.token}`);
@@ -30,7 +38,9 @@ describe('DELETE meme/:id', () => {
     expect(res.status).toBe(204);
     expect(await Meme.findOne(meme.id)).toBeUndefined();
 
-    /** @todo Check that meme reacts are deleted */
+    // Meme react should be deleted //
+    const userReactedAfterDelete = await MemeReacts.findOne({ meme, user: userInfo.user });
+    expect(userReactedAfterDelete).not.toBeTruthy();
   });
 
   it('should fail without auth token', async () => {
