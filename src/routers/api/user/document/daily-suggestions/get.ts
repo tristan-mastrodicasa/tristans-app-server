@@ -5,7 +5,7 @@ import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
 import { ContentCard, EContentType } from 'shared/models';
-import { buildImageUrl } from 'shared/helpers';
+import { buildImageUrl, buildCanvasCard } from 'shared/helpers';
 import { Raw } from 'typeorm';
 
 const router = Router({ mergeParams: true });
@@ -118,29 +118,7 @@ router.get('/', async (req, res, next) => {
             utcTime: +entity.utc,
           };
 
-        } else if (entity instanceof Canvas) {
-
-          // Check if the meme has been starred by the user //
-          userReacted = await CanvasReacts.findOne({ user: user.id, canvas: entity });
-
-          contentCard = {
-            type: EContentType.Canvas,
-            id: entity.id,
-            users: {
-              primary: {
-                id: entity.user.id,
-                firstName: entity.user.firstName,
-                username: entity.user.username,
-                photo: buildImageUrl('user', entity.user.profileImg),
-              },
-            },
-            description: entity.description,
-            imagePath: buildImageUrl('canvas', entity.imagePath),
-            stars: entity.stars,
-            starred: (userReacted ? true : false),
-            utcTime: +entity.utc,
-          };
-        }
+        } else if (entity instanceof Canvas) contentCard = await buildCanvasCard(entity, user.id);
 
         contentCardList.push(contentCard);
       }

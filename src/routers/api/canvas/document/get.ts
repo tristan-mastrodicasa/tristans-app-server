@@ -1,9 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
-import { ContentCard, EContentType } from 'shared/models';
-import { buildImageUrl } from 'shared/helpers';
+import { buildCanvasCard } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });
 
@@ -28,30 +26,8 @@ router.get('/', async (req, res, next) => {
 
     if (canvas) {
 
-      let userReacted = undefined;
-
-      // Check if the canvas has been starred //
-      if (user) {
-        userReacted = await CanvasReacts.findOne({ canvas, user });
-      }
-
       /** @todo consider centeralizing content card building */
-      const contentCard: ContentCard = {
-        type: EContentType.Canvas,
-        id: canvas.id,
-        users: {
-          primary: {
-            id: canvas.user.id,
-            firstName: canvas.user.firstName,
-            username: canvas.user.username,
-            photo: buildImageUrl('user', canvas.user.profileImg) },
-        },
-        imagePath: buildImageUrl('canvas', canvas.imagePath),
-        description: canvas.description,
-        stars: canvas.stars,
-        starred: (userReacted ? true : false),
-        utcTime: +canvas.utc,
-      };
+      const contentCard = await buildCanvasCard(canvas, user);
 
       return res.send(contentCard);
 

@@ -13,3 +13,4 @@ export * from './run-async-concurrently.function';
 export * from './user-influence-manager.function';
 export * from './build-image-url.function';
 export * from './user-content-number-manager.function';
+export * from './build-canvas-card.function';
