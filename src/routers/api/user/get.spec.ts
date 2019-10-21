@@ -107,7 +107,7 @@ describe('GET user', () => {
 
     const secondaryUserInfo = await getNewAuthorizedUser();
     secondaryUserInfo.user.username = 'veryunique12893718923';
-    secondaryUserInfo.user.save();
+    await secondaryUserInfo.user.save();
 
     await networkManager('follow', primaryUserInfo.user.id, secondaryUserInfo.user.id);
 

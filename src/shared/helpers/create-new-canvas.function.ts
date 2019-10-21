@@ -1,10 +1,10 @@
 import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { validate, ValidationError } from 'class-validator';
+import { userContentNumberManager } from 'shared/helpers';
 
 /**
  * Create a canvas along with all of it's associated relations
- * @todo change image path to full url instead of just file name
  * @param  canvas      Canvas Object
  * @param  userid      The userid of the canvas owner
  * @param  ignoreLimit Create as many canvases as you want
@@ -45,9 +45,7 @@ export async function createNewCanvas(canvas: Canvas, userid: number, ignoreLimi
   }
 
   // Update user stats //
-  /** @todo convert incremation to a similar strategy used by userInfluenceManager */
-  user.statistics.contentNum += 1;
-  await user.statistics.save();
+  await userContentNumberManager('add', user.id, 1);
 
   return canvas.save();
 

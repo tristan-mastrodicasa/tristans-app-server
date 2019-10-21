@@ -3,7 +3,7 @@ import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { validate, ValidationError } from 'class-validator';
 import { EInfluence } from 'shared/models';
-import { userInfluenceManager } from 'shared/helpers';
+import { userInfluenceManager, userContentNumberManager } from 'shared/helpers';
 
 /**
  * Create a meme along with all of it's associated relations
@@ -47,9 +47,7 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
   }
 
   // Update user stats //
-  /** @todo convert incremation to a similar strategy used by userInfluenceManager */
-  user.statistics.contentNum += 1;
-  await user.statistics.save();
+  await userContentNumberManager('add', user.id, 1);
 
   // Owner of meme should not get influence if memeing own canvas //
   if (userid !== canvas.user.id) {
