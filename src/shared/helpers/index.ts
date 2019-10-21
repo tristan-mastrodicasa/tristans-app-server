@@ -14,3 +14,4 @@ export * from './user-influence-manager.function';
 export * from './build-image-url.function';
 export * from './user-content-number-manager.function';
 export * from './build-canvas-card.function';
+export * from './build-meme-with-host-card.function';

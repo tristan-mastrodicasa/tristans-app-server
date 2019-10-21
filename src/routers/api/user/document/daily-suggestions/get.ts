@@ -1,11 +1,9 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { MemeReacts } from 'database/entities/meme-reacts.entity';
-import { CanvasReacts } from 'database/entities/canvas-reacts.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
-import { ContentCard, EContentType } from 'shared/models';
-import { buildImageUrl, buildCanvasCard } from 'shared/helpers';
+import { ContentCard } from 'shared/models';
+import { buildMemeWithHostCard, buildCanvasCard } from 'shared/helpers';
 import { Raw } from 'typeorm';
 
 const router = Router({ mergeParams: true });
@@ -84,41 +82,11 @@ router.get('/', async (req, res, next) => {
 
       // Compile cards  //
       for (const entity of content) {
-
-        let userReacted = undefined;
         let contentCard: ContentCard;
 
         // Compile the card for shipping //
-        if (entity instanceof Meme) {
-
-          // Check if the meme has been starred by the user //
-          userReacted = await MemeReacts.findOne({ user: user.id, meme: entity });
-
-          contentCard = {
-            type: EContentType.MemeWithHost,
-            id: entity.id,
-            cid: entity.canvas.id,
-            users: {
-              primary: {
-                id: entity.canvas.user.id,
-                firstName: entity.canvas.user.firstName,
-                username: entity.canvas.user.username,
-                photo: buildImageUrl('user', entity.canvas.user.profileImg),
-              },
-              secondary: {
-                id: entity.user.id,
-                firstName: entity.user.firstName,
-                username: entity.user.username,
-                photo: buildImageUrl('user', entity.user.profileImg),
-              },
-            },
-            imagePath: buildImageUrl('meme', entity.imagePath),
-            stars: entity.stars,
-            starred: (userReacted ? true : false),
-            utcTime: +entity.utc,
-          };
-
-        } else if (entity instanceof Canvas) contentCard = await buildCanvasCard(entity, user.id);
+        if (entity instanceof Meme) contentCard = await buildMemeWithHostCard(entity, user.id);
+        else if (entity instanceof Canvas) contentCard = await buildCanvasCard(entity, user.id);
 
         contentCardList.push(contentCard);
       }
