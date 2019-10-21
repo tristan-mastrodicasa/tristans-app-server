@@ -4,7 +4,7 @@
     "**/*[sS]pec.ts"
   ],
   "helpers": [
-    "spec-helpers/**/*.ts"
+    "spec-helpers/environment-setup.ts"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": true,
