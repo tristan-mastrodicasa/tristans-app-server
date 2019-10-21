@@ -2,10 +2,11 @@ import passport from 'passport';
 import passportGoogleOauth20 from 'passport-google-oauth20';
 import passportGoogleAuthcode from 'passport-google-authcode';
 import passportJwt from 'passport-jwt';
+import passportFacebookToken from 'passport-facebook-token';
 
 import env from './env';
 
-import { googleSignIn } from 'shared/helpers';
+import { googleSignIn, facebookSignIn } from 'shared/helpers';
 
 passport.use(
   new passportJwt.Strategy(
@@ -39,5 +40,16 @@ passport.use(
       callbackURL: '',
     },
     googleSignIn,
+  ),
+);
+
+// Facebook mobile authentication //
+passport.use(
+  new passportFacebookToken(
+    {
+      clientID: env.facebook_app_id,
+      clientSecret: env.facebook_app_secret,
+    },
+    facebookSignIn,
   ),
 );

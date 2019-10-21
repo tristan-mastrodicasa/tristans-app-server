@@ -7,6 +7,7 @@ import user from './user';
 
 const router = express.Router();
 
+router.use('/auth/facebook', auth.facebook.post);
 router.use('/auth/google-authcode', auth.googleAuthcode.post);
 router.use('/auth/google', auth.google.get);
 router.use('/auth/google/redirect', auth.google.redirect.get);

@@ -10,6 +10,8 @@ export interface IEnv {
   google_redirect_url: string;
   google_client_id: string;
   google_client_secret: string;
+  facebook_app_id: string;
+  facebook_app_secret: string;
   rebuild_database: boolean;
   jwt_key: string;
 }
