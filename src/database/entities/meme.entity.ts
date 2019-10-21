@@ -24,7 +24,7 @@ export class Meme extends BaseEntity {
   @Column('int', { default: () => '0' })
   @IsOptional()
   @IsInt()
-  public stars?: number; /** @todo remove and rely on COUNT(*) from meme_reacts */
+  public stars?: number;
 
   @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
   @IsOptional()
