@@ -10,6 +10,7 @@
     "build": "tsc",
     "startProd": "SET NODE_PATH=./dist&& node ./dist/server.js",
     "startDev": "SET NODE_PATH=./dist&& SET NODE_ENV=development&& node ./dist/server.js",
+    "start": "NODE_PATH=./dist node ./dist/server.js",
     "devWindows": "SET NODE_PATH=./src&& SET NODE_ENV=development&& nodemon",
     "typeorm": "SET NODE_PATH=./src&& ts-node ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",

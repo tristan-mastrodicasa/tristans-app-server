@@ -4,8 +4,8 @@ import env from './env';
 
 export const ormconfig: ConnectionOptions = {
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
+  host: env.database_host,
+  port: env.database_port,
   username: env.database_username,
   password: env.database_password,
   database: 'tristans_app',
@@ -14,12 +14,5 @@ export const ormconfig: ConnectionOptions = {
   entities: [
     `${path.resolve(__dirname)}/../database/entities/*.entity{.ts,.js}`,
   ],
-  migrations: [],
-  subscribers: [],
-  cli: {
-    entitiesDir: 'src/database/entity',
-    migrationsDir: 'src/database/migration',
-    subscribersDir: 'src/database/subscriber',
-  },
   synchronize: env.rebuild_database,
 };

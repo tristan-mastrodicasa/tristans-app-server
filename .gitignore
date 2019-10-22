@@ -20,3 +20,9 @@ src/conf/env.prod.ts
 
 # apidoc output
 /api-doc
+
+# Packaged builds
+/zip
+
+# Sensitive database information
+ormconfig.json
