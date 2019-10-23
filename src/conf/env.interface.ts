@@ -1,3 +1,5 @@
+import { StorageEngine } from 'multer';
+
 /**
  * Interface defining how to structure your environment objects
  * @author Tristan Mastrodicasa
@@ -16,4 +18,6 @@ export interface IEnv {
   facebook_app_secret: string;
   rebuild_database: boolean;
   jwt_key: string;
+  awsS3Buckets: { [bucketAlias: string]: string };
+  multerFileStorageEngine: (bucket: string) => StorageEngine;
 }

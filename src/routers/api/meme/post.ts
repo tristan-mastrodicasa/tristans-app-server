@@ -1,28 +1,16 @@
 import { Router } from 'express';
 import multer from 'multer';
 import passport from 'passport';
-// import crypto from 'crypto';
 import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { createNewMeme, validationErrorToHttpResponse } from 'shared/helpers';
+import env from 'conf/env';
 
 const router = Router();
 
-// File upload initalization //
-/*const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    cb(null, 'uploads/meme_images/');
-  },
-  filename: (_req, file, cb) => {
-    if (file.mimetype === 'image/jpeg') cb(null, `${crypto.randomBytes(16).toString('hex')}.jpg`);
-    if (file.mimetype === 'image/png') cb(null, `${crypto.randomBytes(16).toString('hex')}.png`);
-  },
-});*/
-
 const upload = multer({
-  // storage,
-  dest: 'uploads/meme_images/',
-  limits: { fileSize: 1500000, files: 1 },
+  storage: env.multerFileStorageEngine(env.awsS3Buckets.meme),
+  limits: { fileSize: 1000000, files: 1 },
   fileFilter: (_req, file, cb) => {
 
     // Make sure only images are uploaded //

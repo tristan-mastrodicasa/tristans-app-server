@@ -3,13 +3,14 @@ import multer from 'multer';
 import passport from 'passport';
 import { User } from 'database/entities/user.entity';
 import expressRateLimit from 'express-rate-limit';
+import env from 'conf/env';
 
 const router = Router({ mergeParams: true });
 
 // File upload initalization //
 const upload = multer({
-  dest: 'uploads/user_images/',
-  limits: { fileSize: 1500000, files: 1 },
+  storage: env.multerFileStorageEngine(env.awsS3Buckets.user),
+  limits: { fileSize: 300000, files: 1 },
   fileFilter: (_req, file, cb) => {
 
     // Make sure only images are uploaded //

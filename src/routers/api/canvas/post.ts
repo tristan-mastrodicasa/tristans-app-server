@@ -5,13 +5,14 @@ import passport from 'passport';
 import { Canvas } from 'database/entities/canvas.entity';
 import { EVisibility } from 'shared/models';
 import { createNewCanvas, validationErrorToHttpResponse } from 'shared/helpers';
+import env from 'conf/env';
 
 const router = Router();
 
 // File upload initalization //
 const upload = multer({
-  dest: 'uploads/canvas_images/',
-  limits: { fileSize: 1500000, files: 1 },
+  storage: env.multerFileStorageEngine(env.awsS3Buckets.canvas),
+  limits: { fileSize: 1000000, files: 1 },
   fileFilter: (_req, file, cb) => {
 
     // Make sure only images are uploaded //

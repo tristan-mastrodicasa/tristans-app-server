@@ -11,5 +11,9 @@ export function buildImageUrl(imageType: 'canvas' | 'user' | 'meme', imagePath: 
   if (imagePath.slice(0, 4) === 'http') return imagePath; // If a test image
   if (imagePath.slice(0, 1) === '/') return imagePath; // If a local image
 
-  return `${env.host}/api/${imageType}/image/${imagePath}`;
+  // Access test image storage //
+  if (!env.production) return `${env.host}/api/${imageType}/image/${imagePath}`;
+
+  // In production return the files from the buckets //
+  return `https://${env.awsS3Buckets[imageType]}.s3-ap-southeast-2.amazonaws.com/${imagePath}`;
 }
