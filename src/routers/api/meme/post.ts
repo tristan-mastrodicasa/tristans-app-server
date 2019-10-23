@@ -43,6 +43,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res, ne
   if (!req.query.canvasid) return next({ content: [{ detail: 'Please pass a canvas id in the query' }], status: 400 });
 
   /** @todo Fix known bug where image is uploaded even if validation fails for other inputs */
+  /** @todo enable daily rate limiting */
   upload(req, res, async (err) => {
     if (err instanceof Error) return next({ content: [{ title: 'file', detail: err.message }], status: 400 });
     if (err) return next({ content: [{ title: 'file', detail: 'Something went wrong' }], status: 400 });
