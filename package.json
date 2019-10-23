@@ -16,7 +16,8 @@
     "lint": "tslint src/**/*.ts",
     "test": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node node_modules/jasmine/bin/jasmine",
     "apidoc": "apidoc -o api-doc -i src/routers",
-    "populateDatabase": "SET NODE_PATH=./src&& ts-node src/spec-helpers/populate-database.ts"
+    "populateDatabase": "SET NODE_PATH=./src&& ts-node src/spec-helpers/populate-database.ts",
+    "scss": "node-sass --watch assets/scss -o assets/css"
   },
   "repository": {
     "type": "git",
@@ -64,6 +65,7 @@
   "dependencies": {
     "aws-sdk": "^2.554.0",
     "class-validator": "^0.9.1",
+    "ejs": "^2.7.1",
     "express": "^4.16.4",
     "express-rate-limit": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
