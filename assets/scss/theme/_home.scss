@@ -222,10 +222,16 @@
 .banner-right{
 	@media(max-width:991px){
 		img{
-			width:55%;
 			margin-right: auto !important;
 			margin-left: auto !important;
 			display:block;
+			height: 300px;
+		}
+	}
+	@media(min-width:991px){
+		img {
+			display: block;
+			margin: 0 auto;
 		}
 	}
 }

@@ -1637,10 +1637,15 @@ h4, h5, h6 {
 
 @media (max-width: 991px) {
   .banner-right img {
-    width: 55%;
     margin-right: auto !important;
     margin-left: auto !important;
-    display: block; } }
+    display: block;
+    height: 300px; } }
+
+@media (min-width: 991px) {
+  .banner-right img {
+    display: block;
+    margin: 0 auto; } }
 
 .header-btn {
   background-color: #fff;
