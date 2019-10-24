@@ -20,56 +20,11 @@ $(document).ready(function(){
           $('select').niceSelect();
     };
 
-    $('.img-pop-up').magnificPopup({
-        type: 'image',
-        gallery:{
-        enabled:true
-        }
-    });
-
 
 
   // $('.navbar-nav>li>a').on('click', function(){
   //     $('.navbar-collapse').collapse('hide');
   // });
-
-  //  Counter Js 
-
-  $('.counter').counterUp({
-      delay: 10,
-      time: 1000
-  });
-
-
-  $('.play-btn').magnificPopup({
-    type: 'iframe',
-    mainClass: 'mfp-fade',
-    removalDelay: 160,
-    preloader: false,
-    fixedContentPos: false
-});
-
-
-
-    $('.active-feature-carusel').owlCarousel({
-        items:3,
-        loop:true,
-        autoplay:true,
-        margin:30,
-        nav:true,
-        navText: ["<span class='lnr lnr-arrow-up'></span>","<span class='lnr lnr-arrow-down'></span>"],
-        responsive:{    
-        0:{
-          items: 1
-        },
-        414:{
-          items: 2
-        },
-        768:{
-          items: 3
-        }
-    }
-    });
 
 
   // Select all links with hashes
@@ -80,8 +35,8 @@ $(document).ready(function(){
   .on('click',function(event) {
   // On-page links
   if (
-    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-    && 
+    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+    &&
     location.hostname == this.hostname
   ) {
     // Figure out element to scroll to
@@ -108,10 +63,5 @@ $(document).ready(function(){
     }
   }
   });
-
-
-      $(document).ready(function() {
-          $('#mc_embed_signup').find('form').ajaxChimp();
-      });   
 
  });

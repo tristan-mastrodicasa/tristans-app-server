@@ -69,12 +69,12 @@
       <div class="c-card">
 
         <div class="c-header clearfix">
-          <div class="c-header-avatar">
+          <div class="c-header-avatar" onclick="presentAlertConfirm()">
             <img class="avatar-primary" src="<%= canvash.canvas.users.primary.photo %>">
           </div>
 
           <div class="c-header-action">
-            <ion-icon name="brush" class="more-icon"></ion-icon>
+            <ion-icon name="brush" class="more-icon" onclick="presentAlertConfirm()"></ion-icon>
           </div>
 
           <div class="c-header-info">
@@ -90,7 +90,7 @@
         </div>
 
         <div class="c-actions clearfix">
-          <div class="star">
+          <div class="star" onclick="presentAlertConfirm()">
             <ion-icon class="star-icon" name="star-outline"></ion-icon>&nbsp;<span><%= canvash.canvas.stars %></span>
           </div>
           <div class="time"><ion-icon class="time-icon" name="time"></ion-icon>&nbsp;<span><%= canvash.utcFormatted %></span></div>
@@ -106,13 +106,13 @@
         <div class="c-card c-card-bottom-margin">
 
           <div class="c-header clearfix">
-            <div class="c-header-avatar">
+            <div class="c-header-avatar" onclick="presentAlertConfirm()">
               <img class="avatar-primary" src="<%= record.meme.users.primary.photo %>">
               <img class="avatar-secondary" src="<%= record.meme.users.secondary.photo %>">
             </div>
 
             <div class="c-header-action">
-              <ion-icon class="more-icon" name="more" mode="ios"></ion-icon>
+
             </div>
 
             <div class="c-header-info">
@@ -127,7 +127,7 @@
           </div>
 
           <div class="c-actions clearfix">
-            <div class="star">
+            <div class="star" onclick="presentAlertConfirm()">
               <ion-icon class="star-icon" name="star-outline"></ion-icon>&nbsp;<span><%= record.meme.stars %></span>
             </div>
             <div class="time"><ion-icon class="time-icon" name="time"></ion-icon>&nbsp;<span><%= record.utcFormatted %></span></div>
@@ -135,6 +135,8 @@
 
         </div>
       <% }); %>
+
+      <ion-button class="load-more-button" expand="block" color="primary" onclick="presentAlertConfirm()">Load More</ion-button>
 
     </div>
 
@@ -159,5 +161,24 @@
     <script src="/js/jquery.sticky.js"></script>
     <script src="/js/hexagons.min.js"></script>
     <script src="/js/main.js"></script>
+
+    <script>
+    function presentAlertConfirm() {
+      const alert = document.createElement('ion-alert');
+      alert.header = 'Download the App';
+      alert.message = `<a href="/"><div class="buttons flex-row d-flex play-store-download canvas-app-install">
+        <i class="fa fa-android" aria-hidden="true"></i>
+        <div class="desc">
+            <p>
+              <span>Available</span> <br>
+              on Play Store
+            </p>
+        </div>
+      </div></a>`;
+
+      document.body.appendChild(alert);
+      return alert.present();
+    }
+    </script>
   </body>
 </html>

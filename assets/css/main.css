@@ -1,4 +1,12 @@
 /*--------------------------- Color variations ----------------------*/
+:root {
+  --ion-color-primary: #ff9933;
+  --ion-color-primary-rgb: 255,153,51;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-shade: #e0872d;
+  --ion-color-primary-tint: #ffa347; }
+
 /* Medium Layout: 1280px */
 /* Tablet Layout: 768px */
 /* Mobile Layout: 320px */
@@ -2133,6 +2141,13 @@ h6 {
   background-color: #e9ebee;
   overflow-y: scroll; }
 
+.canvas-app-install:hover {
+  color: #000;
+  box-shadow: none; }
+
+.canvas-app-install:hover i {
+  color: #000 !important; }
+
 /**
  * Import into components that want to reset the default
  * styles of some native tags
@@ -2249,7 +2264,8 @@ h6 {
 .c-header-action {
   width: auto;
   height: 100%;
-  float: right; }
+  float: right;
+  cursor: pointer; }
 
 .c-header-action > .more-icon {
   font-size: 24px;
@@ -2280,7 +2296,8 @@ span.alert {
   width: auto;
   float: left;
   color: #657786;
-  font-size: 16px; }
+  font-size: 16px;
+  cursor: pointer; }
 
 .star-selected {
   width: auto;

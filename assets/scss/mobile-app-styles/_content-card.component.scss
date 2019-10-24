@@ -50,6 +50,7 @@
   width: auto;
   height: 100%;
   float: right;
+  cursor: pointer;
 }
 
 .c-header-action > .more-icon {
@@ -91,6 +92,7 @@ $actions-size: 16px;
   float: left;
   color: $light-color;
   font-size: $actions-size;
+  cursor: pointer;
 }
 
 .star-selected {
