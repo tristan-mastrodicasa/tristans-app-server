@@ -1,8 +1,5 @@
 {
   "name": "tristans-app-server",
-  "version": "1.0.0",
-  "description": "API for the Tristan's app service",
-  "main": "index.js",
   "directories": {
     "doc": "docs"
   },
@@ -23,9 +20,6 @@
     "type": "git",
     "url": "git+https://github.com/ghostcoder217/tristans-app-server.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/ghostcoder217/tristans-app-server/issues"
   },
