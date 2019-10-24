@@ -1,0 +1,19 @@
+/**
+ * File contains project wide mixins
+ * Created by Tristan Mastrodicasa
+ */
+
+/* Mixins */
+
+@mixin box-sizing($box-model) {
+	-webkit-box-sizing: $box-model; // Safari <= 5
+	-moz-box-sizing: $box-model; // Firefox <= 19
+	box-sizing: $box-model;
+}
+
+@mixin transform ($parameter) {
+	-webkit-transform: $parameter;
+	-ms-transform: $parameter;
+	-moz-transform: $parameter;
+	transform: $parameter;
+}

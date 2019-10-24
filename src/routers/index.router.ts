@@ -4,6 +4,7 @@ import index from './';
 import privacy from './privacy';
 import terms from './terms';
 import support from './support';
+import canvas from './canvas';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.use('/', index.get);
 router.use('/privacy', privacy.get);
 router.use('/terms', terms.get);
 router.use('/support', support.get);
+router.use('/canvas', canvas.get);
 
 router.use('/css', express.static('assets/css'));
 router.use('/img', express.static('assets/img'));

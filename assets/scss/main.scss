@@ -16,8 +16,12 @@
 @import "theme/reset";
 
 
-// Custom Scss 
+// Custom Scss
 @import "theme/elements";
 @import "theme/header";
 @import "theme/home";
 @import "theme/footer";
+@import "theme/canvas-preview";
+
+// Styles from the mobile app //
+@import "mobile-app-styles/content-card.component"

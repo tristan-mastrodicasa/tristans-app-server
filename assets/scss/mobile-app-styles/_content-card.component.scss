@@ -1,0 +1,127 @@
+@import './globals/defaults';
+@import './helpers/utility-classes';
+@import './helpers/colors';
+@import './globals/card';
+@import './globals/text';
+
+.c-card {
+  max-width: 500px;
+  background-color: #FFFFFF;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.c-card-bottom-margin {
+  margin-bottom: 20px;
+}
+
+.c-header {
+  padding: 10px;
+  background-color: #FFF;
+}
+
+.c-header-avatar {
+  width: auto;
+  float: left;
+}
+
+.c-header-avatar > .avatar-primary {
+  height: 45px;
+  z-index: -1;
+}
+
+.c-header-avatar > .avatar-secondary {
+  height: 23px;
+  position: absolute;
+  margin-left: -23px;
+  margin-top: 22px;
+  z-index: 2;
+
+  border-left: 3px solid #FFFFFF;
+  border-top: 3px solid #FFFFFF;
+}
+
+.c-header-info {
+  width: auto;
+  margin-left: 50px;
+}
+
+.c-header-action {
+  width: auto;
+  height: 100%;
+  float: right;
+}
+
+.c-header-action > .more-icon {
+  font-size: 24px;
+  color: $light-color;
+}
+
+.c-header-info-text-bar {
+  b {
+    color: #000;
+  }
+  text-align: left;
+  font-size: 15px;
+  padding: 1px 0 0px 4px;
+}
+
+span.light {
+  color: $light-color;
+}
+
+span.alert {
+  color: $info-color;
+}
+
+.c-content img {
+  max-height: $card-image-max-height;
+  width: auto;
+}
+
+$actions-size: 16px;
+
+.c-actions {
+  height: 43px;
+  padding: 10px;
+}
+
+.star {
+  width: auto;
+  float: left;
+  color: $light-color;
+  font-size: $actions-size;
+}
+
+.star-selected {
+  width: auto;
+  float: left;
+  color: #e5c100;
+  font-size: $actions-size;
+}
+
+.star-icon {
+  margin-bottom: -3.5px;
+  font-size: 20px;
+}
+
+.time {
+  width: auto;
+  float: right;
+  color: $light-color;
+  font-size: $actions-size;
+}
+
+.time-icon {
+  margin-bottom: -3px;
+  font-size: 17px;
+}
+
+.alert-icon {
+  margin-bottom: -3px;
+  font-size: 17px;
+}
+
+.invisible {
+  display: none;
+}

@@ -1,0 +1,52 @@
+/*
+ * File contains classes which can be
+ * applied to html elements to quickly add
+ * short css rules
+ * Created by Tristan Mastrodicasa
+ */
+
+ .width-full {
+   width: 100%;
+ }
+
+.center {
+  display: block;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.clearfix::after {
+   content: "";
+   clear: both;
+   display: table;
+ }
+
+$default-size: 16px;
+
+.default-padding {
+  padding: $default-size;
+}
+
+.default-margin {
+  margin: $default-size;
+}
+
+.default-vertical-padding {
+  padding-top: $default-size;
+  padding-bottom: $default-size;
+}
+
+.default-bottom-padding {
+  padding-bottom: $default-size;
+}
+
+.default-bottom-margin {
+  margin-bottom: $default-size;
+}
+
+.no-padding {
+  padding: 0;
+}
