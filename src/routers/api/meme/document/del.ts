@@ -6,6 +6,13 @@ import { Meme } from 'database/entities/meme.entity';
 const router = Router({ mergeParams: true });
 
 /**
+ * @todo hackers can exploit the influence system by creating another user
+ * and repeatedly creating new memes on their canvas and then deleting them,
+ * look to drop influence for when a meme is deleted by a user but not when
+ * it is deleted when the canvas is removed or by other means
+ */
+
+/**
  * @api {delete} /meme/:id Delete meme document
  * @apiName DeleteMeme
  * @apiGroup Meme
