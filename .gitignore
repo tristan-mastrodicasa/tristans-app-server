@@ -26,3 +26,5 @@ src/conf/env.prod.ts
 
 # Sensitive database information
 ormconfig.json
+
+landing_page_template
