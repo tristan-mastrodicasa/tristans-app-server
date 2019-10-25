@@ -27,4 +27,9 @@ src/conf/env.prod.ts
 # Sensitive database information
 ormconfig.json
 
+<<<<<<< HEAD
 landing_page_template
+=======
+# hide landing template
+/landing_page_template
+>>>>>>> web-pages

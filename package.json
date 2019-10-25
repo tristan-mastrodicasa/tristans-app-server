@@ -1,13 +1,11 @@
 {
   "name": "tristans-app-server",
-  "version": "1.0.0",
-  "description": "API for the Tristan's app service",
-  "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "build": "tsc",
+    "apidoc": "apidoc -o api-doc -i src/routers",
+    "build": "tsc --project tsconfig.prod.json",
     "startProd": "SET NODE_PATH=./dist&& node ./dist/server.js",
     "startDev": "SET NODE_PATH=./dist&& SET NODE_ENV=development&& node ./dist/server.js",
     "start": "NODE_PATH=./dist node ./dist/server.js",
@@ -15,16 +13,14 @@
     "typeorm": "SET NODE_PATH=./src&& ts-node ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
     "test": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node node_modules/jasmine/bin/jasmine",
-    "apidoc": "apidoc -o api-doc -i src/routers",
-    "populateDatabase": "SET NODE_PATH=./src&& ts-node src/spec-helpers/populate-database.ts"
+    "testPushNotifications": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/test-push-notifications.ts",
+    "populateDatabase": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/populate-database.ts",
+    "scss": "node-sass --watch assets/scss -o assets/css"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ghostcoder217/tristans-app-server.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/ghostcoder217/tristans-app-server/issues"
   },
@@ -53,6 +49,7 @@
     "form-urlencoded": "^4.0.1",
     "jasmine": "^3.4.0",
     "js-image-generator": "^1.0.2",
+    "node-sass": "^4.13.0",
     "nodemon": "^1.19.0",
     "supertest": "^4.0.2",
     "ts-node": "^8.3.0",
@@ -63,7 +60,9 @@
   },
   "dependencies": {
     "aws-sdk": "^2.554.0",
+    "axios": "^0.19.0",
     "class-validator": "^0.9.1",
+    "ejs": "^2.7.1",
     "express": "^4.16.4",
     "express-rate-limit": "^5.0.0",
     "jsonwebtoken": "^8.5.1",

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "*": ["*"]
+    }
+  },
+  "lib": ["es2018"],
+  "exclude": [
+    "**/spec-helpers",
+    "**/*.spec.ts"
+  ]
+}

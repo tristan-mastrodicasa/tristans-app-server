@@ -20,8 +20,4 @@
     }
   },
   "lib": ["es2018"],
-  "exclude": [
-    "**/spec-helpers",
-    "**/*.spec.ts"
-  ]
 }

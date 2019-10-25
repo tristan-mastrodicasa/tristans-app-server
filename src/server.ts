@@ -13,6 +13,9 @@ createConnection(ormconfig).then((_connection) => {
   const server = express();
   const port: number = Number(process.env.PORT) || 3000;
 
+  // Set view engine //
+  server.set('view engine', 'ejs');
+
   // Data configuration //
   server.use(express.json());
   server.use(

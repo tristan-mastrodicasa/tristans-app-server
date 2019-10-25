@@ -1,0 +1,22 @@
+/**
+ * File creates global style rules for html dealing with cards
+ * Created by Tristan Mastrodicasa
+ */
+
+ $card-image-max-height: 400px;
+
+.card-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.card-container-no-padding {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.white-card {
+  background-color: #FFFFFF;
+}
