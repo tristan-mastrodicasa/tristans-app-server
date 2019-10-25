@@ -1,7 +1,8 @@
 import { User } from 'database/entities/user.entity';
+import { UserNetwork } from 'database/entities/user-network.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { validate, ValidationError } from 'class-validator';
-import { userContentNumberManager } from 'shared/helpers';
+import { userContentNumberManager, NotificationManager } from 'shared/helpers';
 
 /**
  * Create a canvas along with all of it's associated relations
@@ -44,9 +45,15 @@ export async function createNewCanvas(canvas: Canvas, userid: number, ignoreLimi
 
   }
 
+  // Generate new canvas //
+  const newCanvas = await canvas.save();
+
   // Update user stats //
   await userContentNumberManager('add', user.id, 1);
 
-  return canvas.save();
+  // Send subscribed users a notification about the uploaded canvas //
+  NotificationManager.sendUploadedCanvasPushNotifications(user, newCanvas.id);
+
+  return newCanvas;
 
 }

@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { MemeReacts } from 'database/entities/meme-reacts.entity';
 import { User } from 'database/entities/user.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { Meme } from 'database/entities/meme.entity';
-import { ContentCard, EContentType } from 'shared/models';
+import { ContentCard } from 'shared/models';
 import { buildMemeWithHostCard, buildCanvasCard } from 'shared/helpers';
 
 const router = Router({ mergeParams: true });

@@ -3,7 +3,7 @@ import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { validate, ValidationError } from 'class-validator';
 import { EInfluence } from 'shared/models';
-import { userInfluenceManager, userContentNumberManager } from 'shared/helpers';
+import { userInfluenceManager, userContentNumberManager, NotificationManager } from 'shared/helpers';
 
 /**
  * Create a meme along with all of it's associated relations
@@ -49,10 +49,13 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
   // Update user stats //
   await userContentNumberManager('add', user.id, 1);
 
-  // Owner of meme should not get influence if memeing own canvas //
+  // Owner of meme should not get influence or notification if memeing own canvas //
   if (userid !== canvas.user.id) {
     // Update influence of the canvas owner //
     await userInfluenceManager('add', canvas.user.id, EInfluence.memeCreated);
+
+    // Notify the canvas owner of the new meme //
+    NotificationManager.sendUserCreatedMemePushNotification(canvas.user.id, canvas.id, user.username);
   }
 
   return meme.save();
