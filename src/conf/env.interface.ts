@@ -11,6 +11,8 @@ export interface IEnv {
   database_port: number;
   database_username: string;
   database_password: string;
+  push_service_id: string;
+  push_service_secret: string;
   google_redirect_url: string;
   google_client_id: string;
   google_client_secret: string;

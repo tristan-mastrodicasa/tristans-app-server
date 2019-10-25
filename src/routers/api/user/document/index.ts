@@ -9,6 +9,7 @@ import followers from './followers';
 import following from './following';
 import followBacks from './follow-backs';
 import dailySuggestions from './daily-suggestions';
+import devices from './devices';
 
 export default {
   get,
@@ -22,4 +23,5 @@ export default {
   unfollow,
   image,
   settings,
+  devices,
 };

@@ -17,3 +17,4 @@ export * from './user-content-number-manager.function';
 export * from './build-canvas-card.function';
 export * from './build-meme-with-host-card.function';
 export * from './build-meme-card.function';
+export * from './notification-manager.class';

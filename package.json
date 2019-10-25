@@ -4,7 +4,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "tsc",
+    "apidoc": "apidoc -o api-doc -i src/routers",
+    "build": "tsc --project tsconfig.prod.json",
     "startProd": "SET NODE_PATH=./dist&& node ./dist/server.js",
     "startDev": "SET NODE_PATH=./dist&& SET NODE_ENV=development&& node ./dist/server.js",
     "start": "NODE_PATH=./dist node ./dist/server.js",
@@ -12,8 +13,8 @@
     "typeorm": "SET NODE_PATH=./src&& ts-node ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
     "test": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node node_modules/jasmine/bin/jasmine",
-    "apidoc": "apidoc -o api-doc -i src/routers",
-    "populateDatabase": "SET NODE_PATH=./src&& ts-node src/spec-helpers/populate-database.ts",
+    "testPushNotifications": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/test-push-notifications.ts",
+    "populateDatabase": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/populate-database.ts",
     "scss": "node-sass --watch assets/scss -o assets/css"
   },
   "repository": {
@@ -59,6 +60,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.554.0",
+    "axios": "^0.19.0",
     "class-validator": "^0.9.1",
     "ejs": "^2.7.1",
     "express": "^4.16.4",

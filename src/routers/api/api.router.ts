@@ -25,6 +25,7 @@ router.use('/user/:id/unfollow', user.document.unfollow.post);
 router.use('/user/:id/followers', user.document.followers.get);
 router.use('/user/:id/following', user.document.following.get);
 router.use('/user/:id/follow-backs', user.document.followBacks.get);
+router.use('/user/:id/devices', user.document.devices.put);
 
 router.use('/meme', meme.post);
 router.use('/meme/:id', meme.document.del);

@@ -8,6 +8,7 @@ import { CanvasReacts } from './canvas-reacts.entity';
 import { Meme } from './meme.entity';
 import { MemeReacts } from './meme-reacts.entity';
 import { CanvasInvites } from './canvas-invites.entity';
+import { MobileRelations } from './mobile-relations.entity';
 
 /**
  * The user model describes everything stored per user.
@@ -76,6 +77,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => MemeReacts, memeReacts => memeReacts.user)
   public memeReacts: MemeReacts[]; // actions over memes
+
+  @OneToOne(() => MobileRelations, mobileRelations => mobileRelations.user)
+  public mobileDevice: MobileRelations; // actions over memes
 
   @OneToOne(() => UserStatistics, userStatistics => userStatistics.user)
   public statistics: UserStatistics; // This field gives access to all user statistics
