@@ -15,7 +15,7 @@
     "test": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node node_modules/jasmine/bin/jasmine",
     "testPushNotifications": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/test-push-notifications.ts",
     "populateDatabase": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/populate-database.ts",
-    "scss": "node-sass --watch assets/scss -o assets/css"
+    "scss": "node-sass --watch src/scss -o assets/css"
   },
   "repository": {
     "type": "git",

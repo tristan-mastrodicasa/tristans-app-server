@@ -16,9 +16,6 @@ router.use('/terms', terms.get);
 router.use('/support', support.get);
 router.use('/canvas', canvas.get);
 
-router.use('/css', express.static('assets/css'));
-router.use('/img', express.static('assets/img'));
-router.use('/js', express.static('assets/js'));
-router.use('/fonts', express.static('assets/fonts'));
+router.use('/', express.static('assets'));
 
 export default router;
