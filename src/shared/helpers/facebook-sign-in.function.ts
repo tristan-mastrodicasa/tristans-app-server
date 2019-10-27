@@ -2,6 +2,7 @@ import { User } from 'database/entities/user.entity';
 import passportFacebookToken from 'passport-facebook-token';
 import { VerifyCallback } from 'passport-google-oauth20';
 import { createNewUser } from './';
+import env from 'conf/env';
 
 /**
  * Function to call when the access token is verified and a user is to be
@@ -24,7 +25,7 @@ export async function facebookSignIn(_accessToken: string, _refreshToken: string
   const newUser = new User();
   newUser.facebookId = profile.id;
   newUser.firstName = profile.name.givenName;
-  newUser.profileImg = '/assets/svg-img/default-profile-picture.svg'; // Change to remote hosted image so web can access
+  newUser.profileImg = `${env.host}/img/default-profile-picture.svg`;
   newUser.profileImgMimeType = 'image/jpeg';
   newUser.email = (
     profile._json.email ? profile._json.email : (profile.emails[0].value ? profile.emails[0].value : null)
