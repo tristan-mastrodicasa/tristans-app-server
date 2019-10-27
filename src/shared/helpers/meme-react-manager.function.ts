@@ -4,6 +4,9 @@ import { MemeReacts } from 'database/entities/meme-reacts.entity';
 import { EInfluence } from 'shared/models';
 import { userInfluenceManager } from 'shared/helpers';
 
+/** @todo stop users getting influence for starring their own content (including canvas react manager) */
+/** Currently users can make a meme, star it, delete, then repeat to spam influence */
+
 /**
  * Add and remove reacts from memes
  * @param  action Add or remove react
