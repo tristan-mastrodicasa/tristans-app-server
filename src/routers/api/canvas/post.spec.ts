@@ -123,7 +123,7 @@ describe('POST canvas', () => {
     expect(res.body.errors[0].title).toEqual('file');
   });
 
-  it('should fail if > 6 canvases uploaded a day', async () => {
+  it('should fail if > 15 canvases uploaded a day', async () => {
     // Clear the existing canvases //
     await Canvas.remove(await Canvas.find());
 
@@ -131,32 +131,32 @@ describe('POST canvas', () => {
     const canvasArray: number[] = [];
 
     // Create a lot of canvases //
-    for (let i = 0; i < 7; i += 1) {
+    for (let i = 0; i < 16; i += 1) {
       const res = await supertest(app)
       .post('/')
       .set('Authorization', `Bearer ${userInfo.token}`)
       .attach('canvas', 'src/spec-helpers/images/medium-image.jpg');
 
-      if (i < 6) {
+      if (i < 15) {
         expect(res.body.canvasId).toBeDefined();
         canvasArray.push(res.body.canvasId);
       } else {
-        // On 7th canvas attempted to be created today //
+        // On 16th canvas attempted to be created today //
         expect(res.body.errors).toBeDefined();
       }
     }
 
   });
 
-  it('should succeed if < 6 canvases uploaded a day', async () => {
+  it('should succeed if < 15 canvases uploaded a day', async () => {
     // Clear the existing canvases //
     await Canvas.remove(await Canvas.find());
 
     const userInfo = await getNewAuthorizedUser();
     const canvasArray: number[] = [];
 
-    // Create 6 canvases //
-    for (let i = 0; i < 6; i += 1) {
+    // Create 15 canvases //
+    for (let i = 0; i < 15; i += 1) {
       const res = await supertest(app)
         .post('/')
         .set('Authorization', `Bearer ${userInfo.token}`)

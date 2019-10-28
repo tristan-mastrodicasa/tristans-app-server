@@ -1,5 +1,4 @@
 import { User } from 'database/entities/user.entity';
-import { UserNetwork } from 'database/entities/user-network.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { validate, ValidationError } from 'class-validator';
 import { userContentNumberManager, NotificationManager } from 'shared/helpers';
@@ -26,19 +25,19 @@ export async function createNewCanvas(canvas: Canvas, userid: number, ignoreLimi
 
   /** @todo (Production) Implmenent canvas invites (invite users) */
 
-  // Validate that the user has uploaded less than 6 canvases a day //
+  // Validate that the user has uploaded less than 15 canvases a day //
   const canvasList = user.canvases;
 
-  if (canvasList.length >= 6 && !ignoreLimit) {
+  if (canvasList.length >= 15 && !ignoreLimit) {
 
-    const canvas = canvasList[canvasList.length - 6];
+    const canvas = canvasList[canvasList.length - 15];
     const diffTime = +new Date() - +canvas.utc;
     const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
     if (diffDays < 1) {
       const error = new ValidationError();
       error.property = 'canvas';
-      error.constraints = { limit: 'Client can only upload 6 canvases a day' };
+      error.constraints = { limit: 'Client can only upload 15 canvases a day' };
       error.children = [];
       throw [error];
     }
