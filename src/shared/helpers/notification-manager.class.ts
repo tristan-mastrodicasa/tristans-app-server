@@ -20,6 +20,8 @@ export class NotificationManager {
     // Check if the user(s) have enabled push notifications for this event //
     if (!user.settings.nPointsUpdate) return;
 
+    if (!env.production) console.log('notification sent');
+
     axios.post(
       'https://onesignal.com/api/v1/notifications',
       {
@@ -54,6 +56,8 @@ export class NotificationManager {
 
     // Check if the user(s) have enabled push notifications for this event //
     if (!user.settings.nUserMemedMyCanvas) return;
+
+    if (!env.production) console.log('notification sent');
 
     axios.post(
       'https://onesignal.com/api/v1/notifications',
@@ -107,6 +111,8 @@ export class NotificationManager {
 
     if (subscriptionList.length === 0) return;
 
+    if (!env.production) console.log('notification sent');
+
     axios.post(
       'https://onesignal.com/api/v1/notifications',
       {
@@ -117,6 +123,43 @@ export class NotificationManager {
         small_icon: 'ic_stat_onesignal_default',
         android_accent_color: 'FFFF9933',
         data: { page: `/canvas/${canvasid}` },
+      },
+      {
+        headers: {
+          Authorization: `Basic ${env.push_service_secret}`,
+        },
+      },
+    );
+  }
+
+  /**
+   * Send a user a push notification when another user follows you
+   * @param  userid       To send the notification too
+   * @param  followerName Name of the user who followed you
+   * @param  otherUserId  Id of the other user
+   */
+  public static async sendUserFollowedYouPushNotification(userid: number, followerName: string, otherUserId: number): Promise<void> {
+
+    const user = await User.findOne(userid, { relations: ['mobileDevice', 'settings'] });
+
+    // Check if a device is registered //
+    if (!user || !user.mobileDevice || !user.mobileDevice.deviceId) return;
+
+    // Check if the user(s) have enabled push notifications for this event //
+    if (!user.settings.nNewFollowers) return;
+
+    if (!env.production) console.log('notification sent');
+
+    axios.post(
+      'https://onesignal.com/api/v1/notifications',
+      {
+        app_id: env.push_service_id,
+        include_player_ids: [user.mobileDevice.deviceId],
+        headings: { en: 'New Follower' },
+        contents: { en: `${followerName} started following you` },
+        small_icon: 'ic_stat_onesignal_default',
+        android_accent_color: 'FFFF9933',
+        data: { page: `/profile/${otherUserId}` },
       },
       {
         headers: {

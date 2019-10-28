@@ -31,6 +31,11 @@ export class UserSettings extends BaseEntity {
   @IsBoolean()
   public nPointsUpdate?: boolean; // Get notifications for when you reach certain influence point thresholds
 
+  @Column('boolean', { default: () => 'true' })
+  @IsOptional()
+  @IsBoolean()
+  public nNewFollowers?: boolean; // Get notifications when another user follows you
+
   @OneToOne(() => User, user => user.settings, { onDelete: 'CASCADE' })
   @JoinColumn()
   public user: User; // Foreign key of the user entity used also the primary key

@@ -1,5 +1,6 @@
 import { User } from 'database/entities/user.entity';
 import { UserNetwork } from 'database/entities/user-network.entity';
+import { NotificationManager } from 'shared/helpers';
 
 /**
  * Manages the following and unfollowing of users
@@ -26,6 +27,9 @@ export async function networkManager(action: 'unfollow' | 'follow', cuid: number
     newNetworkLink.user = hostUser;
     newNetworkLink.follower = clientUser;
     await newNetworkLink.save();
+
+    // Send a notificaiton to the user being followed //
+    NotificationManager.sendUserFollowedYouPushNotification(hostUser.id, clientUser.username, clientUser.id);
 
   } else if (action === 'unfollow') {
 

@@ -32,10 +32,16 @@ createConnection(ormconfig).then(() => {
       });
     });
 
+    // Test the user uploaded a new canvas notification //
     getNewAuthorizedUser().then((userInfo) => { // Generate a fake user
       networkManager('follow', +process.argv[2], userInfo.user.id).then(() => { // The main user follows this fake user
         getPhonyCanvas(userInfo.user.id); // Fake user uploads a new canvas
       });
+    });
+
+    // Test a new user follows you notification //
+    getNewAuthorizedUser().then((userInfo) => { // Generate a fake user
+      networkManager('follow', userInfo.user.id, +process.argv[2]).then(() => null); // Get the fake user to follow you
     });
   }
 
