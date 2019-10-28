@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
     // Return the token //
     if (user) {
 
-      res.json({ token: jsonwebtoken.sign(<IJwt>{ id: user.id }, env.jwt_key, { expiresIn: '30d' }) });
+      res.json({ token: jsonwebtoken.sign(<IJwt>{ id: user.id }, env.jwt_key, { expiresIn: '90d' }) });
 
     } else {
 
