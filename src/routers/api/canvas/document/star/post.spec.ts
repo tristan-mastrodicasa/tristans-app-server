@@ -18,6 +18,26 @@ describe('POST canvas/:id/star', () => {
 
   it('should work with ideal inputs', async () => {
     const userInfo = await getNewAuthorizedUser();
+    const userInfo2 = await getNewAuthorizedUser();
+    const canvas = await getPhonyCanvas(userInfo.user.id);
+
+    const res = await supertest(app)
+      .post(`/${canvas.id}/star`)
+      .set('Authorization', `Bearer ${userInfo2.token}`);
+
+    // Expect the canvas star stats to increase //
+    await canvas.reload();
+    expect(canvas.stars).toBeGreaterThan(0);
+
+    // Expect the canvas owner influence to increase //
+    await userInfo.user.statistics.reload();
+    expect(userInfo.user.statistics.influence).toBeGreaterThan(0);
+
+    expect(res.status).toEqual(200);
+  });
+
+  it('should not increase influence of the canvas owner, if starred by owner', async () => {
+    const userInfo = await getNewAuthorizedUser();
     const canvas = await getPhonyCanvas(userInfo.user.id);
 
     const res = await supertest(app)
@@ -28,9 +48,9 @@ describe('POST canvas/:id/star', () => {
     await canvas.reload();
     expect(canvas.stars).toBeGreaterThan(0);
 
-    // Expect the canvas owner influence to increase //
+    // Expect the canvas owner influence to not increase //
     await userInfo.user.statistics.reload();
-    expect(userInfo.user.statistics.influence).toBeGreaterThan(0);
+    expect(userInfo.user.statistics.influence).toEqual(0);
 
     expect(res.status).toEqual(200);
   });
@@ -58,15 +78,16 @@ describe('POST canvas/:id/star', () => {
 
   it('should not add more than one star', async () => {
     const userInfo = await getNewAuthorizedUser();
+    const userInfo2 = await getNewAuthorizedUser();
     const canvas = await getPhonyCanvas(userInfo.user.id);
 
     await supertest(app)
       .post(`/${canvas.id}/star`)
-      .set('Authorization', `Bearer ${userInfo.token}`);
+      .set('Authorization', `Bearer ${userInfo2.token}`);
 
     const res = await supertest(app)
       .post(`/${canvas.id}/star`)
-      .set('Authorization', `Bearer ${userInfo.token}`);
+      .set('Authorization', `Bearer ${userInfo2.token}`);
 
     // Expect the canvas star stats to remain at 1 //
     await canvas.reload();

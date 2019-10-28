@@ -19,6 +19,27 @@ describe('POST meme/:id/star', () => {
 
   it('should work with ideal inputs', async () => {
     const userInfo = await getNewAuthorizedUser();
+    const userInfo2 = await getNewAuthorizedUser();
+    const canvas = await getPhonyCanvas(userInfo.user.id);
+    const meme = await getPhonyMeme(canvas.id, userInfo.user.id);
+
+    const res = await supertest(app)
+      .post(`/${meme.id}/star`)
+      .set('Authorization', `Bearer ${userInfo2.token}`);
+
+    // Expect the meme star stats to increase //
+    await meme.reload();
+    expect(meme.stars).toBeGreaterThan(0);
+
+    // Expect the meme owner influence to increase //
+    await userInfo.user.statistics.reload();
+    expect(userInfo.user.statistics.influence).toBeGreaterThan(0);
+
+    expect(res.status).toEqual(200);
+  });
+
+  it('should not increase influence of the meme owner, if starred by owner', async () => {
+    const userInfo = await getNewAuthorizedUser();
     const canvas = await getPhonyCanvas(userInfo.user.id);
     const meme = await getPhonyMeme(canvas.id, userInfo.user.id);
 
@@ -30,9 +51,9 @@ describe('POST meme/:id/star', () => {
     await meme.reload();
     expect(meme.stars).toBeGreaterThan(0);
 
-    // Expect the meme owner influence to increase //
+    // Expect the meme owner influence to remain the same //
     await userInfo.user.statistics.reload();
-    expect(userInfo.user.statistics.influence).toBeGreaterThan(0);
+    expect(userInfo.user.statistics.influence).toEqual(0);
 
     expect(res.status).toEqual(200);
   });
@@ -61,16 +82,17 @@ describe('POST meme/:id/star', () => {
 
   it('should not add more than one star', async () => {
     const userInfo = await getNewAuthorizedUser();
+    const userInfo2 = await getNewAuthorizedUser();
     const canvas = await getPhonyCanvas(userInfo.user.id);
     const meme = await getPhonyMeme(canvas.id, userInfo.user.id);
 
     await supertest(app)
       .post(`/${meme.id}/star`)
-      .set('Authorization', `Bearer ${userInfo.token}`);
+      .set('Authorization', `Bearer ${userInfo2.token}`);
 
     const res = await supertest(app)
       .post(`/${meme.id}/star`)
-      .set('Authorization', `Bearer ${userInfo.token}`);
+      .set('Authorization', `Bearer ${userInfo2.token}`);
 
     // Expect the meme star stats to remain at 1 //
     await meme.reload();

@@ -40,7 +40,12 @@ export async function canvasReactManager(action: 'add' | 'remove', canvasId: num
   canvas.stars = await CanvasReacts.count({ where: { canvas: canvasId } });
   await canvas.save();
 
-  // Update influence of the canvas owner //
-  await userInfluenceManager(action, canvas.user.id, EInfluence.star);
+  // Canvas owner cannot get influence from reacting own content //
+  if (canvas.user.id !== userId) {
+
+    // Update influence of the canvas owner //
+    await userInfluenceManager(action, canvas.user.id, EInfluence.star);
+
+  }
 
 }
