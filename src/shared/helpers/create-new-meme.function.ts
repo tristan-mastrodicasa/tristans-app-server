@@ -27,19 +27,19 @@ export async function createNewMeme(meme: Meme, canvasid: number, userid: number
   meme.user = user;
   meme.canvas = canvas;
 
-  // Validate that the user has uploaded less than 20 memes a day //
+  // Validate that the user has uploaded less than 25 memes a day //
   const memeList = user.memes;
 
-  if (memeList.length >= 20) {
+  if (memeList.length >= 25) {
 
-    const canvas = memeList[memeList.length - 20];
+    const canvas = memeList[memeList.length - 25];
     const diffTime = +new Date() - +canvas.utc;
     const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
     if (diffDays < 1) {
       const error = new ValidationError();
       error.property = 'meme';
-      error.constraints = { limit: 'Client can only upload 20 memes a day' };
+      error.constraints = { limit: 'Client can only upload 25 memes a day' };
       error.children = [];
       throw [error];
     }

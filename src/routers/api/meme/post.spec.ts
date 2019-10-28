@@ -8,7 +8,6 @@ import { Meme } from 'database/entities/meme.entity';
 import { Canvas } from 'database/entities/canvas.entity';
 import { EInfluence } from 'shared/models';
 
-/** @todo Test image is actually uploaded */
 describe('POST meme', () => {
 
   let app: express.Express;
@@ -115,7 +114,7 @@ describe('POST meme', () => {
     expect(res.status).toEqual(400);
   });
 
-  it('should fail if > 20 memes uploaded a day', async () => {
+  it('should fail if > 25 memes uploaded a day', async () => {
     // Delete all existing memes //
     await Meme.remove(await Meme.find());
 
@@ -123,7 +122,7 @@ describe('POST meme', () => {
     const memeArray: number[] = [];
 
     // Create a lot of memes //
-    for (let i = 0; i < 21; i += 1) {
+    for (let i = 0; i < 26; i += 1) {
       const newCanvas = await getPhonyCanvas(userInfo.user.id);
 
       const res = await supertest(app)
@@ -132,18 +131,18 @@ describe('POST meme', () => {
       .set('Authorization', `Bearer ${userInfo.token}`)
       .attach('meme', 'src/spec-helpers/images/medium-image.jpg');
 
-      if (i < 20) {
+      if (i < 25) {
         expect(res.body.memeId).toBeDefined();
         memeArray.push(res.body.memeId);
       } else {
-        // On 21st meme attempted to be created today //
+        // On 26th meme attempted to be created today //
         expect(res.body.errors).toBeDefined();
       }
     }
 
   });
 
-  it('should succeed if < 20 memes uploaded a day', async () => {
+  it('should succeed if < 25 memes uploaded a day', async () => {
     // Delete all existing memes //
     await Meme.remove(await Meme.find());
 
@@ -151,8 +150,8 @@ describe('POST meme', () => {
     const canvas = await getPhonyCanvas(userInfo.user.id);
     const memeArray: number[] = [];
 
-    // Create 20 memes //
-    for (let i = 0; i < 20; i += 1) {
+    // Create 25 memes //
+    for (let i = 0; i < 25; i += 1) {
       const newCanvas = await getPhonyCanvas(userInfo.user.id);
 
       const res = await supertest(app)
