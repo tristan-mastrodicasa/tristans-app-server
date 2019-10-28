@@ -25,6 +25,7 @@ describe('PUT user/:id/settings', () => {
         subscriptionUploadedACanvas: false,
         userMemedMyCanvas: true,
         pointsUpdate: true,
+        newFollower: false,
       },
     };
 
@@ -41,6 +42,7 @@ describe('PUT user/:id/settings', () => {
     // Check changes have been made //
     expect(userInfo.user.settings.nCanvasInvites).toEqual(false);
     expect(userInfo.user.settings.nSubscriptionUploadedACanvas).toEqual(false);
+    expect(userInfo.user.settings.nNewFollowers).toEqual(false);
   });
 
   it('should fail if user does not exist', async () => {
@@ -52,6 +54,7 @@ describe('PUT user/:id/settings', () => {
         subscriptionUploadedACanvas: false,
         userMemedMyCanvas: true,
         pointsUpdate: true,
+        newFollower: true,
       },
     };
 
@@ -121,6 +124,7 @@ describe('PUT user/:id/settings', () => {
         subscriptionUploadedACanvas: 'false',
         userMemedMyCanvas: 1,
         pointsUpdate: true,
+        newFollower: false,
       },
     };
 
@@ -141,6 +145,7 @@ describe('PUT user/:id/settings', () => {
         subscriptionUploadedACanvas: false,
         userMemedMyCanvas: true,
         pointsUpdate: null,
+        newFollower: null,
       },
     };
 

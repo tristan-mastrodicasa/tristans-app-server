@@ -7,5 +7,6 @@ export interface IUserSettings {
     subscriptionUploadedACanvas: boolean;
     userMemedMyCanvas: boolean;
     pointsUpdate: boolean;
+    newFollower: boolean;
   };
 }

@@ -32,6 +32,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
         subscriptionUploadedACanvas: user.settings.nSubscriptionUploadedACanvas,
         userMemedMyCanvas: user.settings.nUserMemedMyCanvas,
         pointsUpdate: user.settings.nPointsUpdate,
+        newFollower: user.settings.nNewFollowers,
       },
     };
 

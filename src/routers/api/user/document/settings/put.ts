@@ -37,6 +37,7 @@ router.put('/', passport.authenticate('jwt', { session: false }), async (req, re
       user.settings.nSubscriptionUploadedACanvas = body.notifications.subscriptionUploadedACanvas;
       user.settings.nUserMemedMyCanvas = body.notifications.userMemedMyCanvas;
       user.settings.nPointsUpdate = body.notifications.pointsUpdate;
+      user.settings.nNewFollowers = body.notifications.newFollower;
     } catch (err) {
       return next({ content: [{ detail: 'Malformed body' }], status: 400 });
     }
