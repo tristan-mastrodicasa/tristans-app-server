@@ -21,16 +21,16 @@ export async function buildMemeWithHostCard(meme: Meme, clientUserId?: any): Pro
     cid: meme.canvas.id,
     users: {
       primary: {
-        id: meme.canvas.user.id,
-        firstName: meme.canvas.user.firstName,
-        username: meme.canvas.user.username,
-        photo: buildImageUrl('user', meme.canvas.user.profileImg),
-      },
-      secondary: {
         id: meme.user.id,
         firstName: meme.user.firstName,
         username: meme.user.username,
         photo: buildImageUrl('user', meme.user.profileImg),
+      },
+      secondary: {
+        id: meme.canvas.user.id,
+        firstName: meme.canvas.user.firstName,
+        username: meme.canvas.user.username,
+        photo: buildImageUrl('user', meme.canvas.user.profileImg),
       },
     },
     imagePath: buildImageUrl('meme', meme.imagePath),
