@@ -42,10 +42,10 @@ describe('GET user/:id/daily-suggestions', () => {
       .set('Authorization', `Bearer ${userInfo.token}`);
 
     // Expect a set of content to bew returned //
-    expect(res.body.length).toEqual(150);
+    expect(res.body.length).toEqual(50);
 
     // Expect to be ordered from oldest to newest //
-    expect(+res.body[0].utcTime).toBeGreaterThan(+res.body[149].utcTime);
+    expect(+res.body[0].utcTime).toBeGreaterThan(+res.body[49].utcTime);
   });
 
   it('should fail when an authorized user tries to access another\'s suggestions', async () => {
@@ -65,7 +65,7 @@ describe('GET user/:id/daily-suggestions', () => {
       .get('/0/daily-suggestions');
 
     // Should return a list of recommended //
-    expect(res.body.length).toEqual(150);
+    expect(res.body.length).toEqual(50);
   });
 
   it('should fail if a registered user accesses the public suggestions', async () => {
@@ -87,8 +87,8 @@ describe('GET user/:id/daily-suggestions', () => {
     expect(res.status).toEqual(401);
   });
 
-  // Check that if one canvas has more stars than the rest but was made 3 days ago it won't show
-  it('should most starred post should not show if made 3 days ago', async () => {
+  // Check that if one canvas has more stars than the rest but was made 6 days ago it won't show
+  it('should most starred post should not show if made 6 days ago', async () => {
     let res: any;
     const bigStar = 10000;
     const userInfo = await getNewAuthorizedUser();
@@ -108,8 +108,8 @@ describe('GET user/:id/daily-suggestions', () => {
       }
     });
 
-    // Set the big star creation date 3 days ago //
-    newCanvas.utc.setDate(newCanvas.utc.getDate() - 3);
+    // Set the big star creation date 6 days ago //
+    newCanvas.utc.setDate(newCanvas.utc.getDate() - 6);
     await newCanvas.save();
 
     res = await supertest(app)
@@ -124,8 +124,8 @@ describe('GET user/:id/daily-suggestions', () => {
 
   });
 
-  // Check if it correctly shows if you starred it
-  it('should most starred post should not show if made 3 days ago', async () => {
+  // Check if it correctly shows if you starred it //
+  it('should most starred post should not show if made 6 days ago', async () => {
     const userInfo = await getNewAuthorizedUser();
     const newCanvas = await getPhonyCanvas(userInfo.user.id);
 

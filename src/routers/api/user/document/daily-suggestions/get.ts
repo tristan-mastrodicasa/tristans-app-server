@@ -8,8 +8,6 @@ import { Raw } from 'typeorm';
 
 const router = Router({ mergeParams: true });
 
-// Get top 25 canvases + 125 memes for the last 3 days
-
 /**
  * @api {get} /user/:id/daily-suggestions Get content suggestions for a specific user
  * @apiName GetUserSuggested
@@ -48,28 +46,28 @@ router.get('/', async (req, res, next) => {
        * both public and registered users
        */
 
-      // Get the best memes from the past 3 days //
+      // Get the best memes //
       bestMemes = await Meme.find({
         relations: ['user', 'canvas', 'canvas.user'],
         where: {
-          utc: Raw(alias => `${alias} > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY)`),
+          utc: Raw(alias => `${alias} > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 6 DAY)`),
         },
         order: {
           stars: 'DESC',
         },
-        take: 125,
+        take: 40,
       });
 
-      // Best canvases from last 3 days //
+      // Best canvases //
       bestCanvases = await Canvas.find({
         relations: ['user'],
         where: {
-          utc: Raw(alias => `${alias} > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY)`),
+          utc: Raw(alias => `${alias} > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 6 DAY)`),
         },
         order: {
           stars: 'DESC',
         },
-        take: 25,
+        take: 10,
       });
 
       // Combine the meme and canvas arrays //
