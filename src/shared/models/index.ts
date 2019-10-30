@@ -10,3 +10,4 @@ export * from './mobile-device.interface';
 export * from './content-type.enum';
 export * from './visibility.enum';
 export * from './influence.enum';
+export * from './device-types.enum';

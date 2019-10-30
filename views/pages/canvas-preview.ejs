@@ -164,7 +164,7 @@
     function presentAlertConfirm() {
       const alert = document.createElement('ion-alert');
       alert.header = 'Download the App';
-      alert.message = `<a href="https://play.google.com/store/apps/details?id=com.tristans.app" target="_blank"><div class="buttons flex-row d-flex play-store-download canvas-app-install">
+      alert.message = `<a href="/playstore?url=/canvas/<%= canvash.canvas.id %>" target="_blank"><div class="buttons flex-row d-flex play-store-download canvas-app-install">
         <i class="fa fa-android" aria-hidden="true"></i>
         <div class="desc">
             <p>

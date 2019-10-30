@@ -5,6 +5,7 @@ import privacy from './privacy';
 import terms from './terms';
 import support from './support';
 import canvas from './canvas';
+import playstore from './playstore';
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.use('/privacy', privacy.get);
 router.use('/terms', terms.get);
 router.use('/support', support.get);
 router.use('/canvas', canvas.get);
+router.use('/playstore', playstore.get);
 
 router.use('/', express.static('assets'));
 

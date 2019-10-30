@@ -1,7 +1,9 @@
 import express from 'express';
 import { createConnection } from 'typeorm';
 import { ormconfig } from 'conf/ormconfig';
+import { WebsiteAnalytics } from 'database/entities/website-analytics.entity';
 import { httpErrorMiddleware } from 'shared/helpers';
+import { EDeviceType } from 'shared/models';
 import indexRouter from 'routers/index.router';
 import env from 'conf/env';
 import 'conf/passport';
@@ -34,6 +36,30 @@ createConnection(ormconfig).then((_connection) => {
       next();
     });
   }
+
+  // Log website access (analytics) //
+  server.use((req, _res, next) => {
+
+    if ((req.path.includes('/canvas') || req.path === '/' || req.path.includes('/playstore')) && !req.path.includes('/api')) {
+
+      const webAnalytics = new WebsiteAnalytics();
+      const ua = req.headers['user-agent'];
+      let deviceType = EDeviceType.Other;
+
+      if (/Android/.test(ua)) deviceType = EDeviceType.Android;
+      if (/like Mac OS X/.test(ua)) deviceType = EDeviceType.Ios;
+
+      webAnalytics.deviceType = deviceType;
+      webAnalytics.ip = (req.headers['x-forwarded-for'] as string) || req.connection.remoteAddress;
+      webAnalytics.endPoint = req.path;
+      webAnalytics.query = req.url.substr(req.url.indexOf('?') + 1);
+
+      webAnalytics.save();
+    }
+
+    next();
+
+  });
 
   // Set server side headers //
   server.use((_req, res, next) => {
