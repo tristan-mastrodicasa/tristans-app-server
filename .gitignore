@@ -29,3 +29,6 @@ ormconfig.json
 
 # hide landing template
 /landing_page_template
+
+# Script to reset the time of content creation on live server
+reset-content-time.ts
