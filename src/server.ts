@@ -37,6 +37,8 @@ createConnection(ormconfig).then((_connection) => {
     });
   }
 
+  server.set('trust proxy', true);
+
   // Log website access (analytics) //
   server.use((req, _res, next) => {
 
@@ -50,7 +52,7 @@ createConnection(ormconfig).then((_connection) => {
       if (/like Mac OS X/.test(ua)) deviceType = EDeviceType.Ios;
 
       webAnalytics.deviceType = deviceType;
-      webAnalytics.ip = (Array.isArray(req.headers['x-forwarded-for']) ? req.headers['x-forwarded-for'][0] : req.headers['x-forwarded-for'] as string) || req.connection.remoteAddress;
+      webAnalytics.ip = req.ip;
       webAnalytics.endPoint = req.path;
       webAnalytics.query = req.url.substr(req.url.indexOf('?') + 1);
 
