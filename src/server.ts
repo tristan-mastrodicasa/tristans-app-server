@@ -40,7 +40,7 @@ createConnection(ormconfig).then((_connection) => {
   // Log website access (analytics) //
   server.use((req, _res, next) => {
 
-    if ((req.path.includes('/canvas') || req.path === '/' || req.path.includes('/playstore')) && !req.path.includes('/api')) {
+    if ((req.path.includes('/canvas') || req.path === '/' || req.path.includes('/playstore') || req.path.includes('/influencers')) && !req.path.includes('/api')) {
 
       const webAnalytics = new WebsiteAnalytics();
       const ua = req.headers['user-agent'];
@@ -50,7 +50,7 @@ createConnection(ormconfig).then((_connection) => {
       if (/like Mac OS X/.test(ua)) deviceType = EDeviceType.Ios;
 
       webAnalytics.deviceType = deviceType;
-      webAnalytics.ip = (req.headers['x-forwarded-for'] as string) || req.connection.remoteAddress;
+      webAnalytics.ip = (Array.isArray(req.headers['x-forwarded-for']) ? req.headers['x-forwarded-for'][0] : req.headers['x-forwarded-for'] as string) || req.connection.remoteAddress;
       webAnalytics.endPoint = req.path;
       webAnalytics.query = req.url.substr(req.url.indexOf('?') + 1);
 
