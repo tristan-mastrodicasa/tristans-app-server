@@ -6,6 +6,7 @@ import terms from './terms';
 import support from './support';
 import canvas from './canvas';
 import playstore from './playstore';
+import influencers from './influencers';
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.use('/terms', terms.get);
 router.use('/support', support.get);
 router.use('/canvas', canvas.get);
 router.use('/playstore', playstore.get);
+router.use('/influencers', influencers.get);
 
 router.use('/', express.static('assets'));
 

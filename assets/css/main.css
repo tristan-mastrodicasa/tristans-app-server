@@ -2148,6 +2148,14 @@ h6 {
 .canvas-app-install:hover i {
   color: #000 !important; }
 
+.single-defination h4 {
+  text-align: center; }
+
+.single-defination img {
+  display: block;
+  width: 50%;
+  margin: 0 auto; }
+
 /**
  * Import into components that want to reset the default
  * styles of some native tags
