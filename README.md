@@ -27,8 +27,6 @@ We are using Trello to manage tasks
 3. run `npm run lint` to check if code is clean
 4. run `npm run test` to check if jasmine tests pass
 
-Front-end repo: https://github.com/ghostcoder217/tristans-app/
-
 ## Misc
 
 When we deploy Tristan want's to use [CloudCraft](https://cloudcraft.co/) to design the AWS servers

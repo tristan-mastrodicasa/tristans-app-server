@@ -17,18 +17,10 @@
     "scss": "node-sass --watch src/scss -o assets/css",
     "resetContentTime": "NODE_PATH=./src ts-node src/spec-helpers/reset-content-time.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ghostcoder217/tristans-app-server.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ghostcoder217/tristans-app-server/issues"
-  },
   "apidoc": {
-    "title": "Tristan's App",
+    "title": "DopaMeme",
     "url": "https://localhost:3000/api"
   },
-  "homepage": "https://github.com/ghostcoder217/tristans-app-server#readme",
   "devDependencies": {
     "@types/express": "^4.17.0",
     "@types/express-rate-limit": "^3.3.3",
