@@ -6,16 +6,20 @@
   "scripts": {
     "apidoc": "apidoc -o api-doc -i src/routers",
     "build": "tsc --project tsconfig.prod.json",
-    "startDev": "NODE_PATH=./dist NODE_ENV=development node ./dist/server.js",
+    "startProd": "SET NODE_PATH=./dist&& node ./dist/server.js",
+    "startDev": "SET NODE_PATH=./dist&& SET NODE_ENV=development&& node ./dist/server.js",
     "start": "NODE_PATH=./dist node ./dist/server.js",
+    "devWindows": "SET NODE_PATH=./src&& SET NODE_ENV=development&& nodemon",
     "dev": "NODE_PATH=./src NODE_ENV=development nodemon",
     "typeorm": "NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js",
+    "typeormWin": "SET NODE_PATH=./src&& ts-node ./node_modules/typeorm/cli.js",
     "lint": "tslint src/**/*.ts",
     "test": "NODE_PATH=./src NODE_ENV=development ts-node node_modules/jasmine/bin/jasmine",
-    "testPushNotifications": "NODE_PATH=./src NODE_ENV=development ts-node src/spec-helpers/test-push-notifications.ts",
-    "populateDatabase": "NODE_PATH=./src NODE_ENV=development ts-node src/spec-helpers/populate-database.ts",
+    "testWindows": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node node_modules/jasmine/bin/jasmine",
+    "testPushNotifications": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/test-push-notifications.ts",
+    "populateDatabase": "SET NODE_PATH=./src&& SET NODE_ENV=development&& ts-node src/spec-helpers/populate-database.ts",
     "scss": "node-sass --watch src/scss -o assets/css",
-    "resetContentTime": "NODE_PATH=./src ts-node src/spec-helpers/reset-content-time.ts"
+    "resetContentTime": "SET NODE_PATH=./src&& ts-node src/spec-helpers/reset-content-time.ts"
   },
   "apidoc": {
     "title": "DopaMeme",
