@@ -13,7 +13,7 @@ import passport from 'passport';
 createConnection(ormconfig).then((_connection) => {
 
   const server = express();
-  const port: number = Number(process.env.PORT) || 3000;
+  const port: number = 80;
 
   // Set view engine //
   server.set('view engine', 'ejs');

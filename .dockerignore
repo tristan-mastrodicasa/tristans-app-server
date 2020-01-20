@@ -1,9 +1,9 @@
-# NPM modules
+# Folders that should be built in images
 node_modules
 dist
 
-# VS Code
-.vscode
+# hide landing template
+landing_page_template
 
 # Database
 data
@@ -11,10 +11,6 @@ data_test
 
 # Helper scripts
 batch-files
-
-# Hide the environment variables
-src/conf/env.dev.ts
-src/conf/env.prod.ts
 
 # Uploads
 /uploads
@@ -27,9 +23,6 @@ src/conf/env.prod.ts
 
 # Sensitive database information
 ormconfig.json
-
-# hide landing template
-/landing_page_template
 
 # Script to reset the time of content creation on live server
 reset-content-time.ts
