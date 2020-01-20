@@ -1,4 +1,6 @@
-# Meme App server
+# Tristan's App server
+
+This project uses docker. To run the server with a database run `docker-compose up tristans-app-server-stage`
 
 ## Set up Environment
 
