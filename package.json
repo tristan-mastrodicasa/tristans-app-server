@@ -41,7 +41,7 @@
     "form-urlencoded": "^4.0.1",
     "jasmine": "^3.4.0",
     "js-image-generator": "^1.0.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "nodemon": "^1.19.0",
     "supertest": "^4.0.2",
     "ts-node": "^8.3.0",
